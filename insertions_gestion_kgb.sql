@@ -245,6 +245,42 @@ INSERT INTO Agent (
     'Name-Agent18',
     '1999-06-06 06:06:00',
     'Russia'
+), (
+    '019',
+    'Firstname-Agent19',
+    'Name-Agent19',
+    '1999-06-06 06:06:00',
+    'Russia'
+), (
+    '020',
+    'Firstname-Agent20',
+    'Name-Agent20',
+    '1999-06-06 06:06:00',
+    'Slovenia'
+), (
+    '021',
+    'Firstname-Agent21',
+    'Name-Agent21',
+    '1999-06-06 06:06:00',
+    'Iran'
+), (
+    '022',
+    'Firstname-Agent22',
+    'Name-Agent22',
+    '1999-06-06 06:06:00',
+    'Irak'
+), (
+    '023',
+    'Firstname-Agent23',
+    'Name-Agent23',
+    '1999-06-06 06:06:00',
+    'Kazakhstan'
+), (
+    '024',
+    'Firstname-Agent24',
+    'Name-Agent24',
+    '1999-06-06 06:06:00',
+    'Ouzbekistan'
 );
 
 INSERT INTO Contact ( 
@@ -1204,7 +1240,31 @@ INSERT INTO Agent_Specialty (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '018'),
     'seduction'
 ), (
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '018'),
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '019'),
+    'support'
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '019'),
+    'discretion'
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '020'),
+    'seduction'
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '021'),
+    'support'
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '022'),
+    'shooter'
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '023'),
+    'hacking'
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '023'),
+    'discretion'
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '023'),
+    'seduction'
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '024'),
     'diplomacy'
 );
 
@@ -1282,24 +1342,24 @@ WHERE agent_code = 018;
 
 UPDATE Agent
 SET agent_mission_uuid = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Sigma')
-WHERE agent_code = 001;
+WHERE agent_code = 019;
 
 UPDATE Agent
 SET agent_mission_uuid = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Tau')
-WHERE agent_code = 002;
+WHERE agent_code = 020;
 
 UPDATE Agent
 SET agent_mission_uuid = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Upsilon')
-WHERE agent_code = 003;
+WHERE agent_code = 021;
 
 UPDATE Agent
 SET agent_mission_uuid = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Phi')
-WHERE agent_code = 008;
+WHERE agent_code = 022;
 
 UPDATE Agent
 SET agent_mission_uuid = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Phi')
-WHERE agent_code = 012;
+WHERE agent_code = 023;
 
 UPDATE Agent
 SET agent_mission_uuid = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Chi')
-WHERE agent_code = 017;
+WHERE agent_code = 024;
