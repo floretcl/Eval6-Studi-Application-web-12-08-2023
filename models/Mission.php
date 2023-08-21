@@ -6,21 +6,22 @@ class Mission {
     private string $title;
     private string $description;
     private string $country;
-    private int $typeUuid;
+    private string $type;
     private string $specialty;
-    private int $statusUuid;
+    private string $status;
     private string $startDate;
     private string $endDate;
 
+    /*
     public function __construct(
         string $uuid, 
         string $codeName,
         string $title,
         string $description,
         string $country,
-        int $typeUuid,
+        string $type,
         string $specialty,
-        int $statusUuid,
+        string $status,
         ?string $startDate = null,
         ?string $endDate = null
         ) {
@@ -29,12 +30,13 @@ class Mission {
         $this->title = $title;
         $this->description = $description;
         $this->country = $country;
-        $this->typeUuid = $typeUuid;
+        $this->type = $type;
         $this->specialty = $specialty;
-        $this->statusUuid = $statusUuid;
+        $this->status = $status;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
+    */
 
     public function getUuid(): string {
         return $this->uuid;
@@ -51,23 +53,35 @@ class Mission {
     public function getCountry(): string {
         return $this->country;
     }
-    public function getTypeUuid(): int {
-        return $this->typeUuid;
+    public function getType(): string {
+        return $this->type;
     }
     public function getSpecialty(): string {
         return $this->specialty;
     }
-    public function getstatus(): int {
-        return $this->statusUuid;
+    public function getStatus(): string {
+        return $this->status;
     }
-    public function getStarDate(): string {
-        $timestamp = $this->startDate;
-        $date = date('Y-m-d H:i:s', $timestamp);
+    public function getStartDate(): string {
+        $datetime = $this->startDate;
+        $date = date('Y-m-d H:i', strtotime($datetime));
         return $date;
+    }
+    public function getStartDateLong(): string {
+        $datetime = $this->startDate;
+        $date = date('l, j F Y', strtotime($datetime));
+        $hour = date('h:i a', strtotime($datetime));
+        return $date.' at '.$hour;
     }
     public function getEndDate(): string {
-        $timestamp = $this->endDate;
-        $date = date('Y-m-d H:i:s', $timestamp);
+        $datetime = $this->endDate;
+        $date = date('Y-m-d H:i', strtotime($datetime));
         return $date;
+    }
+    public function getEndDateLong(): string {
+        $datetime = $this->endDate;
+        $date = date('l, j F Y', strtotime($datetime));
+        $hour = date('h:i a', strtotime($datetime));
+        return $date.' at '.$hour;
     }
 }
