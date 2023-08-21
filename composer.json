@@ -2,5 +2,11 @@
     "require": {
         "twbs/bootstrap": "5.3.1",
         "vlucas/phpdotenv": "^5.5"
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "rm -rf assets/bootstrap",
+            "cp -R vendor/twbs/bootstrap/dist assets/bootstrap"
+        ]
     }
 }
