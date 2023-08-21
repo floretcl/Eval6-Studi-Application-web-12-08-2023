@@ -1,0 +1,7 @@
+.mission-table-row:hover {
+    cursor: pointer;
+}
+
+.breadcrumb-item::before {
+    color: #f8f9fa !important;
+}
