@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="utf-8"?>
+<katyusha>
+	<version>0.4.6</version>
+</katyusha>
+<base>
+	<nom>Base</nom>
+	<sgbd>mysql</sgbd>
+	<rep>/home/clementfloret/Téléchargements/Eval-6</rep>
+	<drop>0</drop>
+</base>
+<tables>
+	<table id=0>
+		<nom>Mission</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>mission_uuid</nom>
+				<type>text</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=2>
+				<nom>mssion_code_name</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=3>
+				<nom>mission_title</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=4>
+				<nom>mission_description</nom>
+				<type>text</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=5>
+				<nom>mission_country</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=6>
+				<nom>start_date</nom>
+				<type>timestamp</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=7>
+				<nom>end_date</nom>
+				<type>timestamp</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>919.9682910729007/609.0172787921003</coords>
+	</table>
+	<table id=1>
+		<nom>Agent</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>agent_uuid</nom>
+				<type>text</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=2>
+				<nom>agent_code</nom>
+				<type>integer</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=3>
+				<nom>agent_firstname</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=4>
+				<nom>agent_lastname</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=5>
+				<nom>agent_birthday</nom>
+				<type>timestamp</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=6>
+				<nom>agent_nationality</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>917.6638778500007/216.2288005100002</coords>
+	</table>
+	<table id=2>
+		<nom>Target</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>target_uuid</nom>
+				<type>text</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=2>
+				<nom>target_code_name</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=3>
+				<nom>target_firstname</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=4>
+				<nom>target_lastname</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=5>
+				<nom>target_birthday</nom>
+				<type>timestamp</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=6>
+				<nom>target_nationality</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>918.9082718300001/1010.9976733300002</coords>
+	</table>
+	<table id=3>
+		<nom>Contact</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>contact_uuid</nom>
+				<type>text</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=2>
+				<nom>contact_code_name</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=3>
+				<nom>contact_firstname</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=4>
+				<nom>contact_lastname</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=5>
+				<nom>contact_birthday</nom>
+				<type>timestamp</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=6>
+				<nom>contact_nationality</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>1612.3360723500007/612.2850848100004</coords>
+	</table>
+	<table id=4>
+		<nom>Hideout</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>hideout_uuid</nom>
+				<type>text</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=2>
+				<nom>hideout_code</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=3>
+				<nom>hideout_adress</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=4>
+				<nom>hideout_country</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>304.5546259500002/587.4821047600002</coords>
+	</table>
+	<table id=5>
+		<nom>Admin</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>admin_uuid</nom>
+				<type>text</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=2>
+				<nom>admin_firstname</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=3>
+				<nom>admin_lastname</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>30</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>1</null>
+				<description></description>
+			</attribut>
+			<attribut id=4>
+				<nom>admin_email</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>255</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=5>
+				<nom>admin_password</nom>
+				<type>text</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+			<attribut id=6>
+				<nom>admin_creation_date</nom>
+				<type>datetime</type>
+				<complement_type></complement_type>
+				<pk>0</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>233.24370076000014/164.98608978</coords>
+	</table>
+	<table id=10>
+		<nom>Specialty</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>specialty_name</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>50</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>1569.0/194.0</coords>
+	</table>
+	<table id=12>
+		<nom>Hideout_type</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>hideout_type_name</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>0</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>302.0/875.0</coords>
+	</table>
+	<table id=14>
+		<nom>Mission_type</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>mission_type_name</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>50</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>1477.0/873.0</coords>
+	</table>
+	<table id=17>
+		<nom>Mission_status</nom>
+		<attributs>
+			<attribut id=1>
+				<nom>status_name</nom>
+				<type>varchar</type>
+				<complement_type></complement_type>
+				<pk>1</pk>
+				<taille>20</taille>
+				<auto_increment>0</auto_increment>
+				<valeur>null</valeur>
+				<null>0</null>
+				<description></description>
+			</attribut>
+		</attributs>
+		<couleurs>
+			<fond_tete>#FFFFFF</fond_tete>
+			<ligne>#FF7000</ligne>
+			<fond_corps>#FFB57B</fond_corps>
+			<texte>black</texte>
+		</couleurs>
+		<description></description>
+	<coords>599.0/310.0</coords>
+	</table>
+</tables>
+<relations>
+	<relation id=8>
+		<nom>indicates</nom>
+		<attributs>
+		</attributs>
+		<liens>
+			<lien id=0>
+				<table_lien>Mission</table_lien>
+				<n_lien>0.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+			<lien id=1>
+				<table_lien>Hideout</table_lien>
+				<n_lien>0.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<liens>#FF7000</liens>
+			<texte>black</texte>
+		</couleurs>
+		</liens>
+	<coords>609.0/616.0</coords>
+	</relation>
+	<relation id=7>
+		<nom>recommends</nom>
+		<attributs>
+		</attributs>
+		<liens>
+			<lien id=0>
+				<table_lien>Contact</table_lien>
+				<n_lien>0.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+			<lien id=1>
+				<table_lien>Mission</table_lien>
+				<n_lien>1.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<liens>#FF7000</liens>
+			<texte>black</texte>
+		</couleurs>
+		</liens>
+	<coords>1256.0/617.0</coords>
+	</relation>
+	<relation id=16>
+		<nom>require</nom>
+		<attributs>
+		</attributs>
+		<liens>
+			<lien id=0>
+				<table_lien>Mission</table_lien>
+				<n_lien>1.1</n_lien>
+				<relatif>0</relatif>
+			</lien>
+			<lien id=1>
+				<table_lien>Specialty</table_lien>
+				<n_lien>0.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<liens>#FF7000</liens>
+			<texte>black</texte>
+		</couleurs>
+		</liens>
+	<coords>1281.0/378.0</coords>
+	</relation>
+	<relation id=18>
+		<nom>is actually</nom>
+		<attributs>
+		</attributs>
+		<liens>
+			<lien id=0>
+				<table_lien>Mission_status</table_lien>
+				<n_lien>0.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+			<lien id=1>
+				<table_lien>Mission</table_lien>
+				<n_lien>1.1</n_lien>
+				<relatif>0</relatif>
+			</lien>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<liens>#FF7000</liens>
+			<texte>black</texte>
+		</couleurs>
+		</liens>
+	<coords>591.0/445.0</coords>
+	</relation>
+	<relation id=11>
+		<nom>is competent in</nom>
+		<attributs>
+		</attributs>
+		<liens>
+			<lien id=0>
+				<table_lien>Agent</table_lien>
+				<n_lien>1.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+			<lien id=1>
+				<table_lien>Specialty</table_lien>
+				<n_lien>0.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<liens>#FF7000</liens>
+			<texte>black</texte>
+		</couleurs>
+		</liens>
+	<coords>1260.0/193.0</coords>
+	</relation>
+	<relation id=9>
+		<nom>concern</nom>
+		<attributs>
+		</attributs>
+		<liens>
+			<lien id=0>
+				<table_lien>Target</table_lien>
+				<n_lien>0.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+			<lien id=1>
+				<table_lien>Mission</table_lien>
+				<n_lien>1.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<liens>#FF7000</liens>
+			<texte>black</texte>
+		</couleurs>
+		</liens>
+	<coords>919.0/819.0</coords>
+	</relation>
+	<relation id=13>
+		<nom>is of</nom>
+		<attributs>
+		</attributs>
+		<liens>
+			<lien id=0>
+				<table_lien>Hideout</table_lien>
+				<n_lien>1.1</n_lien>
+				<relatif>0</relatif>
+			</lien>
+			<lien id=1>
+				<table_lien>Hideout_type</table_lien>
+				<n_lien>0.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<liens>#FF7000</liens>
+			<texte>black</texte>
+		</couleurs>
+		</liens>
+	<coords>300.0/747.0</coords>
+	</relation>
+	<relation id=15>
+		<nom>has</nom>
+		<attributs>
+		</attributs>
+		<liens>
+			<lien id=0>
+				<table_lien>Mission</table_lien>
+				<n_lien>1.1</n_lien>
+				<relatif>0</relatif>
+			</lien>
+			<lien id=1>
+				<table_lien>Mission_type</table_lien>
+				<n_lien>0.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<liens>#FF7000</liens>
+			<texte>black</texte>
+		</couleurs>
+		</liens>
+	<coords>1154.0/825.0</coords>
+	</relation>
+	<relation id=6>
+		<nom>in charge of</nom>
+		<attributs>
+		</attributs>
+		<liens>
+			<lien id=0>
+				<table_lien>Mission</table_lien>
+				<n_lien>1.n</n_lien>
+				<relatif>0</relatif>
+			</lien>
+			<lien id=1>
+				<table_lien>Agent</table_lien>
+				<n_lien>0.1</n_lien>
+				<relatif>0</relatif>
+			</lien>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<liens>#FF7000</liens>
+			<texte>black</texte>
+		</couleurs>
+		</liens>
+	<coords>917.0/408.0</coords>
+	</relation>
+</relations>
+<etiquettes>
+	<etiquette id=24>
+		<nom>Constraint_3</nom>
+		<texte>A Mission requires only contacts of the same country.
+</texte>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<texte>black</texte>
+		</couleurs>
+		<coords>1543.0/501.0</coords>
+	</etiquette>
+	<etiquette id=25>
+		<nom>Etiquette_4</nom>
+		<texte>An Agent can't be in charge of a target of the same nationality.
+</texte>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<texte>black</texte>
+		</couleurs>
+		<coords>1065.0/110.0</coords>
+	</etiquette>
+	<etiquette id=26>
+		<nom>Constraint_2</nom>
+		<texte>A Mission requires at least 1x Agent with the require specialty.
+</texte>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<texte>black</texte>
+		</couleurs>
+		<coords>1596.0/124.0</coords>
+	</etiquette>
+	<etiquette id=27>
+		<nom>Constraint_1</nom>
+		<texte>An Hideout must be in the same country as a Mission.
+</texte>
+		<couleurs>
+			<fond>#FFE3CD</fond>
+			<ligne>#FF7000</ligne>
+			<texte>black</texte>
+		</couleurs>
+		<coords>387.0/472.0</coords>
+	</etiquette>
+</etiquettes>
+<heritages>
+</heritages>
+
