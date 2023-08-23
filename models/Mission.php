@@ -69,7 +69,7 @@ class Mission {
     }
     public function getStartDateLong(): string {
         $datetime = $this->startDate;
-        $date = date('l, j F Y', strtotime($datetime));
+        $date = date('l, j M Y', strtotime($datetime));
         $hour = date('h:i a', strtotime($datetime));
         return $date.' at '.$hour;
     }
@@ -80,7 +80,7 @@ class Mission {
     }
     public function getEndDateLong(): string {
         $datetime = $this->endDate;
-        $date = date('l, j F Y', strtotime($datetime));
+        $date = date('l, j M Y', strtotime($datetime));
         $hour = date('h:i a', strtotime($datetime));
         return $date.' at '.$hour;
     }
