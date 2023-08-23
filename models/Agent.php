@@ -5,16 +5,17 @@ class Agent {
     private string $code;
     private string $firstName;
     private string $lastName;
-    private int $birthday;
+    private string $birthday;
     private string $nationality;
     private string $missionUuid;
 
+    /*
     public function __construct(
         string $uuid,
         string $code,
         string $firstName,
         string $lastName,
-        int $birthday,
+        string $birthday,
         string $nationality,
         string $missionUuid
         ) {
@@ -26,6 +27,7 @@ class Agent {
         $this->nationality =$nationality;
         $this->missionUuid = $missionUuid;
     }
+    */
 
     public function getUuid(): string {
         return $this->uuid;
@@ -40,8 +42,8 @@ class Agent {
         return $this->lastName;
     }
     public function getBirthday(): string {
-        $timestamp = $this->birthday;
-        $date = date('Y-m-d', $timestamp);
+        $datetime = $this->birthday;
+        $date = date('Y-m-d', strtotime($datetime));
         return $date;
     }
     public function getAge(): int {
