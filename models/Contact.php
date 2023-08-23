@@ -5,9 +5,10 @@ class Contact {
     private string $codeName;
     private string $firstName;
     private string $lastName;
-    private int $birthday;
+    private string $birthday;
     private string $nationality;
 
+    /*
     public function __construct(
         string $uuid,
         string $codeName,
@@ -23,6 +24,7 @@ class Contact {
         $this->birthday = $birthday;
         $this->nationality =$nationality;
     }
+    */
 
     public function getUuid(): string {
         return $this->uuid;
@@ -37,8 +39,8 @@ class Contact {
         return $this->lastName;
     }
     public function getBirthday(): string {
-        $timestamp = $this->birthday;
-        $date = date('Y-m-d', $timestamp);
+        $datetime = $this->birthday;
+        $date = date('Y-m-d', strtotime($datetime));
         return $date;
     }
     public function getAge(): int {
