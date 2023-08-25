@@ -89,12 +89,12 @@ try {
 </head>
 
 <body>
-  <div class="bg-dark">
+  <div class="d-flex flex-column justify-content-between min-vh-100 bg-dark">
     <header>
       <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container">
-          <span class="navbar-brand mb-0 h1">KGB : mission management</span>
-          <button class="btn btn-sm btn-outline-secondary" type="button">Login</button>
+          <a class="navbar-brand mb-0 h1 font-monospace" href="index.php">KGB : missions</a>
+          <button class="btn btn-sm btn-outline-secondary font-monospace" type="button">Login</button>
         </div>
       </nav>
     </header>
@@ -102,7 +102,7 @@ try {
     <main>
       <div class="container text-light">
         <div class="row text-center m-5">
-          <h1>Mission List</h1>
+          <h1 class="text-uppercase font-monospace">Mission List</h1>
         </div>
         <div>
           <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -127,11 +127,11 @@ try {
               <?php foreach($missions as $mission): ?>
               <tr id="<?= $mission->getUuid() ?>" class="mission-table-row">
                 <?php
-                echo '<td>' . $mission->getCodeName() . '</td>';
-                echo '<td>' . $mission->getTitle() . '</td>';
-                echo '<td>' . $mission->getStatus() . '</td>';
-                echo '<td class="d-none d-md-table-cell">' . $mission->getStartDate() . '</td>';
-                echo '<td class="d-none d-md-table-cell">' . $mission->getEndDate() . '</td>';
+                echo '<td class="font-monospace">' . $mission->getCodeName() . '</td>';
+                echo '<td class="font-monospace">' . $mission->getTitle() . '</td>';
+                echo '<td class="font-monospace">' . $mission->getStatus() . '</td>';
+                echo '<td class="d-none d-md-table-cell font-monospace">' . $mission->getStartDate() . '</td>';
+                echo '<td class="d-none d-md-table-cell font-monospace">' . $mission->getEndDate() . '</td>';
                 ?>
               </tr>
               <?php endforeach ?>
@@ -165,7 +165,7 @@ try {
 
     <footer>
       <div class="container bg-dark text-center py-3">
-        <span class="text-light fw-medium ">KGB : mission management - Studi project</span>
+        <span class="text-light fw-medium font-monospace">KGB : mission management - Studi project</span>
       </div>
     </footer>
   </div>
