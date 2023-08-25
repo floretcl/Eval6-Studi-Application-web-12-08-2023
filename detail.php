@@ -178,7 +178,7 @@ try {
       <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container">
           <a class="navbar-brand mb-0 h1 font-monospace" href="index.php">KGB : missions</a>
-          <button class="btn btn-sm btn-outline-secondary font-monospace" type="button">Login</button>
+          <a class="btn btn-sm btn-outline-secondary font-monospace" href="login.php">Login</a>
         </div>
       </nav>
     </header>
