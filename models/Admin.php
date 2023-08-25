@@ -35,8 +35,8 @@ class Admin {
     public function getEmail(): string {
         return $this->email;
     }
-    public function getPasssword(): string {
-        return $this->lastName;
+    public function getPassword(): string {
+        return $this->password;
     }
     public function getCreationDate(): string {
         $timestamp = $this->creationDate;
