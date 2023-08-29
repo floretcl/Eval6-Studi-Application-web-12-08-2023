@@ -79,13 +79,13 @@ try {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex, nofollow">
 
-  <meta name="description" content="KGB mission management: list | Studi project | Clément FLORET" />
+  <meta name="description" content="KGB mission management: mission list, Studi project, Clément FLORET" />
 
   <!-- BOOTSTRAP CSS, CSS -->
-  <link rel="stylesheet" type="text/css" href="./assets/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 
-  <title>KGB : mission management</title>
+  <title>KGB : mission management | mission list</title>
 </head>
 
 <body>
@@ -101,7 +101,7 @@ try {
 
     <main>
       <div class="container text-light">
-        <div class="row text-center m-5">
+        <div class="row text-center my-5">
           <h1 class="text-uppercase font-monospace">Mission List</h1>
         </div>
         <div>
@@ -125,7 +125,7 @@ try {
             </thead>
             <tbody>
               <?php foreach($missions as $mission): ?>
-              <tr id="<?= $mission->getUuid() ?>" class="mission-table-row">
+              <tr id="<?= $mission->getUuid() ?>" class="pointer-table-row">
                 <?php
                 echo '<td class="font-monospace">' . $mission->getCodeName() . '</td>';
                 echo '<td class="font-monospace">' . $mission->getTitle() . '</td>';
@@ -170,8 +170,8 @@ try {
     </footer>
   </div>
   <!-- BOOTSTRAP JS, JS -->
-  <script src="./assets/bootstrap/dist/js/bootstrap.bundle.js"></script>
-  <script src="./assets/js/script.js"></script>
+  <script src="./assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="./assets/js/index.js"></script>
 </body>
 
 </html>

@@ -163,13 +163,13 @@ try {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex, nofollow">
 
-  <meta name="description" content="KGB mission management: mission detail | Studi project | Clément FLORET" />
+  <meta name="description" content="KGB mission management: mission detail, Studi project, Clément FLORET" />
 
   <!-- BOOTSTRAP CSS, CSS -->
-  <link rel="stylesheet" type="text/css" href="./assets/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 
-  <title>KGB : mission management</title>
+  <title>KGB : mission management | mission details</title>
 </head>
 
 <body>
@@ -185,7 +185,7 @@ try {
 
     <main>
       <div class="container text-light">
-        <div class="text-center m-5">
+        <div class="text-center my-5">
           <h1 class="text-uppercase font-monospace"><?= $mission->getCodeName(); ?></h1>
         </div>
         <div>
@@ -396,7 +396,7 @@ try {
     </footer>
   </div>
   <!-- BOOTSTRAP JS, JS -->
-  <script src="./assets/bootstrap/dist/js/bootstrap.bundle.js"></script>
+  <script src="./assets/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 
 </html>
