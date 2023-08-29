@@ -1,7 +1,8 @@
 {
     "require": {
         "twbs/bootstrap": "5.3.1",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "twbs/bootstrap-icons": "^1.10"
     },
     "scripts": {
         "post-update-cmd": [
