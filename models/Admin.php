@@ -5,15 +5,16 @@ class Admin {
     private string $lastName;
     private string $email;
     private string $password;
-    private int $creationDate;
+    private string $creationDate;
 
+    /*
     public function __construct(
         string $uuid,
         string $firstName,
         string $lastName,
         string $email,
         string $password,
-        int $creationDate,
+        string $creationDate,
         ) {
         $this->uuid = $uuid;
         $this->firstName = $firstName;
@@ -22,8 +23,9 @@ class Admin {
         $this->password = $password;
         $this->creationDate = $creationDate;
     }
+    */
 
-    public function getUuid () {
+    public function getUuid (): string {
         return $this->uuid;
     }
     public function getFirstName(): string {
@@ -40,7 +42,7 @@ class Admin {
     }
     public function getCreationDate(): string {
         $timestamp = $this->creationDate;
-        $date = date('Y-m-d', $timestamp);
+        $date = date('Y-m-d H:i', strtotime($timestamp));
         return $date;
     }
 }

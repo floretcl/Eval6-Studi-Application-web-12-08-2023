@@ -14,7 +14,7 @@ class Contact {
         string $codeName,
         string $firstName,
         string $lastName,
-        int $birthday,
+        string $birthday,
         string $nationality
         ) {
         $this->uuid = $uuid;

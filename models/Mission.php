@@ -50,6 +50,11 @@ class Mission {
     public function getDescription(): string {
         return $this->description;
     }
+    public function getDescriptionShort(): string {
+        $desc = $this->description;
+        $shortDesc = substr($desc, 0, 18);
+        return $shortDesc . '...';
+    }
     public function getCountry(): string {
         return $this->country;
     }
