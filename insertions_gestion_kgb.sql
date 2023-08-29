@@ -7,36 +7,20 @@ INSERT INTO Admin (
     'Firstname-Admin1',
     'Name-Admin1',
     'admin1@email.com',
-    HEX(AES_ENCRYPT(
-        'password1', 
-        UNHEX(SHA2('passphrase-admin-1',512)), 
-        '',
-        'hkdf',
-        RANDOM_BYTES(8)
-    ))
+    '$2a$12$DZJtPG6jzdQg0pSdgzkbve7GCJdpe1pRvgvxozwHlL/Qr4pXWITYW'
 ), (
     'Firstname-Admin2',
     'Name-Admin2',
     'admin2@email.com',
-    HEX(AES_ENCRYPT(
-        'password2', 
-        UNHEX(SHA2('passphrase-admin-2',512)), 
-        '',
-        'hkdf',
-        RANDOM_BYTES(8)
-    ))
+    '$2a$12$fFFMMtlz79GFEJp2Mtv8H.rvwx1EhXZHAg6YZsO5LmRf7DpX0bpe6'
 ), (
     'Firstname-Admin3',
     'Name-Admin3',
     'admin3@email.com',
-    HEX(AES_ENCRYPT(
-        'password3', 
-        UNHEX(SHA2('passphrase-admin-3',512)), 
-        '',
-        'hkdf',
-        RANDOM_BYTES(8)
-    ))
+    '$2a$12$ujjM58Qcd/F5XnNzORwEpeUqi7.OtShwiL1tGvhT/Y68NndW37y4u'
 );
+
+-- Passwords : password-admin-1 password-admin-2 password-admin-3
 
 INSERT INTO Specialty (
     specialty_name
