@@ -4,7 +4,7 @@ use Dotenv\Dotenv;
 require __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/models/Mission.php';
 
-// Loading dotenv to load .env
+// Loading dotenv to load .env const
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -79,13 +79,13 @@ try {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex, nofollow">
 
-  <meta name="description" content="KGB mission management: mission list, Studi project, Clément FLORET" />
+  <meta name="description" content="KGB missions : mission list, Studi project, Clément FLORET" />
 
   <!-- BOOTSTRAP CSS, CSS -->
   <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 
-  <title>KGB : mission management | mission list</title>
+  <title>KGB : missions | mission list</title>
 </head>
 
 <body>
@@ -93,8 +93,8 @@ try {
     <header>
       <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container">
-          <a class="navbar-brand mb-0 h1 font-monospace" href="index.php">KGB : missions</a>
-          <a class="btn btn-sm btn-outline-secondary font-monospace" href="login.php">Login</a>
+          <a class="navbar-brand mb-0 h1 font-monospace" href="./index.php">KGB : missions</a>
+          <a class="btn btn-sm btn-outline-secondary font-monospace" href="./login.php">Login</a>
         </div>
       </nav>
     </header>
@@ -125,7 +125,7 @@ try {
             </thead>
             <tbody>
               <?php foreach($missions as $mission): ?>
-              <tr id="<?= $mission->getUuid() ?>" class="pointer-table-row">
+              <tr id="<?= $mission->getUuid() ?>" class="pointer-table-row mission-table-row">
                 <?php
                 echo '<td class="font-monospace">' . $mission->getCodeName() . '</td>';
                 echo '<td class="font-monospace">' . $mission->getTitle() . '</td>';

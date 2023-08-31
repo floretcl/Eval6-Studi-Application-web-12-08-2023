@@ -9,7 +9,7 @@ require_once __DIR__ . '/models/Hideout.php';
 require_once __DIR__ . '/models/Contact.php';
 require_once __DIR__ . '/models/Target.php';
 
-// Loading dotenv to load .env
+// Loading dotenv to load .env const
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -163,13 +163,13 @@ try {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex, nofollow">
 
-  <meta name="description" content="KGB mission management: mission detail, Studi project, Clément FLORET" />
+  <meta name="description" content="KGB missions : mission detail, Studi project, Clément FLORET" />
 
   <!-- BOOTSTRAP CSS, CSS -->
   <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 
-  <title>KGB : mission management | mission details</title>
+  <title>KGB : missions | mission details</title>
 </head>
 
 <body>
@@ -177,8 +177,8 @@ try {
     <header>
       <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container">
-          <a class="navbar-brand mb-0 h1 font-monospace" href="index.php">KGB : missions</a>
-          <a class="btn btn-sm btn-outline-secondary font-monospace" href="login.php">Login</a>
+          <a class="navbar-brand mb-0 h1 font-monospace" href="./index.php">KGB : missions</a>
+          <a class="btn btn-sm btn-outline-secondary font-monospace" href="./login.php">Login</a>
         </div>
       </nav>
     </header>
@@ -191,7 +191,7 @@ try {
         <div>
           <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a class="link-secondary" href="index.php">Missions</a></li>
+              <li class="breadcrumb-item"><a class="link-secondary" href="./index.php">Missions</a></li>
               <li class="breadcrumb-item active text-light" aria-current="page">Details</li>
             </ol>
           </nav>
