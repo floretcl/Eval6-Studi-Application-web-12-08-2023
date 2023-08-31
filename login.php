@@ -5,9 +5,13 @@ use Dotenv\Dotenv;
 require __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/models/Admin.php';
 
-// Loading dotenv to load .env
+// Loading dotenv to load .env const
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
+
+// Reset session and session cookie
+$_SESSION = [];
+setcookie("PHPSESSID", "", time() - 3600);
 
 // Database variables
 $dsn = 'mysql:dbname=' . $_ENV['database_name'] . ';host=' . $_ENV['database_host'] . ';port=3306';
@@ -71,13 +75,13 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex, nofollow">
 
-  <meta name="description" content="KGB mission: login, Studi project, Clément FLORET" />
+  <meta name="description" content="KGB missions : login, Studi project, Clément FLORET" />
 
   <!-- BOOTSTRAP CSS, CSS -->
   <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 
-  <title>KGB : mission management | login</title>
+  <title>KGB : missions | login</title>
 </head>
 
 <body>
@@ -85,8 +89,8 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
     <header>
     <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container">
-          <a class="navbar-brand mb-0 h1 font-monospace" href="index.php">KGB : missions</a>
-          <a class="btn btn-sm btn-outline-secondary font-monospace" href="login.php">Login</a>
+          <a class="navbar-brand mb-0 h1 font-monospace" href="./index.php">KGB : missions</a>
+          <a class="btn btn-sm btn-outline-secondary font-monospace" href="./login.php">Login</a>
         </div>
       </nav>
     </header>
@@ -101,8 +105,8 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
           <div class="col-10 col-sm-9 col-md-7 col-lg-5">
             <form class="form" action="" method="post">
             <?php if (isset($message)) : ?>
-            <div class="alert <?= $message == 'Valid identifiers' ? 'alert-success' : 'alert-danger' ?> d-flex align-items-center" role="alert">
-            <?php if ($message == 'Valid identifiers') : ?>
+              <div class="alert <?= $message == 'Valid identifiers' ? 'alert-success' : 'alert-danger' ?> d-flex align-items-center" role="alert">
+              <?php if ($message == 'Valid identifiers') : ?>
                 <img src="./assets/bootstrap/icons/check-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
               <?php else : ?>
                 <img src="./assets/bootstrap/icons/exclamation-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
