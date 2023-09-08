@@ -106,10 +106,10 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
             <form class="form" action="" method="post">
             <?php if (isset($message)) : ?>
               <div class="alert <?= $message == 'Valid identifiers' ? 'alert-success' : 'alert-danger' ?> d-flex align-items-center" role="alert">
-              <?php if ($message == 'Valid identifiers') : ?>
-                <img src="./assets/bootstrap/icons/check-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
-              <?php else : ?>
-                <img src="./assets/bootstrap/icons/exclamation-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
+            <?php if ($message == 'Valid identifiers') : ?>
+              <img src="./assets/bootstrap/icons/check-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
+            <?php else : ?>
+              <img src="./assets/bootstrap/icons/exclamation-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
             <?php endif ?>
               <div>
                 <?= $message ?>
@@ -135,7 +135,7 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
 
     <footer>
       <div class="container bg-dark text-center py-3">
-        <span class="text-light fw-medium font-monospace">KGB : mission management - Studi project</span>
+        <span class="text-light fw-medium font-monospace">KGB : mission management - Studi project</span>
       </div>
     </footer>
   </div>

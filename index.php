@@ -104,15 +104,8 @@ try {
         <div class="row text-center my-5">
           <h1 class="text-uppercase font-monospace">Mission List</h1>
         </div>
-        <div>
-          <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item active text-light">Missions</li>
-            </ol>
-          </nav>
-        </div>
         <!-- MISSION LIST TABLE -->
-        <div class="row pt-2 pb-4 mt-2 mb-3">
+        <div class="row pt-2 pb-2 mt-2 mb-4">
           <table class="table table-dark table-striped table-hover">
             <thead>
               <tr>
@@ -165,7 +158,7 @@ try {
 
     <footer>
       <div class="container bg-dark text-center py-3">
-        <span class="text-light fw-medium font-monospace">KGB : mission management - Studi project</span>
+        <span class="text-light fw-medium font-monospace">KGB : mission management - Studi project</span>
       </div>
     </footer>
   </div>

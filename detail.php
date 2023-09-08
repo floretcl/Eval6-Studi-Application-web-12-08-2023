@@ -185,7 +185,7 @@ try {
 
     <main>
       <div class="container text-light">
-        <div class="text-center my-5">
+        <div class="row text-center my-5">
           <h1 class="text-uppercase font-monospace"><?= $mission->getCodeName(); ?></h1>
         </div>
         <div>
@@ -391,7 +391,7 @@ try {
 
     <footer>
       <div class="container bg-dark text-center py-3">
-        <span class="text-light fw-medium font-monospace">KGB : mission management - Studi project</span>
+        <span class="text-light fw-medium font-monospace">KGB : mission management - Studi project</span>
       </div>
     </footer>
   </div>
