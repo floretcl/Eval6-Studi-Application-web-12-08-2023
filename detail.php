@@ -46,7 +46,7 @@ try {
     error_log('Error : ' . $error);
   }
 } catch (PDOException $e) {
-  echo "error: unable to display mission informations";
+  echo "error: unable to display mission details";
 }
 
 try {
@@ -72,7 +72,7 @@ try {
     error_log('Error : ' . $error);
   }
 } catch (PDOException $e) {
-  echo "error: unable to display agents informations";
+  echo "error: unable to display agents details";
 }
 
 try {
@@ -98,11 +98,11 @@ try {
     error_log('Error : ' . $error);
   }
 } catch (PDOException $e) {
-  echo "error: unable to display hideouts informations";
+  echo "error: unable to display hideouts details";
 }
 
 try {
-  $sql = 'SELECT 
+  $sql = 'SELECT
     Contact.contact_uuid AS uuid,
     Contact.contact_code_name AS codeName,
     Contact.contact_firstname AS firstName,
@@ -124,7 +124,7 @@ try {
     error_log('Error : ' . $error);
   }
 } catch (PDOException $e) {
-  echo "error: unable to display contacts informations";
+  echo "error: unable to display contacts details";
 }
 
 try {
@@ -150,7 +150,7 @@ try {
     error_log('Error : ' . $error);
   }
 } catch (PDOException $e) {
-  echo "error: unable to display targets informations";
+  echo "error: unable to display targets details";
 }
 ?>
 
