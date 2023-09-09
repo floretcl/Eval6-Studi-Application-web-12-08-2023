@@ -86,7 +86,7 @@ try {
     Admin.admin_firstname AS firstName,
     Admin.admin_lastname AS lastName,
     Admin.admin_email AS email,
-    Admin.admin_password AS password,
+    Admin.admin_password AS passwordHash,
     Admin.admin_creation_date AS creationDate
     FROM Admin
     WHERE admin_email LIKE :search
@@ -106,8 +106,10 @@ try {
   echo "error: unable to display the admin list";
 }
 
-if ($reload) {
-  header("Refresh:0");
+if (isset($reload)) {
+  if ($reload) {
+    header("Refresh:0");
+  }
 }
 ?>
 
