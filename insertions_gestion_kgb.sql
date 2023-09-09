@@ -4,19 +4,19 @@ INSERT INTO Admin (
     admin_email,
     admin_password
 ) VALUES (
-    'Firstname-Admin1',
-    'Name-Admin1',
-    'admin1@email.com',
+    'Lucian',
+    'Mclean',
+    'lucian-mclean@email.com',
     '$2a$12$DZJtPG6jzdQg0pSdgzkbve7GCJdpe1pRvgvxozwHlL/Qr4pXWITYW'
 ), (
-    'Firstname-Admin2',
-    'Name-Admin2',
-    'admin2@email.com',
+    'Shania',
+    'Wood',
+    'shaniawood@email.com',
     '$2a$12$fFFMMtlz79GFEJp2Mtv8H.rvwx1EhXZHAg6YZsO5LmRf7DpX0bpe6'
 ), (
-    'Firstname-Admin3',
-    'Name-Admin3',
-    'admin3@email.com',
+    'Tianna',
+    'Rangel',
+    'tianna.rangel@email.com',
     '$2a$12$ujjM58Qcd/F5XnNzORwEpeUqi7.OtShwiL1tGvhT/Y68NndW37y4u'
 );
 
