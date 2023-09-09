@@ -31,7 +31,7 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
     Admin.admin_firstname AS firstName,
     Admin.admin_lastname AS lastName,
     Admin.admin_email AS email,
-    Admin.admin_password AS password,
+    Admin.admin_password AS passwordHash,
     Admin.admin_creation_date AS creationDate
     FROM Admin WHERE admin_email = :email';
     $statement = $pdo->prepare($sql);
@@ -40,7 +40,7 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
       $message = "Error: invalid identifiers";
       while ($admin = $statement->fetchObject('Admin')) {
         if (isset($admin)) {
-          $hash = $admin->getPassword();
+          $hash = $admin->getPasswordHash();
           $options = array('cost' => 12);
           if (password_verify($password, $hash)) {
             $message = "Valid identifiers";

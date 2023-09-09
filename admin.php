@@ -211,7 +211,7 @@ try {
     Admin.admin_firstname AS firstName,
     Admin.admin_lastname AS lastName,
     Admin.admin_email AS email,
-    Admin.admin_password AS password,
+    Admin.admin_password AS passwordHash,
     Admin.admin_creation_date AS creationDate
     FROM Admin
     ORDER BY admin_creation_date';
