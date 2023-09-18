@@ -35,7 +35,7 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
     Admin.admin_creation_date AS creationDate
     FROM Admin WHERE admin_email = :email';
     $statement = $pdo->prepare($sql);
-    $statement->bindValue(':email', $email, PDO::PARAM_STR);
+    $statement->bindParam(':email', $email, PDO::PARAM_STR);
     if ($statement->execute()) {
       $message = "Error: invalid identifiers";
       while ($admin = $statement->fetchObject('Admin')) {
@@ -106,15 +106,15 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
             <form class="form" action="" method="post">
             <?php if (isset($message)) : ?>
               <div class="alert <?= $message == 'Valid identifiers' ? 'alert-success' : 'alert-danger' ?> d-flex align-items-center" role="alert">
-            <?php if ($message == 'Valid identifiers') : ?>
-              <img src="./assets/bootstrap/icons/check-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
-            <?php else : ?>
-              <img src="./assets/bootstrap/icons/exclamation-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
-            <?php endif ?>
-              <div>
-                <?= $message ?>
+              <?php if ($message == 'Valid identifiers') : ?>
+                <img src="./assets/bootstrap/icons/check-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
+              <?php else : ?>
+                <img src="./assets/bootstrap/icons/exclamation-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
+              <?php endif ?>
+                <div>
+                  <?= $message ?>
+                </div>
               </div>
-            </div>
             <?php endif ?>
               <div class="mb-3">
                 <label class="form-label" for="login-form-email">Email</label>

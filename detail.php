@@ -37,7 +37,7 @@ try {
     INNER JOIN Mission_type ON Mission_type.type_id = Mission.mission_type)
     WHERE mission_uuid = :id';
   $statement = $pdo->prepare($sql);
-  $statement->bindValue(':id', $_GET['id'], PDO::PARAM_STR);
+  $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
   if ($statement->execute()) {
     $mission = $statement->fetchObject('Mission');
   } else {
@@ -61,7 +61,7 @@ try {
     FROM Agent
     WHERE agent_mission_uuid = :id';
   $statement = $pdo->prepare($sql);
-  $statement->bindValue(':id', $_GET['id'], PDO::PARAM_STR);
+  $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
   if ($statement->execute()) {
     while ($agent = $statement->fetchObject('Agent')) {
       $agents[] = $agent;
@@ -87,7 +87,7 @@ try {
     INNER JOIN Hideout_type ON Hideout_type.hideout_type_id = Hideout.hideout_type)
     WHERE mission_uuid = :id';
   $statement = $pdo->prepare($sql);
-  $statement->bindValue(':id', $_GET['id'], PDO::PARAM_STR);
+  $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
   if ($statement->execute()) {
     while ($hideout = $statement->fetchObject('Hideout')) {
       $hideouts[] = $hideout;
@@ -113,7 +113,7 @@ try {
     INNER JOIN Contact ON Contact.contact_uuid = Mission_Contact.contact_uuid
     WHERE mission_uuid = :id';
   $statement = $pdo->prepare($sql);
-  $statement->bindValue(':id', $_GET['id'], PDO::PARAM_STR);
+  $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
   if ($statement->execute()) {
     while ($contact = $statement->fetchObject('Contact')) {
       $contacts[] = $contact;
@@ -139,7 +139,7 @@ try {
     INNER JOIN Target ON Target.target_uuid = Mission_Target.target_uuid
     WHERE mission_uuid = :id';
   $statement = $pdo->prepare($sql);
-  $statement->bindValue(':id', $_GET['id'], PDO::PARAM_STR);
+  $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
   if ($statement->execute()) {
     while ($target = $statement->fetchObject('Target')) {
       $targets[] = $target;

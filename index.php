@@ -54,8 +54,8 @@ try {
     ORDER BY Mission.mission_status
     LIMIT :start, :perPage';
   $statement = $pdo->prepare($sql);
-  $statement->bindValue(':start', $start, PDO::PARAM_INT);
-  $statement->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+  $statement->bindParam(':start', $start, PDO::PARAM_INT);
+  $statement->bindParam(':perPage', $perPage, PDO::PARAM_INT);
   if ($statement->execute()) {
     while ($mission = $statement->fetchObject('Mission')) {
       $missions[] = $mission;
@@ -136,17 +136,17 @@ try {
           <nav aria-label="Missions page navigation">
             <ul class="pagination">
               <li class="page-item <?= $currentPage == 1 ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="./?page=<?= $currentPage - 1 ?>" aria-label="Previous">
+                <a class="page-link text-dark" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
               <?php for($page = 1; $page <= $nbPages; $page++): ?>
                 <li class="page-item <?= $page == $currentPage ? 'active' : '' ?>">
-                  <a class="page-link <?= $page == $currentPage ? 'bg-secondary border-secondary' : '' ?> text-dark" href="./?page=<?= $page ?>"><?= $page ?></a>
+                  <a class="page-link <?= $page == $currentPage ? 'bg-secondary border-secondary' : '' ?> text-dark" href="?page=<?= $page ?>"><?= $page ?></a>
                 </li>
               <?php endfor ?>
               <li class="page-item <?= $currentPage == $nbPages ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="./?page=<?= $currentPage + 1 ?>" aria-label="Next">
+                <a class="page-link text-dark" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
