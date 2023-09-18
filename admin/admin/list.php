@@ -33,7 +33,7 @@ if (isset($_GET['search'])) {
   $search = '';
 }
 
-if (isset($_POST['delete'])) {
+if (($_SERVER['REQUEST_METHOD'] === 'POST')) {
   $uuid = $_POST['delete'];
   try {
     // Delete admin request
@@ -41,7 +41,7 @@ if (isset($_POST['delete'])) {
       FROM Admin 
       WHERE Admin.admin_uuid = :uuid';
     $statement = $pdo->prepare($sql);
-    $statement->bindValue(':uuid', $uuid, PDO::PARAM_STR);
+    $statement->bindParam(':uuid', $uuid, PDO::PARAM_STR);
     if ($statement->execute()) {
       $reload = true;
     } else {
@@ -50,7 +50,7 @@ if (isset($_POST['delete'])) {
       error_log('Error : ' . $error);
     }
   } catch (PDOException $e) {
-    echo "error: unable to delete admin";
+    $message = "Error: unable to delete admin";
   }
 }
 
@@ -76,7 +76,7 @@ try {
     error_log('Error : ' . $error);
   }
 } catch (PDOException $e) {
-  echo "error: unable to get number of admins";
+  $message = "Error: unable to get number of admins";
 }
 
 try {
@@ -90,9 +90,12 @@ try {
     Admin.admin_creation_date AS creationDate
     FROM Admin
     WHERE admin_email LIKE :search
-    ORDER BY admin_creation_date';
+    ORDER BY admin_creation_date
+    LIMIT :start, :perPage';
   $statement = $pdo->prepare($sql);
   $statement->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+  $statement->bindParam(':start', $start, PDO::PARAM_INT);
+  $statement->bindParam(':perPage', $perPage, PDO::PARAM_INT);
   if ($statement->execute()) {
     while ($admin = $statement->fetchObject('Admin')) {
       $admins[] = $admin;
@@ -103,7 +106,7 @@ try {
     error_log('Error : ' . $error);
   }
 } catch (PDOException $e) {
-  echo "error: unable to display the admin list";
+  $message = "Error: unable to display the admin list";
 }
 
 if (isset($reload)) {
@@ -153,7 +156,15 @@ if (isset($reload)) {
       <div class="container-fluid container-sm text-light">
         <div class="text-center my-5">
           <h1 class="text-uppercase font-monospace">Administration</h1>
-          <h2 class="text-uppercase font-monospace">Admins</h2>
+          <h2 class="text-uppercase font-monospace">Admin list</h2>
+        </div>
+        <div>
+          <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a class="link-secondary" href="../../admin.php">Home</a></li>
+              <li class="breadcrumb-item active text-light" aria-current="page">Admin list</li>
+            </ol>
+          </nav>
         </div>
         <!-- ADMIN INTERFACE -->
         <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) : ?>
@@ -168,11 +179,19 @@ if (isset($reload)) {
             </form>
           </div>
           <div class="col-10 col-sm-5 col-md-6 col-lg-7">
-            <button type="button" id="add-button" class="btn btn-secondary me-2">Add</button>
+            <a href="./add.php" class="btn btn-secondary me-2">Add</a>
             <button type="button" id="delete-button" class="btn btn-danger me-2 disabled" data-bs-toggle="modal" data-bs-target="#delete-modal">Delete</button>
           </div>
         </div>
         <div class="row mt-2 pb-2 mb-4 overflow-x-scroll">
+          <?php if (isset($message)) : ?>
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+              <img src="../../assets/bootstrap/icons/exclamation-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
+              <div>
+                <?= $message ?>
+              </div>
+            </div>
+          <?php endif ?>
           <table class="table table-dark table-striped table-hover">
             <thead>
               <tr>
@@ -205,14 +224,14 @@ if (isset($reload)) {
           </table>
         </div>
         <div class="modal text-dark" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label" aria-hidden="true">
-          <div class="modal-dialog">
+          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <p>Do you really want to delete this item(s)?</p>
+                <p>Do you really want to delete those admins?</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -226,17 +245,17 @@ if (isset($reload)) {
           <nav aria-label="Admins page navigation">
             <ul class="pagination">
               <li class="page-item <?= $currentPage == 1 ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="./?page=<?= $currentPage - 1 ?>" aria-label="Previous">
+                <a class="page-link text-dark" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
               <?php for($page = 1; $page <= $nbPages; $page++): ?>
                 <li class="page-item <?= $page == $currentPage ? 'active' : '' ?>">
-                  <a class="page-link <?= $page == $currentPage ? 'bg-secondary border-secondary' : '' ?> text-dark" href="./?page=<?= $page ?>"><?= $page ?></a>
+                  <a class="page-link <?= $page == $currentPage ? 'bg-secondary border-secondary' : '' ?> text-dark" href="?page=<?= $page ?>"><?= $page ?></a>
                 </li>
               <?php endfor ?>
               <li class="page-item <?= $currentPage == $nbPages ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="./?page=<?= $currentPage + 1 ?>" aria-label="Next">
+                <a class="page-link text-dark" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
@@ -255,7 +274,7 @@ if (isset($reload)) {
   </div>
   <!-- BOOTSTRAP JS, JS -->
   <script src="../../assets/bootstrap/js/bootstrap.bundle.js"></script>
-  <script src="../../assets/js/list.js"></script>
+  <script src="../../assets/js/admin/list.js"></script>
 </body>
 
 </html>
