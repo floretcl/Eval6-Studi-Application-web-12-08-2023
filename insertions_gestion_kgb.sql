@@ -7,20 +7,21 @@ INSERT INTO Admin (
     'Lucian',
     'Mclean',
     'lucian-mclean@email.com',
-    '$2a$12$DZJtPG6jzdQg0pSdgzkbve7GCJdpe1pRvgvxozwHlL/Qr4pXWITYW'
+    '$2a$12$UvM2bsv.lLA25L2N7Oc78uKuII1KI9uDnJ3//zI.HcEiVMGBCy0ne'
+    -- Password : N706{XK#2n-5!nSrbj,K
 ), (
     'Shania',
     'Wood',
     'shaniawood@email.com',
-    '$2a$12$fFFMMtlz79GFEJp2Mtv8H.rvwx1EhXZHAg6YZsO5LmRf7DpX0bpe6'
+    '$2a$12$t9RJW0oBPq4OAvxliUp6Pu3iM2GfCTilPhFTwmeUiaYDAifywLlvC'
+    -- Password : s<tRtP,(X5=so-5171OB
 ), (
     'Tianna',
     'Rangel',
     'tianna.rangel@email.com',
-    '$2a$12$ujjM58Qcd/F5XnNzORwEpeUqi7.OtShwiL1tGvhT/Y68NndW37y4u'
+    '$2a$12$2IUyHAFk4.37amxzht8dZuvZyctu.3blKAb3QmW.JtTXD0uZsKaH6'
+    -- Passwords : XI2roscS}[@@gSO980,1
 );
-
--- Passwords : password-admin-1 password-admin-2 password-admin-3
 
 INSERT INTO Specialty (
     specialty_name
