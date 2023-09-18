@@ -1,8 +1,8 @@
 <?php
 class Admin {
     private string $uuid;
-    private string $firstName;
-    private string $lastName;
+    private ?string $firstName;
+    private ?string $lastName;
     private string $email;
     private string $passwordHash;
     private string $creationDate;
@@ -28,10 +28,10 @@ class Admin {
     public function getUuid (): string {
         return $this->uuid;
     }
-    public function getFirstName(): string {
+    public function getFirstName() {
         return $this->firstName;
     }
-    public function getLastName(): string {
+    public function getLastName() {
         return $this->lastName;
     }
     public function getEmail(): string {

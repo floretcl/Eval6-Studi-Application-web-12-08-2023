@@ -7,7 +7,7 @@ class Mission {
     private string $description;
     private string $country;
     private string $type;
-    private string $specialty;
+    private ?string $specialty;
     private string $status;
     private string $startDate;
     private string $endDate;
@@ -61,7 +61,7 @@ class Mission {
     public function getType(): string {
         return $this->type;
     }
-    public function getSpecialty(): string {
+    public function getSpecialty() {
         return $this->specialty;
     }
     public function getStatus(): string {

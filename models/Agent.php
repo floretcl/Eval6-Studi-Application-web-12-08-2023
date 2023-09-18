@@ -3,11 +3,12 @@
 class Agent {
     private string $uuid;
     private string $code;
-    private string $firstName;
-    private string $lastName;
+    private ?string $firstName;
+    private ?string $lastName;
     private string $birthday;
     private string $nationality;
-    private string $missionUuid;
+    private ?string $missionUuid;
+    private string $specialty;
 
     /*
     public function __construct(
@@ -35,10 +36,10 @@ class Agent {
     public function getCode(): string {
         return $this->code;
     }
-    public function getFirstName(): string {
+    public function getFirstName() {
         return $this->firstName;
     }
-    public function getLastName(): string {
+    public function getLastName() {
         return $this->lastName;
     }
     public function getBirthday(): string {
@@ -55,7 +56,10 @@ class Agent {
     public function getNationality(): string {
         return $this->nationality;
     }
-    public function getMissionUuid(): string {
+    public function getMissionUuid() {
         return $this->missionUuid;
+    }
+    public function getSpecialty(): string {
+        return $this->specialty;
     }
 }

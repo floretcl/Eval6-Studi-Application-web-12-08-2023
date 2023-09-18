@@ -3,8 +3,8 @@
 class Contact {
     private string $uuid;
     private string $codeName;
-    private string $firstName;
-    private string $lastName;
+    private ?string $firstName;
+    private ?string $lastName;
     private string $birthday;
     private string $nationality;
 
@@ -32,10 +32,10 @@ class Contact {
     public function getCodeName(): string {
         return $this->codeName;
     }
-    public function getFirstName(): string {
+    public function getFirstName() {
         return $this->firstName;
     }
-    public function getLastName(): string {
+    public function getLastName() {
         return $this->lastName;
     }
     public function getBirthday(): string {
