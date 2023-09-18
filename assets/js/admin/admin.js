@@ -1,9 +1,9 @@
-const adminUuid = document.getElementById('admin-uuid');
+const adminUUID = document.getElementById('admin-uuid');
 const deleteConfirmButton = document.getElementById('delete-confirm-btn');
 
 deleteConfirmButton.addEventListener('click', () => {
     let formData = new FormData();
-    formData.append('delete', adminUuid.value)
+    formData.append('delete', adminUUID.value)
     fetch(`http://127.0.0.1:81/admin/admin/list.php`, {
     method: 'POST',
     mode: 'same-origin',

@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $agentLastname = $_POST['agent-lastname'];
   $agentBirthday = $_POST['agent-birthday'];
   $agentNationality = $_POST['agent-nationality'];
-  $agentMissionUuid = $_POST['agent-mission-uuid'];
+  $agentMissionUUID = $_POST['agent-mission-uuid'];
   $agentSpecialties = $_POST['agent-specialties']; 
 
   try {
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       :lastname,
       :birthday,
       :nationality,
-      :missionUuid
+      :missionUUID
     )';
     $statement = $pdo->prepare($sql);
     $statement->bindParam(':code', $agentCode, PDO::PARAM_STR);
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->bindParam(':lastname', $agentLastname, PDO::PARAM_STR);
     $statement->bindParam(':birthday', $agentBirthday, PDO::PARAM_STR);
     $statement->bindParam(':nationality', $agentNationality, PDO::PARAM_STR);
-    $statement->bindParam(':missionUuid', $agentMissionUuid, PDO::PARAM_STR);
+    $statement->bindParam(':missionUUID', $agentMissionUUID, PDO::PARAM_STR);
     if ($statement->execute()) {
       foreach ($agentSpecialties as $specialty) {
         // Agent_Specialty insert request

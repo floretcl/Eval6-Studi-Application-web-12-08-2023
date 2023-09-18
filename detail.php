@@ -57,7 +57,7 @@ try {
     Agent.agent_lastname AS lastName,
     Agent.agent_birthday AS birthday,
     Agent.agent_nationality AS nationality,
-    Agent.agent_mission_uuid AS missionUuid
+    Agent.agent_mission_uuid AS missionUUID
     FROM Agent
     WHERE agent_mission_uuid = :id';
   $statement = $pdo->prepare($sql);

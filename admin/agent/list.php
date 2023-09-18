@@ -88,7 +88,7 @@ try {
     Agent.agent_lastname AS lastName,
     Agent.agent_birthday AS birthday,
     Agent.agent_nationality AS nationality,
-    Agent.agent_mission_uuid AS missionUuid
+    Agent.agent_mission_uuid AS missionUUID
     FROM Agent
     WHERE agent_code LIKE :search
     ORDER BY agent_code
@@ -197,7 +197,7 @@ if (isset($reload)) {
             <thead>
               <tr>
                 <th class="text-uppercase"><input class="table-checkbox" type="checkbox" id="table-group-checkbox"></th>
-                <th class="text-uppercase">Uuid</th>
+                <th class="text-uppercase">UUID</th>
                 <th class="text-uppercase">Code</th>
                 <th class="text-uppercase">Firstname</th>
                 <th class="text-uppercase">Lastname</th>
@@ -209,10 +209,10 @@ if (isset($reload)) {
             <tbody>
               <?php foreach($agents as $agent): ?>
               <tr>
-              <td class="font-monospace"><input id="table-checkbox-<?= $agent->getCode(); ?>" name="table-checkbox-<?= $agent->getCode(); ?>" class="table-checkbox" type="checkbox" value="<?= $agent->getUuid(); ?>"></td>
+              <td class="font-monospace"><input id="table-checkbox-<?= $agent->getCode(); ?>" name="table-checkbox-<?= $agent->getCode(); ?>" class="table-checkbox" type="checkbox" value="<?= $agent->getUUID(); ?>"></td>
               <td class="font-monospace">
-                <a href="./agent.php?id=<?= $agent->getUuid(); ?>">
-                  <?= $agent->getUuid(); ?>
+                <a href="./agent.php?id=<?= $agent->getUUID(); ?>">
+                  <?= $agent->getUUID(); ?>
                 </a>
               </td>
               <?php
@@ -221,7 +221,7 @@ if (isset($reload)) {
               echo '<td class="font-monospace">' . $agent->getLastName() . '</td>';
               echo '<td class="font-monospace">' . $agent->getBirthday() . '</td>';
               echo '<td class="font-monospace">' . $agent->getNationality() . '</td>';
-              echo '<td class="font-monospace">' . $agent->getMissionUuid() . '</td>';
+              echo '<td class="font-monospace">' . $agent->getMissionUUID() . '</td>';
               ?>
               </tr>
               <?php endforeach ?>

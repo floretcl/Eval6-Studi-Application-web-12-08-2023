@@ -7,7 +7,7 @@ class Agent {
     private ?string $lastName;
     private string $birthday;
     private string $nationality;
-    private ?string $missionUuid;
+    private ?string $missionUUID;
     private string $specialty;
 
     /*
@@ -18,7 +18,7 @@ class Agent {
         string $lastName,
         string $birthday,
         string $nationality,
-        string $missionUuid
+        string $missionUUID
         ) {
         $this->uuid = $uuid;
         $this->code = $code;
@@ -26,11 +26,11 @@ class Agent {
         $this->lastName = $lastName;
         $this->birthday = $birthday;
         $this->nationality =$nationality;
-        $this->missionUuid = $missionUuid;
+        $this->missionUUID = $missionUUID;
     }
     */
 
-    public function getUuid(): string {
+    public function getUUID(): string {
         return $this->uuid;
     }
     public function getCode(): string {
@@ -56,8 +56,8 @@ class Agent {
     public function getNationality(): string {
         return $this->nationality;
     }
-    public function getMissionUuid() {
-        return $this->missionUuid;
+    public function getMissionUUID() {
+        return $this->missionUUID;
     }
     public function getSpecialty(): string {
         return $this->specialty;

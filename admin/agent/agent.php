@@ -29,21 +29,21 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] == true && isset($_SESSION['
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $agentUuid = $_POST['agent-uuid'];
+  $agentUUID = $_POST['agent-uuid'];
   $agentCode = $_POST['agent-code'];
   $agentFirstname = $_POST['agent-firstname'];
   $agentLastname = $_POST['agent-lastname'];
   $agentBirthday = $_POST['agent-birthday'];
   $agentNationality = $_POST['agent-nationality'];
-  $agentMissionUuid = $_POST['agent-mission-uuid'];
+  $agentMissionUUID = $_POST['agent-mission-uuid'];
   $agentSpecialties = $_POST['agent-specialties']; 
 
   try {
     // Agent_Specialty delete request
     $sql = 'DELETE FROM Agent_Specialty
-      WHERE agent_uuid = :id';
+      WHERE agent_uuid = :uuid';
     $statement =  $pdo->prepare($sql);
-    $statement->bindParam(':id', $agentUuid, PDO::PARAM_STR);
+    $statement->bindParam(':uuid', $agentUUID, PDO::PARAM_STR);
     if ($statement->execute()) {
       $message = "Agent specialties deleted";
     } else {
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           :specialty
         )';
       $statement = $pdo->prepare($sql);
-      $statement->bindParam(':agent_uuid', $agentUuid, PDO::PARAM_STR);
+      $statement->bindParam(':agent_uuid', $agentUUID, PDO::PARAM_STR);
       $statement->bindParam(':specialty', $specialty, PDO::PARAM_STR);
       if ($statement->execute()) {
         $message = "Agent specialties updated";
@@ -85,16 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       Agent.agent_lastname = :lastname,
       Agent.agent_birthday = :birthday,
       Agent.agent_nationality = :nationality,
-      Agent.agent_mission_uuid = :missionUuid
-      WHERE agent_uuid = :id LIMIT 1';
+      Agent.agent_mission_uuid = :missionUUID
+      WHERE agent_uuid = :uuid LIMIT 1';
     $statement = $pdo->prepare($sql);
-    $statement->bindParam(':id', $agentUuid, PDO::PARAM_STR);
+    $statement->bindParam(':uuid', $agentUUID, PDO::PARAM_STR);
     $statement->bindParam(':code', $agentCode, PDO::PARAM_STR);
     $statement->bindParam(':firstname', $agentFirstname, PDO::PARAM_STR);
     $statement->bindParam(':lastname', $agentLastname, PDO::PARAM_STR);
     $statement->bindParam(':birthday', $agentBirthday, PDO::PARAM_STR);
     $statement->bindParam(':nationality', $agentNationality, PDO::PARAM_STR);
-    $statement->bindParam(':missionUuid', $agentMissionUuid, PDO::PARAM_STR);
+    $statement->bindParam(':missionUUID', $agentMissionUUID, PDO::PARAM_STR);
     if ($statement->execute()) {
       $message = "Agent updated";
       header("Location: list.php");
@@ -117,13 +117,13 @@ try {
     Agent.agent_lastname AS lastName,
     Agent.agent_birthday AS birthday,
     Agent.agent_nationality AS nationality,
-    Agent.agent_mission_uuid AS missionUuid,
+    Agent.agent_mission_uuid AS missionUUID,
     Agent_Specialty.agent_specialty AS specialty
     FROM (Agent
     INNER JOIN Agent_Specialty ON Agent_Specialty.agent_uuid = Agent.agent_uuid)
-    WHERE Agent.agent_uuid = :id';
+    WHERE Agent.agent_uuid = :uuid';
   $statement = $pdo->prepare($sql);
-  $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
+  $statement->bindParam(':uuid', $_GET['id'], PDO::PARAM_STR);
   if ($statement->execute()) {
     while($agent = $statement->fetchObject('Agent')) {
       $agents[] = $agent;
@@ -227,7 +227,7 @@ try {
               <?php endif ?>
               <div class="mb-3">
                 <label for="agent-uuid" class="form-label">UUID :</label>
-                <input type="text" class="form-control" id="agent-uuid" name="agent-uuid" value="<?= $agents[0]->getUuid() ?>" readonly required>
+                <input type="text" class="form-control" id="agent-uuid" name="agent-uuid" value="<?= $agents[0]->getUUID() ?>" readonly required>
               </div>
               <div class="mb-3">
                 <label for="agent-code" class="form-label">Code :</label>
@@ -256,7 +256,7 @@ try {
               </div>
               <div class="mb-3">
                 <label for="agent-mission-uuid" class="form-label">Mission uuid :</label>
-                <input type="text" class="form-control" id="agent-mission-uuid" name="agent-mission-uuid" value="<?= $agents[0]->getMissionUuid() ?>" maxlength="36" aria-describedby="mission-uuid-help">
+                <input type="text" class="form-control" id="agent-mission-uuid" name="agent-mission-uuid" value="<?= $agents[0]->getMissionUUID() ?>" maxlength="36" aria-describedby="mission-uuid-help">
                 <div id="mission-uuid-help" class="form-text text-light">36 characters max.</div>
               </div>
               <div class="mb-3">

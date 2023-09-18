@@ -118,7 +118,7 @@ try {
             </thead>
             <tbody>
               <?php foreach($missions as $mission): ?>
-              <tr id="<?= $mission->getUuid() ?>" class="pointer-table-row mission-table-row">
+              <tr id="<?= $mission->getUUID() ?>" class="pointer-table-row mission-table-row">
                 <?php
                 echo '<td class="font-monospace">' . $mission->getCodeName() . '</td>';
                 echo '<td class="font-monospace">' . $mission->getTitle() . '</td>';

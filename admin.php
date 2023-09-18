@@ -377,7 +377,7 @@ try {
     Agent.agent_lastname AS lastName,
     Agent.agent_birthday AS birthday,
     Agent.agent_nationality AS nationality,
-    Agent.agent_mission_uuid AS missionUuid
+    Agent.agent_mission_uuid AS missionUUID
     FROM (Agent
     INNER JOIN Mission ON Mission.mission_uuid = Agent.agent_mission_uuid)
     ORDER BY agent_code';
@@ -617,7 +617,7 @@ try {
                   <table class="table table-dark table-striped table-hover">
                     <thead>
                       <tr>
-                        <th class="text-uppercase">Uuid</th>
+                        <th class="text-uppercase">UUID</th>
                         <th class="text-uppercase">Firstname</th>
                         <th class="text-uppercase">Lastname</th>
                         <th class="text-uppercase">Email</th>
@@ -626,9 +626,9 @@ try {
                     </thead>
                     <tbody>
                       <?php foreach($admins as $admin): ?>
-                      <tr id="<?= $admin->getUuid() ?>" class="pointer-table-row admin-table-row">
+                      <tr id="<?= $admin->getUUID() ?>" class="pointer-table-row admin-table-row">
                         <?php
-                        echo '<td class="font-monospace">' . $admin->getUuid() . '</td>';
+                        echo '<td class="font-monospace">' . $admin->getUUID() . '</td>';
                         echo '<td class="font-monospace">' . $admin->getFirstName() . '</td>';
                         echo '<td class="font-monospace">' . $admin->getLastName() . '</td>';
                         echo '<td class="font-monospace">' . $admin->getEmail() . '</td>';
@@ -645,7 +645,7 @@ try {
                   <table class="table table-dark table-striped table-hover">
                     <thead>
                       <tr>
-                        <th class="text-uppercase">Uuid</th>
+                        <th class="text-uppercase">UUID</th>
                         <th class="text-uppercase">Code name</th>
                         <th class="text-uppercase">Title</th>
                         <th class="text-uppercase">Description</th>
@@ -659,9 +659,9 @@ try {
                     </thead>
                     <tbody>
                       <?php foreach($missions as $mission): ?>
-                      <tr id="<?= $mission->getUuid() ?>" class="pointer-table-row mission-table-row">
+                      <tr id="<?= $mission->getUUID() ?>" class="pointer-table-row mission-table-row">
                         <?php
-                        echo '<td class="font-monospace">' . $mission->getUuid() . '</td>';
+                        echo '<td class="font-monospace">' . $mission->getUUID() . '</td>';
                         echo '<td class="font-monospace">' . $mission->getCodeName() . '</td>';
                         echo '<td class="font-monospace">' . $mission->getTitle() . '</td>';
                         echo '<td class="font-monospace">' . $mission->getDescriptionShort() . '</td>';
@@ -736,9 +736,9 @@ try {
                     </thead>
                     <tbody>
                       <?php foreach($hideouts as $hideout): ?>
-                      <tr id="<?= $hideout->getUuid() ?>" class="pointer-table-row hideout-table-row">
+                      <tr id="<?= $hideout->getUUID() ?>" class="pointer-table-row hideout-table-row">
                         <?php
-                        echo '<td class="font-monospace">' . $hideout->getUuid() . '</td>';
+                        echo '<td class="font-monospace">' . $hideout->getUUID() . '</td>';
                         echo '<td class="font-monospace">' . $hideout->getCodeName() . '</td>';
                         echo '<td class="font-monospace">' . $hideout->getAdress() . '</td>';
                         echo '<td class="font-monospace">' . $hideout->getCountry() . '</td>';
@@ -797,7 +797,7 @@ try {
                   <table class="table table-dark table-striped table-hover">
                     <thead>
                       <tr>
-                        <th class="text-uppercase">Uuid</th>
+                        <th class="text-uppercase">UUID</th>
                         <th class="text-uppercase">Code</th>
                         <th class="text-uppercase">Firstname</th>
                         <th class="text-uppercase">Lastname</th>
@@ -809,16 +809,16 @@ try {
                     </thead>
                     <tbody>
                       <?php foreach($agents as $agent): ?>
-                      <tr id="<?= $agent->getUuid() ?>" class="pointer-table-row agent-table-row">
+                      <tr id="<?= $agent->getUUID() ?>" class="pointer-table-row agent-table-row">
                         <?php
-                        echo '<td class="font-monospace">' . $agent->getUuid() . '</td>';
+                        echo '<td class="font-monospace">' . $agent->getUUID() . '</td>';
                         echo '<td class="font-monospace">' . $agent->getCode() . '</td>';
                         echo '<td class="font-monospace">' . $agent->getFirstName() . '</td>';
                         echo '<td class="font-monospace">' . $agent->getLastName() . '</td>';
                         echo '<td class="font-monospace">' . $agent->getBirthday() . '</td>';
                         echo '<td class="font-monospace">' . $agent->getAge() . '</td>';
                         echo '<td class="font-monospace">' . $agent->getNationality() . '</td>';
-                        echo '<td class="font-monospace">' . $agent->getMissionUuid() . '</td>';
+                        echo '<td class="font-monospace">' . $agent->getMissionUUID() . '</td>';
                         ?>
                       </tr>
                       <?php endforeach ?>
@@ -831,7 +831,7 @@ try {
                   <table class="table table-dark table-striped table-hover">
                     <thead>
                       <tr>
-                        <th class="text-uppercase">Uuid</th>
+                        <th class="text-uppercase">UUID</th>
                         <th class="text-uppercase">Code Name</th>
                         <th class="text-uppercase">Firstname</th>
                         <th class="text-uppercase">Lastname</th>
@@ -842,9 +842,9 @@ try {
                     </thead>
                     <tbody>
                       <?php foreach($contacts as $contact): ?>
-                      <tr id="<?= $contact->getUuid() ?>" class="pointer-table-row contact-table-row">
+                      <tr id="<?= $contact->getUUID() ?>" class="pointer-table-row contact-table-row">
                         <?php
-                        echo '<td class="font-monospace">' . $contact->getUuid() . '</td>';
+                        echo '<td class="font-monospace">' . $contact->getUUID() . '</td>';
                         echo '<td class="font-monospace">' . $contact->getCodeName() . '</td>';
                         echo '<td class="font-monospace">' . $contact->getFirstName() . '</td>';
                         echo '<td class="font-monospace">' . $contact->getLastName() . '</td>';
@@ -863,7 +863,7 @@ try {
                   <table class="table table-dark table-striped table-hover">
                     <thead>
                       <tr>
-                        <th class="text-uppercase">Uuid</th>
+                        <th class="text-uppercase">UUID</th>
                         <th class="text-uppercase">Code Name</th>
                         <th class="text-uppercase">Firstname</th>
                         <th class="text-uppercase">Lastname</th>
@@ -874,9 +874,9 @@ try {
                     </thead>
                     <tbody>
                       <?php foreach($targets as $target): ?>
-                      <tr id="<?= $target->getUuid() ?>" class="pointer-table-row target-table-row">
+                      <tr id="<?= $target->getUUID() ?>" class="pointer-table-row target-table-row">
                         <?php
-                        echo '<td class="font-monospace">' . $target->getUuid() . '</td>';
+                        echo '<td class="font-monospace">' . $target->getUUID() . '</td>';
                         echo '<td class="font-monospace">' . $target->getCodeName() . '</td>';
                         echo '<td class="font-monospace">' . $target->getFirstName() . '</td>';
                         echo '<td class="font-monospace">' . $target->getLastName() . '</td>';

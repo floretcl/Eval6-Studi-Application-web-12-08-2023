@@ -196,7 +196,7 @@ if (isset($reload)) {
             <thead>
               <tr>
                 <th class="text-uppercase"><input class="table-checkbox" type="checkbox" id="table-group-checkbox"></th>
-                <th class="text-uppercase">Uuid</th>
+                <th class="text-uppercase">UUID</th>
                 <th class="text-uppercase">Firstname</th>
                 <th class="text-uppercase">Lastname</th>
                 <th class="text-uppercase">Email</th>
@@ -206,10 +206,10 @@ if (isset($reload)) {
             <tbody>
               <?php foreach($admins as $admin): ?>
               <tr>
-              <td class="font-monospace"><input id="table-checkbox-<?= $admin->getEmail(); ?>" name="table-checkbox-<?= $admin->getEmail(); ?>" class="table-checkbox" type="checkbox" value="<?= $admin->getUuid(); ?>"></td>
+              <td class="font-monospace"><input id="table-checkbox-<?= $admin->getEmail(); ?>" name="table-checkbox-<?= $admin->getEmail(); ?>" class="table-checkbox" type="checkbox" value="<?= $admin->getUUID(); ?>"></td>
               <td class="font-monospace">
-                <a href="./admin.php?id=<?= $admin->getUuid(); ?>">
-                  <?= $admin->getUuid(); ?>
+                <a href="./admin.php?id=<?= $admin->getUUID(); ?>">
+                  <?= $admin->getUUID(); ?>
                 </a>
               </td>
               <?php

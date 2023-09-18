@@ -28,7 +28,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] == true && isset($_SESSION['
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $adminUuid = $_POST['admin-uuid'];
+  $adminUUID = $_POST['admin-uuid'];
   $adminFirstname = $_POST['admin-firstname'];
   $adminLastname = $_POST['admin-lastname'];
   $adminEmail = $_POST['admin-email'];
@@ -39,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       Admin.admin_firstname = :firstname,
       Admin.admin_lastname = :lastname,
       Admin.admin_email = :email
-      WHERE admin_uuid = :id LIMIT 1';
+      WHERE admin_uuid = :uuid LIMIT 1';
     $statement = $pdo->prepare($sql);
-    $statement->bindParam(':id', $adminUuid, PDO::PARAM_STR);
+    $statement->bindParam(':uuid', $adminUUID, PDO::PARAM_STR);
     $statement->bindParam(':firstname', $adminFirstname, PDO::PARAM_STR);
     $statement->bindParam(':lastname', $adminLastname, PDO::PARAM_STR);
     $statement->bindParam(':email', $adminEmail, PDO::PARAM_STR);
@@ -68,9 +68,9 @@ try {
     Admin.admin_password AS passwordHash,
     Admin.admin_creation_date AS creationDate
     FROM Admin
-    WHERE admin_uuid = :id';
+    WHERE admin_uuid = :uuid';
   $statement = $pdo->prepare($sql);
-  $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
+  $statement->bindParam(':uuid', $_GET['id'], PDO::PARAM_STR);
   if ($statement->execute()) {
     $admin = $statement->fetchObject('Admin');
   } else {
@@ -152,7 +152,7 @@ try {
               <?php endif ?>
               <div class="mb-3">
                 <label for="admin-uuid" class="form-label">UUID :</label>
-                <input type="text" class="form-control" id="admin-uuid" name="admin-uuid" value="<?= $admin->getUuid() ?>" readonly required>
+                <input type="text" class="form-control" id="admin-uuid" name="admin-uuid" value="<?= $admin->getUUID() ?>" readonly required>
               </div>
               <div class="mb-3">
                 <label for="admin-firstname" class="form-label">Firstname :</label>

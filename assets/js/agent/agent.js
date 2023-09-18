@@ -1,9 +1,9 @@
-const agentUuid = document.getElementById('agent-uuid');
+const agentUUID = document.getElementById('agent-uuid');
 const deleteConfirmButton = document.getElementById('delete-confirm-btn');
 
 deleteConfirmButton.addEventListener('click', () => {
     let formData = new FormData();
-    formData.append('delete', agentUuid.value)
+    formData.append('delete', agentUUID.value)
     fetch(`http://127.0.0.1:81/admin/agent/list.php`, {
     method: 'POST',
     mode: 'same-origin',

@@ -26,7 +26,7 @@ class Contact {
     }
     */
 
-    public function getUuid(): string {
+    public function getUUID(): string {
         return $this->uuid;
     }
     public function getCodeName(): string {
