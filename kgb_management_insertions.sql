@@ -7,20 +7,17 @@ INSERT INTO Admin (
     'Lucian',
     'Mclean',
     'lucian-mclean@email.com',
-    '$2a$12$UvM2bsv.lLA25L2N7Oc78uKuII1KI9uDnJ3//zI.HcEiVMGBCy0ne'
-    -- Password : N706{XK#2n-5!nSrbj,K
+    '$2y$11$cGGJSgDlOi/t0FtZiDrdv./W9ilKdQ8hHLifUkvnLJYxNpQSmfllK'
 ), (
     'Shania',
     'Wood',
     'shaniawood@email.com',
-    '$2a$12$t9RJW0oBPq4OAvxliUp6Pu3iM2GfCTilPhFTwmeUiaYDAifywLlvC'
-    -- Password : s<tRtP,(X5=so-5171OB
+    '$2y$11$j8wEk0IbG/vMfJiKuZBpV.RqaSw7ybGUYsqosyJSFZXc5Mx6796.y'
 ), (
     'Tianna',
     'Rangel',
     'tianna.rangel@email.com',
-    '$2a$12$2IUyHAFk4.37amxzht8dZuvZyctu.3blKAb3QmW.JtTXD0uZsKaH6'
-    -- Passwords : XI2roscS}[@@gSO980,1
+    '$2y$11$lWoyyAs0e64pQV1rvDQ2U.nv4ZxpGYmsoPBAvuSZrRIZisHmskbsa'
 );
 
 INSERT INTO Specialty (
@@ -273,6 +270,9 @@ INSERT INTO Agent_Specialty (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '005'),
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'hacking')
 ), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '005'),
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'engineering')
+), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '006'),
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'shooter')
 ), (
@@ -294,32 +294,35 @@ INSERT INTO Agent_Specialty (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '009'),
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'engineering')
 ), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '009'),
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'diplomacy')
+), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '010'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'hacking')
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'support')
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '011'),
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'engineering')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '011'),
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'support')
 ), (
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '011'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'discretion')
-), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '012'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'engineering')
-), (
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '013'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'discretion')
-), (
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '013'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'diplomacy')
-), (
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '014'),
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'hacking')
 ), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '013'),
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'discretion')
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '013'),
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'hacking')
+), (
+    (SELECT agent_uuid FROM Agent WHERE agent_code = '014'),
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'seduction')
+), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '015'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'shooter')
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'discretion')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '016'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'engineering')
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'diplomacy')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '017'),
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'support')
@@ -328,22 +331,22 @@ INSERT INTO Agent_Specialty (
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'engineering')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '018'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'seduction')
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'shooter')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '019'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'support')
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'hacking')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '019'),
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'discretion')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '020'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'seduction')
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'shooter')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '021'),
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'support')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '022'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'shooter')
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'engineering')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '023'),
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'hacking')
@@ -352,10 +355,10 @@ INSERT INTO Agent_Specialty (
     (SELECT specialty_id FROM Specialty WHERE specialty_name = 'discretion')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '023'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'seduction')
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'diplomacy')
 ), (
     (SELECT agent_uuid FROM Agent WHERE agent_code = '024'),
-    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'diplomacy')
+    (SELECT specialty_id FROM Specialty WHERE specialty_name = 'seduction')
 );
 
 INSERT INTO Contact (
@@ -1022,7 +1025,7 @@ INSERT INTO Mission_Contact (
     (SELECT contact_uuid FROM Contact WHERE contact_code_name = 'Purple Chariot')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Gamma'),
-    (SELECT contact_uuid FROM Contact WHERE contact_code_name = 'Amazing Hammer')
+    (SELECT contact_uuid FROM Contact WHERE contact_code_name = 'Canine Geyser')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Delta'),
     (SELECT contact_uuid FROM Contact WHERE contact_code_name = 'Brown Proton')
@@ -1164,16 +1167,16 @@ INSERT INTO Mission_Target (
     target_uuid
 ) VALUES (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Alpha'),
-    (SELECT target_uuid FROM Target WHERE target_code_name = 'Heavy Heart')
+    (SELECT target_uuid FROM Target WHERE target_code_name = 'Serious Toupee')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Beta'),
-    (SELECT target_uuid FROM Target WHERE target_code_name = 'Fire Phoenix')
+    (SELECT target_uuid FROM Target WHERE target_code_name = 'Heavy Heart')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Gamma'),
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Brief Star')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Delta'),
-    (SELECT target_uuid FROM Target WHERE target_code_name = 'Serious Toupee')
+    (SELECT target_uuid FROM Target WHERE target_code_name = 'Fire Phoenix')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Epsilon'),
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Sad Ribbon')
@@ -1191,7 +1194,7 @@ INSERT INTO Mission_Target (
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Precious Spectator')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Kappa'),
-    (SELECT target_uuid FROM Target WHERE target_code_name = 'Fatal Thunder')
+    (SELECT target_uuid FROM Target WHERE target_code_name = 'Warm Falcon')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Lambda'),
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Basic Surgeon')
@@ -1200,7 +1203,7 @@ INSERT INTO Mission_Target (
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Agile Dasher')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Nu'),
-    (SELECT target_uuid FROM Target WHERE target_code_name = 'Warm Falcon')
+    (SELECT target_uuid FROM Target WHERE target_code_name = 'Early Gambit')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Xi'),
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Silver Dragonfly')
@@ -1212,10 +1215,10 @@ INSERT INTO Mission_Target (
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Pink Eye')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Rho'),
-    (SELECT target_uuid FROM Target WHERE target_code_name = 'Early Gambit')
+    (SELECT target_uuid FROM Target WHERE target_code_name = 'Fatal Thunder')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Sigma'),
-    (SELECT target_uuid FROM Target WHERE target_code_name = 'Silver Dragonfly')
+    (SELECT target_uuid FROM Target WHERE target_code_name = 'Basic Surgeon')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Tau'),
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Bulky Grandpa')
@@ -1227,7 +1230,7 @@ INSERT INTO Mission_Target (
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Coarse Pebble')
 ), (
     (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Chi'),
-    (SELECT target_uuid FROM Target WHERE target_code_name = 'Basic Surgeon')
+    (SELECT target_uuid FROM Target WHERE target_code_name = 'Silver Dragonfly')
 );
 
 INSERT INTO Mission_Agent (
