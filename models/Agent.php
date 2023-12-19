@@ -7,8 +7,6 @@ class Agent {
     private ?string $lastName;
     private string $birthday;
     private string $nationality;
-    private ?string $missionUUID;
-    private string $specialty;
 
     /*
     public function __construct(
@@ -17,8 +15,7 @@ class Agent {
         string $firstName,
         string $lastName,
         string $birthday,
-        string $nationality,
-        string $missionUUID
+        string $nationality
         ) {
         $this->uuid = $uuid;
         $this->code = $code;
@@ -26,7 +23,6 @@ class Agent {
         $this->lastName = $lastName;
         $this->birthday = $birthday;
         $this->nationality =$nationality;
-        $this->missionUUID = $missionUUID;
     }
     */
 
@@ -36,16 +32,15 @@ class Agent {
     public function getCode(): string {
         return $this->code;
     }
-    public function getFirstName() {
+    public function getFirstName(): ?string {
         return $this->firstName;
     }
-    public function getLastName() {
+    public function getLastName(): ?string {
         return $this->lastName;
     }
     public function getBirthday(): string {
         $datetime = $this->birthday;
-        $date = date('Y-m-d', strtotime($datetime));
-        return $date;
+        return date('Y-m-d', strtotime($datetime));
     }
     public function getAge(): int {
         $birth = $this->getBirthday();
@@ -55,11 +50,5 @@ class Agent {
     }
     public function getNationality(): string {
         return $this->nationality;
-    }
-    public function getMissionUUID() {
-        return $this->missionUUID;
-    }
-    public function getSpecialty(): string {
-        return $this->specialty;
     }
 }

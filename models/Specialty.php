@@ -1,6 +1,7 @@
 <?php
 
 class Specialty {
+    private string $id;
     private string $name;
 
     /*
@@ -9,6 +10,9 @@ class Specialty {
     }
     */
 
+    public function getId(): string {
+        return $this->id;
+    }
     public function getName(): string {
         return $this->name;
     }

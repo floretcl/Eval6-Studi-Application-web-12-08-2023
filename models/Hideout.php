@@ -2,7 +2,7 @@
 class Hideout {
     private string $uuid;
     private string $codeName;
-    private string $adress;
+    private string $address;
     private string $country;
     private string $hideoutType;
 
@@ -10,13 +10,13 @@ class Hideout {
     public function __construct(
         string $uuid,
         string $codeName,
-        string $adress,
+        string $address,
         string $country,
         string $hideoutType
         ) {
         $this->uuid = $uuid;
         $this->codeName = $codeName;
-        $this->adress = $adress;
+        $this->address = $address;
         $this->country = $country;
         $this->hideoutType = $hideoutType;
     }
@@ -28,13 +28,12 @@ class Hideout {
     public function getCodeName(): string {
         return $this->codeName;
     }
-    public function getAdress(): string {
-        return $this->adress;
+    public function getAddress(): string {
+        return $this->address;
     }
-    public function getAdressArray(): array {
-        $adress = $this->adress;
-        $array = explode(',', $adress);
-        return $array;
+    public function getAddressArray(): array {
+        $address = $this->address;
+        return explode(',', $address);
     }
     public function getCountry(): string {
         return $this->country;

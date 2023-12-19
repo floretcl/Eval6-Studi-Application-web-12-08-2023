@@ -61,7 +61,7 @@ class Mission {
     public function getType(): string {
         return $this->type;
     }
-    public function getSpecialty() {
+    public function getSpecialty(): ?string {
         return $this->specialty;
     }
     public function getStatus(): string {
@@ -69,8 +69,7 @@ class Mission {
     }
     public function getStartDate(): string {
         $datetime = $this->startDate;
-        $date = date('Y-m-d H:i', strtotime($datetime));
-        return $date;
+        return date('Y-m-d H:i', strtotime($datetime));
     }
     public function getStartDateLong(): string {
         $datetime = $this->startDate;
@@ -80,8 +79,7 @@ class Mission {
     }
     public function getEndDate(): string {
         $datetime = $this->endDate;
-        $date = date('Y-m-d H:i', strtotime($datetime));
-        return $date;
+        return date('Y-m-d H:i', strtotime($datetime));
     }
     public function getEndDateLong(): string {
         $datetime = $this->endDate;
