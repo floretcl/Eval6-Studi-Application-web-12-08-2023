@@ -8,6 +8,7 @@ require_once __DIR__ . '/models/Agent.php';
 require_once __DIR__ . '/models/Hideout.php';
 require_once __DIR__ . '/models/Contact.php';
 require_once __DIR__ . '/models/Target.php';
+require_once __DIR__ . '/models/Specialty.php';
 
 // Loading dotenv to load .env const
 $dotenv = Dotenv::createImmutable(__DIR__);
@@ -27,14 +28,15 @@ try {
     Mission.mission_title AS title,
     Mission.mission_description AS description,
     Mission.mission_country AS country,
-    Mission_type.type_name AS type,
-    Mission.mission_specialty AS specialty,
-    Mission_status.status_name AS status,
-    Mission.start_date AS startDate,
-    Mission.end_date AS endDate
-    FROM ((Mission 
-    INNER JOIN Mission_status ON Mission_status.status_id = Mission.mission_status)
-    INNER JOIN Mission_type ON Mission_type.type_id = Mission.mission_type)
+    Mission_type.mission_type_name AS type,
+    Specialty.specialty_name AS specialty,
+    Mission_status.mission_status_name AS status,
+    Mission.mission_start_date AS startDate,
+    Mission.mission_end_date AS endDate
+    FROM (((Mission 
+    INNER JOIN Mission_status ON Mission_status.mission_status_id = Mission.mission_status)
+    INNER JOIN Mission_type ON Mission_type.mission_type_id = Mission.mission_type)
+    INNER JOIN Specialty ON Specialty.specialty_id = Mission.mission_specialty)
     WHERE mission_uuid = :id';
   $statement = $pdo->prepare($sql);
   $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
@@ -56,10 +58,10 @@ try {
     Agent.agent_firstname AS firstName,
     Agent.agent_lastname AS lastName,
     Agent.agent_birthday AS birthday,
-    Agent.agent_nationality AS nationality,
-    Agent.agent_mission_uuid AS missionUUID
-    FROM Agent
-    WHERE agent_mission_uuid = :id';
+    Agent.agent_nationality AS nationality
+    FROM (Mission_Agent
+    INNER JOIN Agent ON Agent.agent_uuid = Mission_Agent.agent_uuid)
+    WHERE mission_uuid = :id';
   $statement = $pdo->prepare($sql);
   $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
   if ($statement->execute()) {
@@ -79,7 +81,7 @@ try {
   $sql = 'SELECT 
     Hideout.hideout_uuid AS uuid,
     Hideout.hideout_code_name AS codeName,
-    Hideout.hideout_adress AS adress,
+    Hideout.hideout_address AS address,
     Hideout.hideout_country AS country,
     Hideout_type.hideout_type_name AS hideoutType
     FROM ((Mission_Hideout
@@ -286,10 +288,10 @@ try {
                             <span class="fw-bold font-monospace"><?= $hideout->getCodeName(); ?></span>
                           </li>
                           <li class="list-group-item px-0 px-sm-2 px-md-">
-                            <span class="mb-1">Adress :</span>
+                            <span class="mb-1">Address :</span>
                             <span class="fw-bold font-monospace mb-2">
-                              <?php foreach ($hideout->getAdressArray() as $adressLine) : ?>
-                                <?= $adressLine ?><br>
+                              <?php foreach ($hideout->getAddressArray() as $addressLine) : ?>
+                                <?= $addressLine ?><br>
                               <?php endforeach ?>
                             </span>
                           </li>
