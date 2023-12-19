@@ -43,14 +43,14 @@ try {
     Mission.mission_title AS title,
     Mission.mission_description AS description,
     Mission.mission_country AS country,
-    Mission_type.type_name AS type,
+    Mission_type.mission_type_name AS type,
     Mission.mission_specialty AS specialty,
-    Mission_status.status_name AS status,
-    Mission.start_date AS startDate,
-    Mission.end_date AS endDate
+    Mission_status.mission_status_name AS status,
+    Mission.mission_start_date AS startDate,
+    Mission.mission_end_date AS endDate
     FROM ((Mission
-    INNER JOIN Mission_status ON Mission.mission_status = Mission_status.status_id)
-    INNER JOIN Mission_type ON Mission.mission_type = Mission_type.type_id)
+    INNER JOIN Mission_status ON Mission.mission_status = Mission_status.mission_status_id)
+    INNER JOIN Mission_type ON Mission.mission_type = Mission_type.mission_type_id)
     ORDER BY Mission.mission_status
     LIMIT :start, :perPage';
   $statement = $pdo->prepare($sql);
