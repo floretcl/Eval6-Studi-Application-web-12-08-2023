@@ -39,7 +39,6 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
     if ($statement->execute()) {
       $message = "Error: invalid identifiers";
       while ($admin = $statement->fetchObject('Admin')) {
-        if (isset($admin)) {
           $hash = $admin->getPasswordHash();
           $options = array('cost' => 12);
           if (password_verify($password, $hash)) {
@@ -49,11 +48,10 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
             $_SESSION['admin'] = true;
             $_SESSION['firstName'] = $admin->getFirstName();
             $_SESSION['lastName'] = $admin->getLastName();
-            
+
             header("Location: admin.php");
             exit;
           }
-        }
       }
     } else {
       $error = $statement->errorInfo();
