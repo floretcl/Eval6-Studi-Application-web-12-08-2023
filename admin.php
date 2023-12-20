@@ -376,7 +376,6 @@ try {
   </div>
   <!-- BOOTSTRAP JS, JS -->
   <script src="./assets/bootstrap/js/bootstrap.bundle.js"></script>
-  <script src="./assets/js/admin.js"></script>
 </body>
 
 </html>
