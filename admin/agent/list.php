@@ -56,8 +56,11 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST')) {
 
 try {
   // Nb Agents request & pagination
-  $sql = 'SELECT COUNT(*) AS nbAgents FROM Agent';
+  $sql = 'SELECT COUNT(*) AS nbAgents 
+    FROM Agent
+    WHERE agent_code LIKE :search';
   $statement = $pdo->prepare($sql);
+  $statement->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
   if ($statement->execute()) {
     while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
       $nbAgents = (int) $result['nbAgents'];
@@ -87,8 +90,7 @@ try {
     Agent.agent_firstname AS firstName,
     Agent.agent_lastname AS lastName,
     Agent.agent_birthday AS birthday,
-    Agent.agent_nationality AS nationality,
-    Agent.agent_mission_uuid AS missionUUID
+    Agent.agent_nationality AS nationality
     FROM Agent
     WHERE agent_code LIKE :search
     ORDER BY agent_code
@@ -203,10 +205,10 @@ if (isset($reload)) {
                 <th class="text-uppercase">Lastname</th>
                 <th class="text-uppercase">Birthday</th>
                 <th class="text-uppercase">Nationality</th>
-                <th class="text-uppercase">Mission uuid</th>
               </tr>
             </thead>
             <tbody>
+            <?php if (isset($agents)): ?>
               <?php foreach($agents as $agent): ?>
               <tr>
               <td class="font-monospace"><input id="table-checkbox-<?= $agent->getCode(); ?>" name="table-checkbox-<?= $agent->getCode(); ?>" class="table-checkbox" type="checkbox" value="<?= $agent->getUUID(); ?>"></td>
@@ -221,10 +223,10 @@ if (isset($reload)) {
               echo '<td class="font-monospace">' . $agent->getLastName() . '</td>';
               echo '<td class="font-monospace">' . $agent->getBirthday() . '</td>';
               echo '<td class="font-monospace">' . $agent->getNationality() . '</td>';
-              echo '<td class="font-monospace">' . $agent->getMissionUUID() . '</td>';
               ?>
               </tr>
               <?php endforeach ?>
+            <?php endif ?>
             </tbody>
           </table>
         </div>
@@ -250,17 +252,17 @@ if (isset($reload)) {
           <nav aria-label="Agents page navigation">
             <ul class="pagination">
               <li class="page-item <?= $currentPage == 1 ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
+                <a class="page-link text-dark" href="?<?= $search != '' ? 'search=' . $search . '&' : '' ?>page=<?= $currentPage - 1 ?>" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
               <?php for($page = 1; $page <= $nbPages; $page++): ?>
                 <li class="page-item <?= $page == $currentPage ? 'active' : '' ?>">
-                  <a class="page-link <?= $page == $currentPage ? 'bg-secondary border-secondary' : '' ?> text-dark" href="?page=<?= $page ?>"><?= $page ?></a>
+                  <a class="page-link <?= $page == $currentPage ? 'bg-secondary border-secondary' : '' ?> text-dark" href="?<?= $search != '' ? 'search=' . $search . '&' : '' ?>page=<?= $page ?>"><?= $page ?></a>
                 </li>
               <?php endfor ?>
               <li class="page-item <?= $currentPage == $nbPages ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
+                <a class="page-link text-dark" href="?<?= $search != '' ? 'search=' . $search . '&' : '' ?>page=<?= $currentPage + 1 ?>" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
