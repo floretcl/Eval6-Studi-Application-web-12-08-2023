@@ -34,8 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $agentLastname = $_POST['agent-lastname'];
   $agentBirthday = $_POST['agent-birthday'];
   $agentNationality = $_POST['agent-nationality'];
-  $agentMissionUUID = $_POST['agent-mission-uuid'];
-  $agentSpecialties = $_POST['agent-specialties']; 
+  $agentSpecialties = $_POST['agent-specialties'];
 
   try {
     // Agent add request
@@ -44,15 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       agent_firstname,
       agent_lastname,
       agent_birthday,
-      agent_nationality,
-      agent_mission_uuid
+      agent_nationality
     ) VALUES (
       :code,
       :firstname,
       :lastname,
       :birthday,
-      :nationality,
-      :missionUUID
+      :nationality
     )';
     $statement = $pdo->prepare($sql);
     $statement->bindParam(':code', $agentCode, PDO::PARAM_STR);
@@ -60,28 +57,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->bindParam(':lastname', $agentLastname, PDO::PARAM_STR);
     $statement->bindParam(':birthday', $agentBirthday, PDO::PARAM_STR);
     $statement->bindParam(':nationality', $agentNationality, PDO::PARAM_STR);
-    $statement->bindParam(':missionUUID', $agentMissionUUID, PDO::PARAM_STR);
     if ($statement->execute()) {
-      foreach ($agentSpecialties as $specialty) {
-        // Agent_Specialty insert request
-        $sql = 'INSERT INTO Agent_Specialty (
+        foreach ($agentSpecialties as $specialty) {
+            // Agent_Specialty insert request
+            $sql = 'INSERT INTO Agent_Specialty (
             agent_uuid,
-            agent_specialty
+            specialty_id
           ) VALUES (
             (SELECT agent_uuid FROM Agent WHERE agent_code = :agent_code),
-            :specialty
+            :specialty_id
           )';
-        $statement = $pdo->prepare($sql);
-        $statement->bindParam(':agent_code', $agentCode, PDO::PARAM_STR);
-        $statement->bindParam(':specialty', $specialty, PDO::PARAM_STR);
-        if ($statement->execute()) {
-          $message = "Agent specialties updated";
-        } else {
-          $error = $statement->errorInfo();
-          $logFile = '../../logs/errors.log';
-          error_log('Error : ' . $error);
+            $statement = $pdo->prepare($sql);
+            $statement->bindParam(':agent_code', $agentCode, PDO::PARAM_STR);
+            $statement->bindParam(':specialty_id', $specialty, PDO::PARAM_STR);
+            if ($statement->execute()) {
+                $message = "Agent specialties updated";
+            } else {
+                $error = $statement->errorInfo();
+                $logFile = '../../logs/errors.log';
+                error_log('Error : ' . $error);
+            }
         }
-      }
       $message = "Agent added";
       header("Location: list.php");
     } else {
@@ -96,7 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 try {
   // Specialties request
-  $sql = 'SELECT 
+  $sql = 'SELECT
+   Specialty.specialty_id AS id,
     Specialty.specialty_name AS name
     FROM Specialty';
   $statement = $pdo->prepare($sql);
@@ -160,7 +157,8 @@ try {
           <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a class="link-secondary" href="../../admin.php">Home</a></li>
-              <li class="breadcrumb-item active text-light" aria-current="page">Add agent</li>
+              <li class="breadcrumb-item"><a class="link-secondary" href="./list.php">Agent list</a></li>
+              <li class="breadcrumb-item active text-light" aria-current="page">Add</li>
             </ol>
           </nav>
         </div>
@@ -206,15 +204,10 @@ try {
                 <div id="nationality-help" class="form-text text-light">Required. 50 characters max.</div>
               </div>
               <div class="mb-3">
-                <label for="agent-mission-uuid" class="form-label">Mission uuid :</label>
-                <input type="text" class="form-control" id="agent-mission-uuid" name="agent-mission-uuid" value="" maxlength="36" aria-describedby="mission-uuid-help">
-                <div id="mission-uuid-help" class="form-text text-light">36 characters max.</div>
-              </div>
-              <div class="mb-3">
                 <label for="agent-specialties" class="form-label">Specialties :</label>
-                <select class="form-select" id="agent-specialties" name="agent-specialties[]" size="4" multiple aria-label="agent specialties" aria-describedby="specialties-help" required>
+                <select class="form-select" id="agent-specialties" name="agent-specialties[]" size="<?= count($specialties) ?>" multiple aria-label="agent specialties" aria-describedby="specialties-help" required>
                   <?php foreach($specialties as $specialty) : ?>
-                    <option value="<?= $specialty->getName() ?>"><?= $specialty->getName() ?></option>
+                    <option value="<?= $specialty->getId() ?>"><?= $specialty->getName() ?></option>
                   <?php endforeach ?>
                 </select>
                 <div id="specialties-help" class="form-text text-light">Required. At least one.</div>
