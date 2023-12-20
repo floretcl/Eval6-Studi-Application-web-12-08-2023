@@ -1,6 +1,6 @@
 <?php
 
-class Agent {
+class Agent extends stdClass {
     private string $uuid;
     private string $code;
     private ?string $firstName;

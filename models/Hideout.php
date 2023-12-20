@@ -1,5 +1,5 @@
 <?php
-class Hideout {
+class Hideout extends stdClass {
     private string $uuid;
     private string $codeName;
     private string $address;

@@ -1,5 +1,5 @@
 <?php
-class Admin {
+class Admin extends stdClass {
     private string $uuid;
     private ?string $firstName;
     private ?string $lastName;

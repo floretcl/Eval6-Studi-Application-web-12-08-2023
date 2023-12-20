@@ -1,6 +1,6 @@
 <?php
 
-class Contact {
+class Contact extends stdClass {
     private string $uuid;
     private string $codeName;
     private ?string $firstName;

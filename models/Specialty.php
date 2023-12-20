@@ -1,6 +1,6 @@
 <?php
 
-class Specialty {
+class Specialty extends stdClass {
     private string $id;
     private string $name;
 

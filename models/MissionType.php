@@ -1,5 +1,5 @@
 <?php 
-class MissionType {
+class MissionType extends stdClass {
     private string $id;
     private string $name;
 
