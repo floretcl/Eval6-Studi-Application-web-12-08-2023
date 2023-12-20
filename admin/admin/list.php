@@ -204,6 +204,7 @@ if (isset($reload)) {
               </tr>
             </thead>
             <tbody>
+            <?php if (isset($admins)): ?>
               <?php foreach($admins as $admin): ?>
               <tr>
               <td class="font-monospace"><input id="table-checkbox-<?= $admin->getEmail(); ?>" name="table-checkbox-<?= $admin->getEmail(); ?>" class="table-checkbox" type="checkbox" value="<?= $admin->getUUID(); ?>"></td>
@@ -220,6 +221,7 @@ if (isset($reload)) {
               ?>
               </tr>
               <?php endforeach ?>
+            <?php endif ?>
             </tbody>
           </table>
         </div>
