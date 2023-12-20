@@ -56,8 +56,11 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST')) {
 
 try {
   // Nb Admins request
-  $sql = 'SELECT COUNT(*) AS nbAdmins FROM Admin';
+  $sql = 'SELECT COUNT(*) AS nbAdmins
+    FROM Admin
+    WHERE admin_email LIKE :search';
   $statement = $pdo->prepare($sql);
+    $statement->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
   if ($statement->execute()) {
     while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
       $nbAdmins = (int) $result['nbAdmins'];
@@ -247,17 +250,17 @@ if (isset($reload)) {
           <nav aria-label="Admins page navigation">
             <ul class="pagination">
               <li class="page-item <?= $currentPage == 1 ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
+                <a class="page-link text-dark" href="?<?= $search != '' ? 'search=' . $search . '&' : '' ?>page=<?= $currentPage - 1 ?>" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
               <?php for($page = 1; $page <= $nbPages; $page++): ?>
                 <li class="page-item <?= $page == $currentPage ? 'active' : '' ?>">
-                  <a class="page-link <?= $page == $currentPage ? 'bg-secondary border-secondary' : '' ?> text-dark" href="?page=<?= $page ?>"><?= $page ?></a>
+                  <a class="page-link <?= $page == $currentPage ? 'bg-secondary border-secondary' : '' ?> text-dark" href="?<?= $search != '' ? 'search=' . $search . '&' : '' ?>page=<?= $page ?>"><?= $page ?></a>
                 </li>
               <?php endfor ?>
               <li class="page-item <?= $currentPage == $nbPages ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
+                <a class="page-link text-dark" href="?<?= $search != '' ? 'search=' . $search . '&' : '' ?>page=<?= $currentPage + 1 ?>" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
