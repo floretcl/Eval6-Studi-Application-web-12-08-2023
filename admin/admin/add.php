@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $adminLastname = $_POST['admin-lastname'];
   $adminEmail = $_POST['admin-email'];
   $adminPassword = $_POST['admin-password'];
-  $hashOptions = ['cost' => 12];
+  $hashOptions = ['cost' => 11];
   $adminPasswordHash = password_hash($adminPassword, PASSWORD_BCRYPT, $hashOptions);
   
   try {
@@ -113,7 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a class="link-secondary" href="../../admin.php">Home</a></li>
-              <li class="breadcrumb-item active text-light" aria-current="page">Add admin</li>
+              <li class="breadcrumb-item"><a class="link-secondary" href="./list.php">Admin list</a></li>
+              <li class="breadcrumb-item active text-light" aria-current="page">Add</li>
             </ol>
           </nav>
         </div>
