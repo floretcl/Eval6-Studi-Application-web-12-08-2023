@@ -40,7 +40,7 @@ if (isset($_POST['login-form-email']) && isset($_POST['login-form-password'])) {
       $message = "Error: invalid identifiers";
       while ($admin = $statement->fetchObject('Admin')) {
           $hash = $admin->getPasswordHash();
-          $options = array('cost' => 12);
+          $options = array('cost' => 11);
           if (password_verify($password, $hash)) {
             $message = "Valid identifiers";
 
