@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 try {
   // Admin request
-  $sql = 'SELECT 
+  $sql = 'SELECT
     Admin.admin_uuid AS uuid,
     Admin.admin_firstname AS firstName,
     Admin.admin_lastname AS lastName,
@@ -130,7 +130,7 @@ try {
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a class="link-secondary" href="../../admin.php">Home</a></li>
               <li class="breadcrumb-item"><a class="link-secondary" href="./list.php">Admin list</a></li>
-              <li class="breadcrumb-item active text-light" aria-current="page">Admin</li>
+              <li class="breadcrumb-item active text-light" aria-current="page">Edit</li>
             </ol>
           </nav>
         </div>
@@ -152,7 +152,8 @@ try {
               <?php endif ?>
               <div class="mb-3">
                 <label for="admin-uuid" class="form-label">UUID :</label>
-                <input type="text" class="form-control" id="admin-uuid" name="admin-uuid" value="<?= $admin->getUUID() ?>" readonly required>
+                <input type="text" class="form-control" id="admin-uuid" name="admin-uuid" value="<?= $admin->getUUID() ?>" maxlength="36" aria-describedby="uuid-help" readonly required>
+                <div id="uuid-help" class="form-text text-light">Read only.</div>
               </div>
               <div class="mb-3">
                 <label for="admin-firstname" class="form-label">Firstname :</label>
@@ -170,8 +171,14 @@ try {
                 <div id="email-help" class="form-text text-light">Required. 254 characters max.</div>
               </div>
               <div class="mb-3">
+                <label for="admin-password-hash" class="form-label">Password hash :</label>
+                <input type="text" class="form-control" id="admin-password-hash" name="admin-password-hash" value="<?= $admin->getPasswordHash() ?>" aria-describedby="password-hash-help" readonly required>
+                <div id="password-hash-help" class="form-text text-light">Read only.</div>
+              </div>
+              <div class="mb-3">
                 <label for="admin-creation-date" class="form-label">Creation date :</label>
-                <input type="datetime-local" class="form-control" id="admin-creation-date" name="admin-creation-date" value="<?= $admin->getCreationDate() ?>" readonly required>
+                <input type="datetime-local" class="form-control" id="admin-creation-date" name="admin-creation-date" value="<?= $admin->getCreationDate() ?>" aria-describedby="creation-date-help" readonly required>
+                  <div id="creation-date-help" class="form-text text-light">Read only.</div>
               </div>
               <div class="row justify-content-center my-4">
                 <div class="col-12">
