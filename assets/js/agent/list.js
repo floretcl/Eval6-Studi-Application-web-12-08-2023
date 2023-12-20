@@ -31,8 +31,8 @@ const disableDeleteButton = () => {
 const toggleCheckboxes = (checkbox, groupCheckbox) => {
     if (checkbox.checked) {
         let activateGroupCheckbox = true;
-        for (const cbox of allCheckboxes) { 
-            if (!cbox.checked && cbox != groupCheckbox) {
+        for (const checkbox of allCheckboxes) {
+            if (!checkbox.checked && checkbox !== groupCheckbox) {
                 activateGroupCheckbox = false;
                 break;
             }
@@ -44,8 +44,8 @@ const toggleCheckboxes = (checkbox, groupCheckbox) => {
     } else {
         groupCheckbox.checked = false;
         let disableButtons = true
-        for (const cbox of allCheckboxes) { 
-            if (cbox.checked && cbox != groupCheckbox) {
+        for (const checkbox of allCheckboxes) {
+            if (checkbox.checked && checkbox !== groupCheckbox) {
                 disableButtons = false;
                 break;
             }
@@ -57,7 +57,7 @@ const toggleCheckboxes = (checkbox, groupCheckbox) => {
 }
 
 for (const checkbox of allCheckboxes) {
-    if (checkbox != groupCheckbox) {
+    if (checkbox !== groupCheckbox) {
         checkbox.addEventListener('change', () => {
             toggleCheckboxes(checkbox, groupCheckbox);
         })
@@ -78,13 +78,13 @@ groupCheckbox.addEventListener('change', () => {
 
 deleteConfirmButton.addEventListener('click', () => {
     for (const checkbox of allCheckboxes) {
-        if (checkbox.checked && checkbox != groupCheckbox) {
+        if (checkbox.checked && checkbox !== groupCheckbox) {
             let formData = new FormData();
             formData.append('delete', checkbox.value)
-            fetch(`http://127.0.0.1:81/admin/agent/list.php`, {
-            method: 'POST',
-            mode: 'same-origin',
-            body: formData
+            fetch(`http://localhost:81/admin/agent/list.php`, {
+                method: 'POST',
+                mode: 'same-origin',
+                body: formData
             })
             .then((response) => {
                 if (response.ok) {
