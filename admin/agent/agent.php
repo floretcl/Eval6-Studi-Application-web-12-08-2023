@@ -316,7 +316,7 @@ try {
                             <label for="agent-missions-code-names" class="form-label">Missions :</label>
                             <select class="form-select" id="agent-missions-code-names" name="agent-missions-code-names[]" size="<?= count($missionsCodeNames) ?>"
                                     multiple aria-label="agent missions uuid" aria-describedby="missions-help"
-                                    readonly required>
+                                    disabled required>
                                     <?php foreach ($missionsCodeNames as $mission) : ?>
                                         <option value="<?= $mission ?>" selected><?= $mission ?></option>
                                     <?php endforeach ?>
