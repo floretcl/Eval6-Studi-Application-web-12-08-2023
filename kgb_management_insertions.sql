@@ -1233,79 +1233,75 @@ INSERT INTO Mission_Target (
     (SELECT target_uuid FROM Target WHERE target_code_name = 'Silver Dragonfly')
 );
 
-INSERT INTO Mission_Agent (
-    mission_uuid,
-    agent_uuid
-) VALUES (
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Alpha'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '001')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Alpha'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '002')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Beta'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '003')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Gamma'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '004')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Delta'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '005')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Epsilon'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '006')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Zeta'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '007')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Eta'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '008')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Theta'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '009')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Iota'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '010')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Kappa'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '011')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Lambda'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '012')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Mu'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '013')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Nu'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '014')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Xi'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '015')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Omicron'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '016')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Pi'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '017')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Rho'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '018')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Sigma'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '019')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Tau'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '020')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Upsilon'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '021')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Phi'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '022')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Phi'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '023')
-),(
-    (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Chi'),
-    (SELECT agent_uuid FROM Agent WHERE agent_code = '024')
-);
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Alpha')
+WHERE agent_code = '001';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Alpha')
+WHERE agent_code = '002';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Beta')
+WHERE agent_code = '003';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Gamma')
+WHERE agent_code = '004';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Delta')
+WHERE agent_code = '005';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Epsilon')
+WHERE agent_code = '006';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Zeta')
+WHERE agent_code = '007';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Eta')
+WHERE agent_code = '008';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Theta')
+WHERE agent_code = '009';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Iota')
+WHERE agent_code = '010';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Kappa')
+WHERE agent_code = '011';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Lambda')
+WHERE agent_code = '012';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Mu')
+WHERE agent_code = '013';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Nu')
+WHERE agent_code = '014';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Xi')
+WHERE agent_code = '015';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Omicron')
+WHERE agent_code = '016';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Pi')
+WHERE agent_code = '017';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Rho')
+WHERE agent_code = '018';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Sigma')
+WHERE agent_code = '019';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Tau')
+WHERE agent_code = '020';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Upsilon')
+WHERE agent_code = '021';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Phi')
+WHERE agent_code = '022';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Phi')
+WHERE agent_code = '023';
+UPDATE Agent
+SET agent_mission = (SELECT mission_uuid FROM Mission WHERE mission_code_name = 'Mission Chi')
+WHERE agent_code = '024';
