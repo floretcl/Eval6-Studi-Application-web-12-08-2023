@@ -7,6 +7,7 @@ class Agent extends stdClass {
     private ?string $lastName;
     private string $birthday;
     private string $nationality;
+    private string $mission;
 
     /*
     public function __construct(
@@ -50,5 +51,8 @@ class Agent extends stdClass {
     }
     public function getNationality(): string {
         return $this->nationality;
+    }
+    public function getMission(): string {
+        return $this->mission;
     }
 }
