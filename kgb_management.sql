@@ -62,7 +62,8 @@ CREATE TABLE Agent (
     agent_firstname VARCHAR(30),
     agent_lastname VARCHAR(30),
     agent_birthday DATETIME NOT NULL,
-    agent_nationality VARCHAR(50) NOT NULL
+    agent_nationality VARCHAR(50) NOT NULL,
+    agent_mission VARCHAR(36)
 );
 
 CREATE TABLE Target (
@@ -93,6 +94,10 @@ CREATE TABLE Hideout (
 
 /* FOREIGN KEYS */
 
+ALTER TABLE Agent
+ADD CONSTRAINT Fk_Agent_Mission
+FOREIGN KEY (agent_mission) REFERENCES Mission(mission_uuid);
+
 ALTER TABLE Mission 
 ADD CONSTRAINT Fk_Mission_specialty
 FOREIGN KEY (mission_specialty) REFERENCES Specialty(specialty_id);
@@ -115,23 +120,15 @@ CREATE TABLE Mission_Hideout (
     mission_uuid VARCHAR(36) NOT NULL, 
     hideout_uuid VARCHAR(36) NOT NULL, 
     PRIMARY KEY (mission_uuid, hideout_uuid),
-    FOREIGN KEY (mission_uuid) REFERENCES Mission(mission_uuid),
-    FOREIGN KEY (hideout_uuid) REFERENCES Hideout(hideout_uuid)
-);
-
-CREATE TABLE Mission_Agent (
-    mission_uuid VARCHAR(36) NOT NULL,
-    agent_uuid VARCHAR(36) NOT NULL,
-    PRIMARY KEY (mission_uuid, agent_uuid),
-    FOREIGN KEY (mission_uuid) REFERENCES Mission(mission_uuid),
-    FOREIGN KEY (agent_uuid) REFERENCES Agent(agent_uuid)
+    FOREIGN KEY (mission_uuid) REFERENCES Mission(mission_uuid) ON DELETE CASCADE,
+    FOREIGN KEY (hideout_uuid) REFERENCES Hideout(hideout_uuid) ON DELETE CASCADE
 );
 
 CREATE TABLE Mission_Contact (
     mission_uuid VARCHAR(36) NOT NULL, 
     contact_uuid VARCHAR(36) NOT NULL, 
     PRIMARY KEY (mission_uuid, contact_uuid),
-    FOREIGN KEY (mission_uuid) REFERENCES Mission(mission_uuid),
+    FOREIGN KEY (mission_uuid) REFERENCES Mission(mission_uuid) ON DELETE CASCADE,
     FOREIGN KEY (contact_uuid) REFERENCES Contact(contact_uuid)
 );
 
@@ -139,13 +136,13 @@ CREATE TABLE Mission_Target (
     mission_uuid VARCHAR(36) NOT NULL,
     target_uuid VARCHAR(36) NOT NULL,
     PRIMARY KEY (mission_uuid, target_uuid),
-    FOREIGN KEY (mission_uuid) REFERENCES Mission(mission_uuid),
+    FOREIGN KEY (mission_uuid) REFERENCES Mission(mission_uuid) ON DELETE CASCADE,
     FOREIGN KEY (target_uuid) REFERENCES Target(target_uuid)
 );
 
 CREATE TABLE Agent_Specialty (
     agent_uuid VARCHAR(36) NOT NULL,
     specialty_id SMALLINT NOT NULL,
-    FOREIGN KEY (agent_uuid) REFERENCES Agent(agent_uuid),
+    FOREIGN KEY (agent_uuid) REFERENCES Agent(agent_uuid) ON DELETE CASCADE,
     FOREIGN KEY (specialty_id) REFERENCES Specialty(specialty_id)
 );
