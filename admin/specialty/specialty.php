@@ -152,7 +152,7 @@ try {
                             <div id="specialty-id-help" class="form-text text-light">Read only.</div>
                         </div>
                         <div class="mb-3">
-                            <label for="specialty-name" class="form-label">Code :</label>
+                            <label for="specialty-name" class="form-label">Name :</label>
                             <input type="text" class="form-control" id="specialty-name" name="specialty-name"
                                    value="<?= $specialty->getName() ?>" maxlength="50" aria-describedby="specialty-name-help"
                                    required>
