@@ -58,10 +58,10 @@ try {
     Agent.agent_firstname AS firstName,
     Agent.agent_lastname AS lastName,
     Agent.agent_birthday AS birthday,
-    Agent.agent_nationality AS nationality
-    FROM (Mission_Agent
-    INNER JOIN Agent ON Agent.agent_uuid = Mission_Agent.agent_uuid)
-    WHERE mission_uuid = :id';
+    Agent.agent_nationality AS nationality,
+    Agent.agent_mission AS mission
+    FROM Agent
+    WHERE agent_mission = :id';
   $statement = $pdo->prepare($sql);
   $statement->bindParam(':id', $_GET['id'], PDO::PARAM_STR);
   if ($statement->execute()) {

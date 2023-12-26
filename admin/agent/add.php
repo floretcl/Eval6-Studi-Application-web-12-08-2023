@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 try {
   // Specialties request
   $sql = 'SELECT
-   Specialty.specialty_id AS id,
+    Specialty.specialty_id AS id,
     Specialty.specialty_name AS name
     FROM Specialty';
   $statement = $pdo->prepare($sql);

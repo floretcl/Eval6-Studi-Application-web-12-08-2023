@@ -109,7 +109,8 @@ try {
         Agent.agent_firstname AS firstName,
         Agent.agent_lastname AS lastName,
         Agent.agent_birthday AS birthday,
-        Agent.agent_nationality AS nationality
+        Agent.agent_nationality AS nationality,
+        Agent.agent_mission AS mission
         FROM Agent
         WHERE Agent.agent_uuid = :uuid';
     $statement = $pdo->prepare($sql);
@@ -165,27 +166,6 @@ try {
     }
 } catch (PDOException $e) {
     $message = "Error: unable to display specialties list";
-}
-
-try {
-    $sql = 'SELECT 
-        Mission.mission_code_name AS missionCodeName
-        FROM (Mission_Agent 
-        INNER JOIN Mission ON Mission.mission_uuid = Mission_Agent.mission_uuid)
-        WHERE agent_uuid = :uuid';
-    $statement = $pdo->prepare($sql);
-    $statement->bindParam(':uuid', $_GET['id'], PDO::PARAM_STR);
-    if ($statement->execute()) {
-        while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
-            $missionsCodeNames[] = $result['missionCodeName'];
-        }
-    } else {
-        $error = $statement->errorInfo();
-        $logFile = './logs/errors.log';
-        error_log('Error : ' . $error);
-    }
-} catch (PDOException $e) {
-    echo "error: unable to display agent mission(s)";
 }
 ?>
 
@@ -311,19 +291,13 @@ try {
                             </select>
                             <div id="specialties-help" class="form-text text-light">Required. At least one.</div>
                         </div>
-                        <?php if (isset($missionsCodeNames)) : ?>
                         <div class="mb-3">
-                            <label for="agent-missions-code-names" class="form-label">Missions :</label>
-                            <select class="form-select" id="agent-missions-code-names" name="agent-missions-code-names[]" size="<?= count($missionsCodeNames) ?>"
-                                    multiple aria-label="agent missions uuid" aria-describedby="missions-help"
-                                    disabled required>
-                                    <?php foreach ($missionsCodeNames as $mission) : ?>
-                                        <option value="<?= $mission ?>" selected><?= $mission ?></option>
-                                    <?php endforeach ?>
-                            </select>
-                            <div id="missions-help" class="form-text text-light">Read only.</div>
+                            <label for="agent-mission" class="form-label">Mission :</label>
+                            <input type="text" class="form-control" id="agent-mission" name="agent-mission"
+                                   value="<?= $agent->getMission() ?>" maxlength="36"
+                                   aria-describedby="mission-help" required readonly>
+                            <div id="mission-help" class="form-text text-light">Read only.</div>
                         </div>
-                        <?php endif ?>
                         <div class="row justify-content-center my-4">
                             <div class="col-12">
                                 <button type="submit" id="save-button" class="btn btn-primary me-2">Save</button>
