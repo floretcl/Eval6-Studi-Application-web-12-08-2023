@@ -205,13 +205,13 @@ if (isset($reload)) {
               <tr>
               <td class="font-monospace"><input id="table-checkbox-<?= $missionType->getName(); ?>" name="table-checkbox-<?= $missionType->getName(); ?>" class="table-checkbox" type="checkbox" value="<?= $missionType->getId(); ?>"></td>
               <td class="font-monospace">
-                <a href="./mission-type.php?id=<?= $missionType->getId(); ?>">
-                  <?= $missionType->getId(); ?>
-                </a>
+                  <?= $missionType->getId() ?>
               </td>
-              <?php
-              echo '<td class="font-monospace">' . $missionType->getName() . '</td>';
-              ?>
+              <td class="font-monospace">
+                  <a href="./mission-type.php?id=<?= $missionType->getId(); ?>">
+                      <?= $missionType->getName(); ?>
+                  </a>
+              </td>
               </tr>
               <?php endforeach ?>
             <?php endif ?>

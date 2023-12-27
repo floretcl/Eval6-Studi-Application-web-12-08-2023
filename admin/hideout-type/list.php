@@ -205,13 +205,13 @@ if (isset($reload)) {
               <tr>
               <td class="font-monospace"><input id="table-checkbox-<?= $hideoutType->getName(); ?>" name="table-checkbox-<?= $hideoutType->getName(); ?>" class="table-checkbox" type="checkbox" value="<?= $hideoutType->getId(); ?>"></td>
               <td class="font-monospace">
-                <a href="./hideout-type.php?id=<?= $hideoutType->getId(); ?>">
-                  <?= $hideoutType->getId(); ?>
-                </a>
+                  <?= $hideoutType->getId() ?>
               </td>
-              <?php
-              echo '<td class="font-monospace">' . $hideoutType->getName() . '</td>';
-              ?>
+              <td class="font-monospace">
+                  <a href="./hideout-type.php?id=<?= $hideoutType->getId(); ?>">
+                      <?= $hideoutType->getName(); ?>
+                  </a>
+              </td>
               </tr>
               <?php endforeach ?>
             <?php endif ?>
