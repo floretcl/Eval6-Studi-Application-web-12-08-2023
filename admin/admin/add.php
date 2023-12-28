@@ -28,8 +28,8 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] == true && isset($_SESSION['
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $adminFirstname = $_POST['admin-firstname'];
-  $adminLastname = $_POST['admin-lastname'];
+  $adminFirstname = $_POST['admin-firstname'] ?? '';
+  $adminLastname = $_POST['admin-lastname'] ?? '';
   $adminEmail = $_POST['admin-email'];
   $adminPassword = $_POST['admin-password'];
   $hashOptions = ['cost' => 11];
