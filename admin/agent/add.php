@@ -5,6 +5,7 @@ use Dotenv\Dotenv;
 require __DIR__ . '../../../vendor/autoload.php';
 require_once __DIR__ . '../../../models/Agent.php';
 require_once __DIR__ . '../../../models/Specialty.php';
+require_once __DIR__ . '../../../models/Mission.php';
 
 // Loading dotenv to load .env
 $dotenv = Dotenv::createImmutable(__DIR__ . '../../../');
@@ -30,11 +31,12 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] == true && isset($_SESSION['
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $agentCode = $_POST['agent-code'];
-  $agentFirstname = $_POST['agent-firstname'];
-  $agentLastname = $_POST['agent-lastname'];
+  $agentFirstname = $_POST['agent-firstname'] ?? '';
+  $agentLastname = $_POST['agent-lastname'] ?? '';
   $agentBirthday = $_POST['agent-birthday'];
   $agentNationality = $_POST['agent-nationality'];
   $agentSpecialties = $_POST['agent-specialties'];
+  $agentMission = $_POST['agent-mission'] ?? '';
 
   try {
     // Agent add request
@@ -78,6 +80,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 error_log('Error : ' . $error);
             }
         }
+        if (isset($agentMission) && $agentMission != '') {
+            $sql = 'UPDATE Agent
+            SET agent_mission = :mission_uuid
+            WHERE agent_uuid = (SELECT agent_uuid FROM Agent WHERE agent_code = :agent_code)';
+            $statement = $pdo->prepare($sql);
+            $statement->bindParam(':agent_code', $agentCode, PDO::PARAM_STR);
+            $statement->bindParam(':mission_uuid', $agentMission, PDO::PARAM_STR);
+            if ($statement->execute()) {
+                $message = "Agent mission updated";
+            } else {
+                $error = $statement->errorInfo();
+                $logFile = '../../logs/errors.log';
+                error_log('Error : ' . $error);
+            }
+        }
       $message = "Agent added";
       header("Location: list.php");
     } else {
@@ -108,6 +125,37 @@ try {
   }
 } catch (PDOException $e) {
   $message = "Error: unable to display specialties list";
+}
+
+try {
+    // Missions request
+    $sql = 'SELECT 
+        Mission.mission_uuid AS uuid,
+        Mission.mission_code_name AS codeName,
+        Mission.mission_title AS title,
+        Mission.mission_description AS description,
+        Mission.mission_country AS country,
+        Mission_type.mission_type_name AS type,
+        Specialty.specialty_name AS specialty,
+        Mission_status.mission_status_name AS status,
+        Mission.mission_start_date AS startDate,
+        Mission.mission_end_date AS endDate
+        FROM (((Mission
+        INNER JOIN Mission_type ON Mission.mission_type = Mission_type.mission_type_id)
+        INNER JOIN Specialty ON Mission.mission_specialty = Specialty.specialty_id)
+        INNER JOIN Mission_status ON Mission.mission_status = Mission_status.mission_status_id)';
+    $statement = $pdo->prepare($sql);
+    if ($statement->execute()) {
+        while ($mission = $statement->fetchObject('Mission')) {
+            $missions[] = $mission;
+        }
+    } else {
+        $error = $statement->errorInfo();
+        $logFile = '../../logs/errors.log';
+        error_log('Error : ' . $error);
+    }
+} catch (PDOException $e) {
+    $message = "Error: unable to display the mission list";
 }
 ?>
 
@@ -210,8 +258,18 @@ try {
                     <option value="<?= $specialty->getId() ?>"><?= $specialty->getName() ?></option>
                   <?php endforeach ?>
                 </select>
-                <div id="specialties-help" class="form-text text-light">Required. At least one.</div>
+                <div id="specialties-help" class="form-text text-light">Required. Press <kbd>Ctrl</kbd>,<kbd>Cmd</kbd> or <kbd>Shift</kbd> to select multiple specialties.</div>
               </div>
+                <div class="mb-3">
+                    <label for="agent-mission" class="form-label">Mission :</label>
+                    <select class="form-select" id="agent-mission" name="agent-mission"
+                            aria-label="agent mission">
+                        <option value="">None</option>
+                        <?php foreach ($missions as $mission) : ?>
+                            <option value="<?= $mission->getUuid() ?>"><?= $mission->getCodeName() ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
               <div class="row justify-content-center my-4">
                 <div class="col-12">
                   <button type="submit" id="save-button" class="btn btn-primary me-2">Save</button>
