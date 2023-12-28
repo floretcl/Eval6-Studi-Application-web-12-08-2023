@@ -28,14 +28,16 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] == true && isset($_SESSION['
     exit;
 }
 
+$contactMissions = [];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contactUUID = $_POST['contact-uuid'];
     $contactCodeName = $_POST['contact-code-name'];
-    $contactFirstname = $_POST['contact-firstname'];
-    $contactLastname = $_POST['contact-lastname'];
+    $contactFirstname = $_POST['contact-firstname'] ?? "";
+    $contactLastname = $_POST['contact-lastname'] ?? "";
     $contactBirthday = $_POST['contact-birthday'];
     $contactNationality = $_POST['contact-nationality'];
-    $contactMissions = $_POST['contact-missions'];
+    $contactMissions = $_POST['contact-missions'] ?? [];
 
     try {
         // Mission_Contact delete request
@@ -51,26 +53,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             error_log('Error : ' . $error);
         }
 
-        // Agent_Specialty insert request
-        $sql = 'INSERT INTO Mission_Contact (
+        if (isset($contactMissions)) {
+            // Contact mission insert request
+            $sql = 'INSERT INTO Mission_Contact (
                 contact_uuid,
                 mission_uuid
             ) VALUES (
                 :contact_uuid,
                 :mission_uuid
             )';
-        $statement = $pdo->prepare($sql);
-        foreach ($contactMissions as $mission) {
-            $statement->bindParam(':contact_uuid', $contactUUID, PDO::PARAM_STR);
-            $statement->bindParam(':mission_uuid', $mission, PDO::PARAM_STR);
-            if ($statement->execute()) {
-                $message = "Contact Missions updated";
-            } else {
-                $error = $statement->errorInfo();
-                $logFile = '../../logs/errors.log';
-                error_log('Error : ' . $error);
+            $statement = $pdo->prepare($sql);
+            foreach ($contactMissions as $mission) {
+                if (!empty($mission) || $mission != '') {
+                    $statement->bindParam(':contact_uuid', $contactUUID, PDO::PARAM_STR);
+                    $statement->bindParam(':mission_uuid', $mission, PDO::PARAM_STR);
+                    if ($statement->execute()) {
+                        $message = "Contact Missions updated";
+                    } else {
+                        $error = $statement->errorInfo();
+                        $logFile = '../../logs/errors.log';
+                        error_log('Error : ' . $error);
+                    }
+                }
             }
         }
+
         // Contact update request
         $sql = 'UPDATE Contact
             SET 
@@ -257,9 +264,9 @@ try {
                         <div class="mb-3">
                             <label for="contact-code-name" class="form-label">Codename :</label>
                             <input type="text" class="form-control" id="contact-code-name" name="contact-code-name"
-                                   value="<?= $contact->getCodeName() ?>" maxlength="6" aria-describedby="code-name-help"
+                                   value="<?= $contact->getCodeName() ?>" maxlength="30" aria-describedby="code-name-help"
                                    required>
-                            <div id="code-name-help" class="form-text text-light">Required. 6 characters max.</div>
+                            <div id="code-name-help" class="form-text text-light">Required. 30 characters max.</div>
                         </div>
                         <div class="mb-3">
                             <label for="contact-firstname" class="form-label">Firstname :</label>
@@ -292,6 +299,7 @@ try {
                             <label for="contact-missions" class="form-label">Missions :</label>
                             <select class="form-select" id="contact-missions" name="contact-missions[]" size="5"
                                     multiple aria-label="contact missions" aria-describedby="missions-help">
+                                <option value="">None</option>
                                 <?php foreach ($missions as $mission) : ?>
                                     <option value="<?= $mission->getUuid() ?>" <?= in_array($mission->getUuid(), $contactMissions, true) ? "selected" : ""; ?>><?= $mission->getCodeName() ?></option>
                                 <?php endforeach ?>
