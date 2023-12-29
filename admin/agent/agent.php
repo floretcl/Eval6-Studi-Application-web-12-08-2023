@@ -345,7 +345,7 @@ try {
                                     aria-label="agent mission">
                                 <option value="">None</option>
                                 <?php foreach ($missions as $mission) : ?>
-                                    <option value="<?= $mission->getUuid() ?>" <?= $mission->getUuid() == $agent->getMission() ? "selected" : ""; ?>><?= $mission->getCodeName() ?></option>
+                                    <option value="<?= $mission->getUUID() ?>" <?= $mission->getUUID() == $agent->getMission() ? "selected" : ""; ?>><?= $mission->getCodeName() ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>

@@ -224,7 +224,7 @@ try {
                             multiple aria-label="target missions" aria-describedby="missions-help">
                         <option value="">None</option>
                         <?php foreach ($missions as $mission) : ?>
-                            <option value="<?= $mission->getUuid() ?>"><?= $mission->getCodeName() ?></option>
+                            <option value="<?= $mission->getUUID() ?>"><?= $mission->getCodeName() ?></option>
                         <?php endforeach ?>
                     </select>
                     <div id="missions-help" class="form-text text-light">Press <kbd>Ctrl</kbd>,<kbd>Cmd</kbd> or <kbd>Shift</kbd> to select multiple missions.</div>
