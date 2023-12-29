@@ -35,6 +35,60 @@ if (isset($_GET['search'])) {
 
 if (($_SERVER['REQUEST_METHOD'] === 'POST')) {
   $uuid = $_POST['delete'];
+
+    // Mission_Hideout delete request
+    $sql = 'DELETE FROM Mission_Hideout
+                WHERE mission_uuid = :uuid';
+    $statement = $pdo->prepare($sql);
+    $statement->bindParam(':uuid', $uuid, PDO::PARAM_STR);
+    if ($statement->execute()) {
+        $message = "Mission hideouts deleted";
+    } else {
+        $error = $statement->errorInfo();
+        $logFile = '../../logs/errors.log';
+        error_log('Error : ' . $error);
+    }
+
+    // Mission_Contact delete request
+    $sql = 'DELETE FROM Mission_Contact
+                WHERE mission_uuid = :uuid';
+    $statement = $pdo->prepare($sql);
+    $statement->bindParam(':uuid', $uuid, PDO::PARAM_STR);
+    if ($statement->execute()) {
+        $message = "Mission contacts deleted";
+    } else {
+        $error = $statement->errorInfo();
+        $logFile = '../../logs/errors.log';
+        error_log('Error : ' . $error);
+    }
+
+    // Mission_Target delete request
+    $sql = 'DELETE FROM Mission_Target
+                WHERE mission_uuid = :uuid';
+    $statement = $pdo->prepare($sql);
+    $statement->bindParam(':uuid', $uuid, PDO::PARAM_STR);
+    if ($statement->execute()) {
+        $message = "Mission targets deleted";
+    } else {
+        $error = $statement->errorInfo();
+        $logFile = '../../logs/errors.log';
+        error_log('Error : ' . $error);
+    }
+
+    // Agent mission update request
+    $sql = 'UPDATE Agent
+                SET agent_mission = NULL
+                WHERE agent_mission = :mission_uuid';
+    $statement = $pdo->prepare($sql);
+    $statement->bindParam(':mission_uuid', $uuid, PDO::PARAM_STR);
+    if ($statement->execute()) {
+        $message = "Agent mission deleted";
+    } else {
+        $error = $statement->errorInfo();
+        $logFile = '../../logs/errors.log';
+        error_log('Error : ' . $error);
+    }
+
   try {
     // Delete mission request
     $sql = 'DELETE 

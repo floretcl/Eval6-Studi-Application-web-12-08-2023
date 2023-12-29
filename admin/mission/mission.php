@@ -7,6 +7,10 @@
     require_once __DIR__ . '../../../models/MissionType.php';
     require_once __DIR__ . '../../../models/Specialty.php';
     require_once __DIR__ . '../../../models/MissionStatus.php';
+    require_once __DIR__ . '../../../models/Target.php';
+    require_once __DIR__ . '../../../models/Hideout.php';
+    require_once __DIR__ . '../../../models/Contact.php';
+    require_once __DIR__ . '../../../models/Agent.php';
 
     // Loading dotenv to load .env
     $dotenv = Dotenv::createImmutable(__DIR__ . '../../../');
@@ -30,6 +34,11 @@
         exit;
     }
 
+    $missionTargets = [];
+    $missionAgents = [];
+    $missionContacts = [];
+    $missionHideouts = [];
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $missionUUID = $_POST['mission-uuid'];
         $missionCodeName = $_POST['mission-codename'];
@@ -41,8 +50,146 @@
         $missionStatus = $_POST['mission-status'];
         $missionStartDate = $_POST['mission-start-date'];
         $missionEndDate = $_POST['mission-end-date'];
+        $missionHideouts = $_POST['mission-hideouts'];
+        $missionContacts = $_POST['mission-contacts'];
+        $missionAgents = $_POST['mission-agents'];
+        $missionTargets = $_POST['mission-targets'];
 
         try {
+            // Mission_Hideout delete request
+            $sql = 'DELETE FROM Mission_Hideout
+                WHERE mission_uuid = :uuid';
+            $statement = $pdo->prepare($sql);
+            $statement->bindParam(':uuid', $missionUUID, PDO::PARAM_STR);
+            if ($statement->execute()) {
+                $message = "Mission hideouts deleted";
+            } else {
+                $error = $statement->errorInfo();
+                $logFile = '../../logs/errors.log';
+                error_log('Error : ' . $error);
+            }
+
+            // Mission_Hideout insert request
+            $sql = 'INSERT INTO Mission_Hideout (
+                    mission_uuid,
+                    hideout_uuid
+                ) VALUES (
+                    :mission_uuid,
+                    :hideout_uuid
+                )';
+            $statement = $pdo->prepare($sql);
+            foreach ($missionHideouts as $hideoutUUID) {
+                $statement->bindParam(':mission_uuid', $missionUUID, PDO::PARAM_STR);
+                $statement->bindParam(':hideout_uuid', $hideoutUUID, PDO::PARAM_STR);
+                if ($statement->execute()) {
+                    $message = "Mission hideout updated";
+                } else {
+                    $error = $statement->errorInfo();
+                    $logFile = '../../logs/errors.log';
+                    error_log('Error : ' . $error);
+                }
+            }
+
+            // Mission_Contact delete request
+            $sql = 'DELETE FROM Mission_Contact
+                WHERE mission_uuid = :uuid';
+            $statement = $pdo->prepare($sql);
+            $statement->bindParam(':uuid', $missionUUID, PDO::PARAM_STR);
+            if ($statement->execute()) {
+                $message = "Mission contacts deleted";
+            } else {
+                $error = $statement->errorInfo();
+                $logFile = '../../logs/errors.log';
+                error_log('Error : ' . $error);
+            }
+
+            // Mission_Contact insert request
+            $sql = 'INSERT INTO Mission_Contact (
+                    mission_uuid,
+                    contact_uuid
+                ) VALUES (
+                    :mission_uuid,
+                    :contact_uuid
+                )';
+            $statement = $pdo->prepare($sql);
+            foreach ($missionContacts as $contactUUID) {
+                $statement->bindParam(':mission_uuid', $missionUUID, PDO::PARAM_STR);
+                $statement->bindParam(':contact_uuid', $contactUUID, PDO::PARAM_STR);
+                if ($statement->execute()) {
+                    $message = "Mission contact updated";
+                } else {
+                    $error = $statement->errorInfo();
+                    $logFile = '../../logs/errors.log';
+                    error_log('Error : ' . $error);
+                }
+            }
+
+            // Mission_Target delete request
+            $sql = 'DELETE FROM Mission_Target
+                WHERE mission_uuid = :uuid';
+            $statement = $pdo->prepare($sql);
+            $statement->bindParam(':uuid', $missionUUID, PDO::PARAM_STR);
+            if ($statement->execute()) {
+                $message = "Mission targets deleted";
+            } else {
+                $error = $statement->errorInfo();
+                $logFile = '../../logs/errors.log';
+                error_log('Error : ' . $error);
+            }
+
+            // Mission_Target insert request
+            $sql = 'INSERT INTO Mission_Target (
+                    mission_uuid,
+                    target_uuid
+                ) VALUES (
+                    :mission_uuid,
+                    :target_uuid
+                )';
+            $statement = $pdo->prepare($sql);
+            foreach ($missionTargets as $targetUUID) {
+                $statement->bindParam(':mission_uuid', $missionUUID, PDO::PARAM_STR);
+                $statement->bindParam(':target_uuid', $targetUUID, PDO::PARAM_STR);
+                if ($statement->execute()) {
+                    $message = "Mission target updated";
+                } else {
+                    $error = $statement->errorInfo();
+                    $logFile = '../../logs/errors.log';
+                    error_log('Error : ' . $error);
+                }
+            }
+
+            // Agent mission update request
+            $sql = 'UPDATE Agent
+                SET agent_mission = NULL
+                WHERE agent_mission = :mission_uuid';
+            $statement = $pdo->prepare($sql);
+            $statement->bindParam(':mission_uuid', $missionUUID, PDO::PARAM_STR);
+            if ($statement->execute()) {
+                $message = "Agent mission deleted";
+            } else {
+                $error = $statement->errorInfo();
+                $logFile = '../../logs/errors.log';
+                error_log('Error : ' . $error);
+            }
+
+            if (isset($missionAgents) && $missionAgents != []) {
+                // Agent mission update request
+                $sql = 'UPDATE Agent
+                    SET agent_mission = :mission_uuid
+                    WHERE agent_uuid = :agent_uuid';
+                $statement = $pdo->prepare($sql);
+                foreach ($missionAgents as $agentUUID) {
+                    $statement->bindParam(':agent_uuid', $agentUUID, PDO::PARAM_STR);
+                    $statement->bindParam(':mission_uuid', $missionUUID, PDO::PARAM_STR);
+                    if ($statement->execute()) {
+                        $message = "Agent mission updated";
+                    } else {
+                        $error = $statement->errorInfo();
+                        $logFile = '../../logs/errors.log';
+                        error_log('Error : ' . $error);
+                    }
+                }
+            }
 
             // Mission update request
             $sql = 'UPDATE Mission
@@ -171,7 +318,7 @@
 
     try {
         $sql = 'SELECT
-            Hideout.hideout_code_name AS codeName
+            Hideout.hideout_code_name AS hideoutCodeName
             FROM (Mission_Hideout
             INNER JOIN Hideout ON Mission_Hideout.hideout_uuid = Hideout.hideout_uuid)
             WHERE mission_uuid = :uuid';
@@ -179,7 +326,7 @@
         $statement->bindParam(':uuid', $_GET['id'], PDO::PARAM_STR);
         if ($statement->execute()) {
             while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
-                $hideoutsCodeName[] = $result['codeName'];
+                $missionHideouts[] = $result['hideoutCodeName'];
             }
         } else {
             $error = $statement->errorInfo();
@@ -191,8 +338,31 @@
     }
 
     try {
+        // Hideouts request
+        $sql = 'SELECT 
+        Hideout.hideout_uuid AS uuid,
+        Hideout.hideout_code_name AS codeName,
+        Hideout.hideout_address AS address,
+        Hideout.hideout_country AS country,
+        Hideout.hideout_type AS hideoutType
+        FROM Hideout';
+        $statement = $pdo->prepare($sql);
+        if ($statement->execute()) {
+            while ($hideout = $statement->fetchObject('Hideout')) {
+                $hideouts[] = $hideout;
+            }
+        } else {
+            $error = $statement->errorInfo();
+            $logFile = '../../logs/errors.log';
+            error_log('Error : ' . $error);
+        }
+    } catch (PDOException $e) {
+        $message = "Error: unable to display hideout list";
+    }
+
+    try {
         $sql = 'SELECT
-            Contact.contact_code_name AS codeName
+            Contact.contact_code_name AS contactCodeName
             FROM (Mission_Contact
             INNER JOIN Contact ON Mission_Contact.contact_uuid = Contact.contact_uuid)
             WHERE mission_uuid = :uuid';
@@ -200,7 +370,7 @@
         $statement->bindParam(':uuid', $_GET['id'], PDO::PARAM_STR);
         if ($statement->execute()) {
             while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
-                $contactsCodeName[] = $result['codeName'];
+                $missionContacts[] = $result['contactCodeName'];
             }
         } else {
             $error = $statement->errorInfo();
@@ -211,47 +381,118 @@
         echo "error: unable to display mission contacts";
     }
 
-try {
-    $sql = 'SELECT
-            Target.target_code_name AS codeName
-            FROM (Mission_Target
-            INNER JOIN Target ON Mission_Target.target_uuid = Target.target_uuid)
-            WHERE mission_uuid = :uuid';
-    $statement = $pdo->prepare($sql);
-    $statement->bindParam(':uuid', $_GET['id'], PDO::PARAM_STR);
-    if ($statement->execute()) {
-        while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
-            $targetsCodeName[] = $result['codeName'];
+    try {
+        // Contacts request
+        $sql = 'SELECT 
+        Contact.contact_uuid AS uuid,
+        Contact.contact_code_name AS codeName,
+        Contact.contact_firstname AS firstName,
+        Contact.contact_lastname AS lastName,
+        Contact.contact_birthday AS birthday,
+        Contact.contact_nationality AS nationality
+        FROM Contact';
+        $statement = $pdo->prepare($sql);
+        if ($statement->execute()) {
+            while ($contact = $statement->fetchObject('Contact')) {
+                $contacts[] = $contact;
+            }
+        } else {
+            $error = $statement->errorInfo();
+            $logFile = '../../logs/errors.log';
+            error_log('Error : ' . $error);
         }
-    } else {
-        $error = $statement->errorInfo();
-        $logFile = './logs/errors.log';
-        error_log('Error : ' . $error);
+    } catch (PDOException $e) {
+        $message = "Error: unable to display contact list";
     }
-} catch (PDOException $e) {
-    echo "error: unable to display mission targets";
-}
 
-try {
-    $sql = 'SELECT
-        Agent.agent_code AS code
-        FROM (Mission_Agent
-        INNER JOIN Agent ON Mission_Agent.agent_uuid = Agent.agent_uuid)
-        WHERE mission_uuid = :uuid';
-    $statement = $pdo->prepare($sql);
-    $statement->bindParam(':uuid', $_GET['id'], PDO::PARAM_STR);
-    if ($statement->execute()) {
-        while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
-            $agentsCode[] = $result['code'];
+    try {
+        $sql = 'SELECT
+                Target.target_code_name AS targetCodeName
+                FROM (Mission_Target
+                INNER JOIN Target ON Mission_Target.target_uuid = Target.target_uuid)
+                WHERE mission_uuid = :uuid';
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':uuid', $_GET['id'], PDO::PARAM_STR);
+        if ($statement->execute()) {
+            while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $missionTargets[] = $result['targetCodeName'];
+            }
+        } else {
+            $error = $statement->errorInfo();
+            $logFile = './logs/errors.log';
+            error_log('Error : ' . $error);
         }
-    } else {
-        $error = $statement->errorInfo();
-        $logFile = './logs/errors.log';
-        error_log('Error : ' . $error);
+    } catch (PDOException $e) {
+        echo "error: unable to display mission targets";
     }
-} catch (PDOException $e) {
-    echo "error: unable to display mission agents";
-}
+
+    try {
+        // Targets request
+        $sql = 'SELECT 
+            Target.target_uuid AS uuid,
+            Target.target_code_name AS codeName,
+            Target.target_firstname AS firstName,
+            Target.target_lastname AS lastName,
+            Target.target_birthday AS birthday,
+            Target.target_nationality AS nationality
+            FROM Target';
+        $statement = $pdo->prepare($sql);
+        if ($statement->execute()) {
+            while ($target = $statement->fetchObject('Target')) {
+                $targets[] = $target;
+            }
+        } else {
+            $error = $statement->errorInfo();
+            $logFile = '../../logs/errors.log';
+            error_log('Error : ' . $error);
+        }
+    } catch (PDOException $e) {
+        $message = "Error: unable to display target list";
+    }
+
+    try {
+        $sql = 'SELECT
+            Agent.agent_code AS agentCode
+            FROM Agent
+            WHERE agent_mission = :uuid';
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':uuid', $_GET['id'], PDO::PARAM_STR);
+        if ($statement->execute()) {
+            while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $missionAgents[] = $result['agentCode'];
+            }
+        } else {
+            $error = $statement->errorInfo();
+            $logFile = './logs/errors.log';
+            error_log('Error : ' . $error);
+        }
+    } catch (PDOException $e) {
+        echo "error: unable to display mission agents";
+    }
+
+    try {
+        // Agents request
+        $sql = 'SELECT 
+        Agent.agent_uuid AS uuid,
+        Agent.agent_code AS code,
+        Agent.agent_firstname AS firstName,
+        Agent.agent_lastname AS lastName,
+        Agent.agent_birthday AS birthday,
+        Agent.agent_nationality AS nationality
+        FROM Agent';
+        $statement = $pdo->prepare($sql);
+        if ($statement->execute()) {
+            while ($agent = $statement->fetchObject('Agent')) {
+                $agents[] = $agent;
+            }
+        } else {
+            $error = $statement->errorInfo();
+            $logFile = '../../logs/errors.log';
+            error_log('Error : ' . $error);
+        }
+    } catch (PDOException $e) {
+        $message = "Error: unable to display agent list";
+    }
 ?>
 
 
@@ -400,52 +641,52 @@ try {
                                    value="<?= $mission->getEndDate() ?>" aria-describedby="end-date-help" required>
                             <div id="end-date-help" class="form-text text-light">Required.</div>
                         </div>
-                        <?php if (isset($hideoutsCodeName)) : ?>
+                        <?php if (isset($hideouts)) : ?>
                             <div class="mb-3">
                                 <label for="mission-hideouts" class="form-label">Hideout(s) :</label>
-                                <select class="form-select" id="mission-hideouts" name="mission-hideouts[]" size="<?= count($hideoutsCodeName) ?>"
-                                        multiple aria-label="mission hideouts" aria-describedby="hideouts-help" disabled>
-                                    <?php foreach ($hideoutsCodeName as $hideout) : ?>
-                                        <option value="<?= $hideout ?>" selected><?= $hideout ?></option>
+                                <select class="form-select" id="mission-hideouts" name="mission-hideouts[]" size="5"
+                                        multiple aria-label="mission hideouts" aria-describedby="hideouts-help">
+                                    <?php foreach ($hideouts as $hideout): ?>
+                                        <option value="<?= $hideout->getUUID() ?>" <?= in_array($hideout->getCodeName(), $missionHideouts, true) ? "selected" : ""; ?>><?= $hideout->getCodename() ?></option>
                                     <?php endforeach ?>
                                 </select>
-                                <div id="hideouts-help" class="form-text text-light"></div>
+                                <div id="hideouts-help" class="form-text text-light">Press <kbd>Ctrl</kbd>,<kbd>Cmd</kbd> or <kbd>Shift</kbd> to select multiple hideouts.</div>
                             </div>
                         <?php endif ?>
-                        <?php if (isset($contactsCodeName)) : ?>
+                        <?php if (isset($contacts)) : ?>
                             <div class="mb-3">
                                 <label for="mission-contacts" class="form-label">Contact(s) :</label>
-                                <select class="form-select" id="mission-contacts" name="mission-contacts[]" size="<?= count($contactsCodeName) ?>"
-                                        multiple aria-label="mission contacts" aria-describedby="contacts-help" disabled>
-                                    <?php foreach ($contactsCodeName as $contact) : ?>
-                                        <option value="<?= $contact ?>" selected><?= $contact ?></option>
+                                <select class="form-select" id="mission-contacts" name="mission-contacts[]" size="5"
+                                        multiple aria-label="mission contacts" aria-describedby="contacts-help">
+                                    <?php foreach ($contacts as $contact): ?>
+                                        <option value="<?= $contact->getUUID() ?>" <?= in_array($contact->getCodeName(), $missionContacts, true) ? "selected" : ""; ?>><?= $contact->getCodeName() ?></option>
                                     <?php endforeach ?>
                                 </select>
-                                <div id="contacts-help" class="form-text text-light"></div>
+                                <div id="contacts-help" class="form-text text-light">Required. Press <kbd>Ctrl</kbd>,<kbd>Cmd</kbd> or <kbd>Shift</kbd> to select multiple contacts.</div>
                             </div>
                         <?php endif ?>
-                        <?php if (isset($agentsCode)) : ?>
+                        <?php if (isset($agents)) : ?>
                             <div class="mb-3">
                                 <label for="mission-agents" class="form-label">Agent(s) :</label>
-                                <select class="form-select" id="mission-agents" name="mission-agents[]" size="<?= count($agentsCode) ?>"
-                                        multiple aria-label="mission agents" aria-describedby="agents-help" disabled>
-                                    <?php foreach ($agentsCode as $agent) : ?>
-                                        <option value="<?= $agent ?>" selected><?= $agent ?></option>
+                                <select class="form-select" id="mission-agents" name="mission-agents[]" size="5"
+                                        multiple aria-label="mission agents" aria-describedby="agents-help">
+                                    <?php foreach ($agents as $agent): ?>
+                                        <option value="<?= $agent->getUUID() ?>" <?= in_array($agent->getCode(), $missionAgents, true) ? "selected" : ""; ?>><?= $agent->getCode() ?></option>
                                     <?php endforeach ?>
                                 </select>
-                                <div id="agents-help" class="form-text text-light">Required.</div>
+                                <div id="agents-help" class="form-text text-light">Required. Press <kbd>Ctrl</kbd>,<kbd>Cmd</kbd> or <kbd>Shift</kbd> to select multiple agents.</div>
                             </div>
                         <?php endif ?>
-                        <?php if (isset($targetsCodeName)) : ?>
+                        <?php if (isset($targets)) : ?>
                             <div class="mb-3">
                                 <label for="mission-targets" class="form-label">Target(s) :</label>
-                                <select class="form-select" id="mission-targets" name="mission-targets[]" size="<?= count($targetsCodeName) ?>"
-                                        multiple aria-label="mission targets" aria-describedby="targets-help" disabled>
-                                    <?php foreach ($targetsCodeName as $target) : ?>
-                                        <option value="<?= $target ?>" selected><?= $target ?></option>
+                                <select class="form-select" id="mission-targets" name="mission-targets[]" size="5"
+                                        multiple aria-label="mission targets" aria-describedby="targets-help">
+                                    <?php foreach ($targets as $target): ?>
+                                        <option value="<?= $target->getUUID() ?>" <?= in_array($target->getCodeName(), $missionTargets, true) ? "selected" : ""; ?>><?= $target->getCodeName() ?></option>
                                     <?php endforeach ?>
                                 </select>
-                                <div id="targets-help" class="form-text text-light">Required.</div>
+                                <div id="targets-help" class="form-text text-light">Required. Press <kbd>Ctrl</kbd>,<kbd>Cmd</kbd> or <kbd>Shift</kbd> to select multiple targets.</div>
                             </div>
                         <?php endif ?>
                         <div class="row justify-content-center my-4">
