@@ -1,19 +1,21 @@
 /*
 
-sudo mysql
-CREATE DATABASE kgb_management;
+(sudo mariadb
 GRANT ALL ON kgb_management.* TO 'username'@'localhost';
 FLUSH PRIVILEGES;
-\q
+\q)
 
-mariadb kgb_management -u username -p */
+mariadb kgb_management -u username -p
+*/
+
+CREATE DATABASE IF NOT EXISTS kgb_management;
 
 /* USERS TABLES */
 
 CREATE TABLE Admin (
     admin_uuid VARCHAR(36) DEFAULT (UUID()) NOT NULL PRIMARY KEY,
-    admin_firstname VARCHAR(30),
-    admin_lastname VARCHAR(30),
+    admin_firstname VARCHAR(30) NOT NULL,
+    admin_lastname VARCHAR(30) NOT NULL,
     admin_email VARCHAR(254) NOT NULL UNIQUE,
     admin_password TEXT NOT NULL,
     admin_creation_date DATETIME DEFAULT CURRENT_TIMESTAMP() NOT NULL
