@@ -1,170 +1,236 @@
 <?php
-use Dotenv\Dotenv;
 
 require __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/models/Mission.php';
 
-// Loading dotenv to load .env const
+use Dotenv\Dotenv;
+use App\Controller\HomeController;
+use App\Controller\AuthController;
+use App\Controller\DetailController;
+use App\Controller\AdministrationController;
+use App\Controller\AdminController;
+use App\Controller\AgentController;
+use App\Controller\ContactController;
+use App\Controller\HideoutController;
+use App\Controller\HideoutTypeController;
+use App\Controller\MissionController;
+use App\Controller\MissionStatusController;
+use App\Controller\MissionTypeController;
+use App\Controller\SpecialtyController;
+use App\Controller\TargetController;
+use App\Controller\ErrorController;
+
+// Loading dotenv to load .env
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// Database variables
-$dsn = 'mysql:dbname=' . $_ENV['database_name'] . ';host=' . $_ENV['database_host'] . ';port=3306';
-$username = $_ENV['database_user'];
-$password = $_ENV['database_password'];
-
-// Requests to mysql database
-$pdo = new PDO($dsn, $username, $password);
 try {
-  // Nb Missions request
-  $sql = 'SELECT COUNT(*) AS nbMissions FROM Mission';
-  $statement = $pdo->prepare($sql);
-  if ($statement->execute()) {
-    while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
-      $nbMissions = (int) $result['nbMissions'];
-    }
-    $perPage = 10;
-    $nbPages = ceil($nbMissions / $perPage);
-    if(isset($_GET['page']) && !empty($_GET['page'])){
-      $currentPage = (int) strip_tags($_GET['page']);
+    if (isset($_GET['controller']) && $_GET['controller'] !== '') {
+        if ($_GET['controller'] == 'detail' && isset($_GET['id'])) {
+            $detailController = new DetailController();
+            $detailController->detail($_GET['id']);
+        } elseif ($_GET['controller'] == 'auth') {
+            $authController = new AuthController();
+            if ($_GET['action'] == 'login') {
+                $authController->login();
+            }
+        } elseif ($_GET['controller'] == 'administration') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $administrationController = new AdministrationController();
+                $administrationController->admin($_SESSION['uuid']);
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'admin') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $adminController = new AdminController();
+                if ($_GET['action'] == 'list') {
+                    $adminController->listAdmin($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $adminController->removeAdmin($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $adminController->addAdmin($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $adminController->editAdmin($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'mission') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $missionController = new MissionController();
+                if ($_GET['action'] == 'list') {
+                    $missionController->listMission($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $missionController->removeMission($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $missionController->addMission($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $missionController->editMission($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'hideout') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $hideoutController = new HideoutController();
+                if ($_GET['action'] == 'list') {
+                    $hideoutController->listHideout($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $hideoutController->removeHideout($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $hideoutController->addHideout($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $hideoutController->editHideout($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'agent') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $agentController = new AgentController();
+                if ($_GET['action'] == 'list') {
+                    $agentController->listAgent($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $agentController->removeAgent($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $agentController->addAgent($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $agentController->editAgent($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'contact') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $contactController = new ContactController();
+                if ($_GET['action'] == 'list') {
+                    $contactController->listContact($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $contactController->removeContact($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $contactController->addContact($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $contactController->editContact($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'target') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $targetController = new TargetController();
+                if ($_GET['action'] == 'list') {
+                    $targetController->listTarget($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $targetController->removeTarget($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $targetController->addTarget($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $targetController->editTarget($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'mission-type') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $missionTypeController = new MissionTypeController();
+                if ($_GET['action'] == 'list') {
+                    $missionTypeController->listMissionType($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $missionTypeController->removeMissionType($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $missionTypeController->addMissionType($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $missionTypeController->editMissionType($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'mission-status') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $missionStatusController = new MissionStatusController();
+                if ($_GET['action'] == 'list') {
+                    $missionStatusController->listMissionStatus($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $missionStatusController->removeMissionStatus($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $missionStatusController->addMissionStatus($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $missionStatusController->editMissionStatus($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'hideout-type') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $hideoutTypeController = new HideoutTypeController();
+                if ($_GET['action'] == 'list') {
+                    $hideoutTypeController->listHideoutType($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $hideoutTypeController->removeHideoutType($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $hideoutTypeController->addHideoutType($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $hideoutTypeController->editHideoutType($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } elseif ($_GET['controller'] == 'specialty') {
+            session_start();
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
+                $specialtyController = new SpecialtyController();
+                if ($_GET['action'] == 'list') {
+                    $specialtyController->listSpecialty($_SESSION['uuid'], $_POST['search'] ?? '');
+                } elseif ($_GET['action'] == 'delete') {
+                    $specialtyController->removeSpecialty($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'add') {
+                    $specialtyController->addSpecialty($_SESSION['uuid']);
+                } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
+                    $specialtyController->editSpecialty($_SESSION['uuid'], $_GET['id']);
+                } else {
+                    throw new Exception("404: Resource not found");
+                }
+            } else {
+                header('Location: ?controller=auth&action=login');
+            }
+        } else {
+            throw new Exception("404: Resource not found");
+        }
     } else {
-      $currentPage = 1;
+        $homeController = new HomeController();
+        $homeController->home();
     }
-    $start = ($currentPage * $perPage) - $perPage;
-  } else {
-    $error = $statement->errorInfo();
-    $logFile = './logs/errors.log';
-    error_log('Error : ' . $error);
-  }
-  // Missions request
-  $sql = 'SELECT 
-    Mission.mission_uuid AS uuid,
-    Mission.mission_code_name AS codeName,
-    Mission.mission_title AS title,
-    Mission.mission_description AS description,
-    Mission.mission_country AS country,
-    Mission_type.mission_type_name AS type,
-    Mission.mission_specialty AS specialty,
-    Mission_status.mission_status_name AS status,
-    Mission.mission_start_date AS startDate,
-    Mission.mission_end_date AS endDate
-    FROM ((Mission
-    INNER JOIN Mission_status ON Mission.mission_status = Mission_status.mission_status_id)
-    INNER JOIN Mission_type ON Mission.mission_type = Mission_type.mission_type_id)
-    ORDER BY Mission.mission_status
-    LIMIT :start, :perPage';
-  $statement = $pdo->prepare($sql);
-  $statement->bindParam(':start', $start, PDO::PARAM_INT);
-  $statement->bindParam(':perPage', $perPage, PDO::PARAM_INT);
-  if ($statement->execute()) {
-    while ($mission = $statement->fetchObject('Mission')) {
-      $missions[] = $mission;
-    }
-  } else {
-    $error = $statement->errorInfo();
-    $logFile = './logs/errors.log';
-    error_log('Error : ' . $error);
-  }
-} catch (PDOException $e) {
-  echo "error: unable to display the mission list";
+} catch (Exception $e) {
+    $errorMessage = $e->getMessage();
+
+    $errorController = new ErrorController();
+    $errorController->error($errorMessage);
 }
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="robots" content="noindex, nofollow">
-
-  <meta name="description" content="KGB missions : mission list, Studi project, Clément FLORET" />
-
-  <!-- BOOTSTRAP CSS, CSS -->
-  <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
-
-  <title>KGB : missions | mission list</title>
-</head>
-
-<body>
-  <div class="d-flex flex-column justify-content-between min-vh-100 bg-dark">
-    <header>
-      <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-        <div class="container">
-          <a class="navbar-brand mb-0 h1 font-monospace" href="./index.php">KGB : missions</a>
-          <a class="btn btn-sm btn-outline-secondary font-monospace" href="./login.php">Login</a>
-        </div>
-      </nav>
-    </header>
-
-    <main>
-      <div class="container text-light">
-        <div class="row text-center my-5">
-          <h1 class="text-uppercase font-monospace">Mission List</h1>
-        </div>
-        <!-- MISSION LIST TABLE -->
-        <div class="row pt-2 pb-2 mt-2 mb-4">
-          <table class="table table-dark table-striped table-hover">
-            <thead>
-              <tr>
-                <th>Code name</th>
-                <th>Title</th>
-                <th>Type</th>
-                <th class="d-none d-md-table-cell">Start date</th>
-                <th class="d-none d-md-table-cell">End date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach($missions as $mission): ?>
-              <tr id="<?= $mission->getUUID() ?>" class="pointer-table-row mission-table-row">
-                <?php
-                echo '<td class="font-monospace">' . $mission->getCodeName() . '</td>';
-                echo '<td class="font-monospace">' . $mission->getTitle() . '</td>';
-                echo '<td class="font-monospace">' . $mission->getStatus() . '</td>';
-                echo '<td class="d-none d-md-table-cell font-monospace">' . $mission->getStartDate() . '</td>';
-                echo '<td class="d-none d-md-table-cell font-monospace">' . $mission->getEndDate() . '</td>';
-                ?>
-              </tr>
-              <?php endforeach ?>
-            </tbody>
-          </table>
-        </div>
-        <!-- PAGINATION -->
-        <div class="d-flex justify-content-center mb-5">
-          <nav aria-label="Missions page navigation">
-            <ul class="pagination">
-              <li class="page-item <?= $currentPage == 1 ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <?php for($page = 1; $page <= $nbPages; $page++): ?>
-                <li class="page-item <?= $page == $currentPage ? 'active' : '' ?>">
-                  <a class="page-link <?= $page == $currentPage ? 'bg-secondary border-secondary' : '' ?> text-dark" href="?page=<?= $page ?>"><?= $page ?></a>
-                </li>
-              <?php endfor ?>
-              <li class="page-item <?= $currentPage == $nbPages ? 'disabled' : '' ?>">
-                <a class="page-link text-dark" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </main>
-
-    <footer>
-      <div class="container bg-dark text-center py-3">
-        <span class="text-light fw-medium font-monospace">KGB : mission management - Studi project</span>
-      </div>
-    </footer>
-  </div>
-  <!-- BOOTSTRAP JS, JS -->
-  <script src="./assets/bootstrap/js/bootstrap.bundle.js"></script>
-  <script src="./assets/js/index.js"></script>
-</body>
-
-</html>

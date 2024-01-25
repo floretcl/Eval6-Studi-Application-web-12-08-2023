@@ -10,5 +10,10 @@
             "rm -rf assets/bootstrap",
             "cp -R vendor/twbs/bootstrap/dist assets/bootstrap"
         ]
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\":"App"
+        }
     }
 }

@@ -1,0 +1,102 @@
+<?php $description = "KGB missions : administration, Studi project, Clément FLORET"?>
+
+<?php ob_start(); ?>
+<script src="../../../assets/js/hideout/hideout.js" defer></script>
+<?php $js = ob_get_clean(); ?>
+
+<?php $title = "KGB : missions | administration | hideout"?>
+
+<?php ob_start(); ?>
+<div class="container-fluid container-sm text-light">
+    <div class="text-center my-5">
+        <h1 class="text-uppercase font-monospace">Administration</h1>
+        <h2 class="text-uppercase font-monospace">Edit hideout</h2>
+    </div>
+    <div>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="link-secondary" href="?controller=administration">Home</a></li>
+                <li class="breadcrumb-item"><a class="link-secondary" href="?controller=hideout&action=list">Hideout list</a></li>
+                <li class="breadcrumb-item active text-light" aria-current="page">Edit</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- ADMIN INTERFACE -->
+    <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) : ?>
+        <div class="row mt-2 pb-2 mb-4 overflow-x-scroll">
+            <form action="" method="post">
+                <?php require(__DIR__ . '/../admin-message.php') ?>
+                <div class="mb-3">
+                    <label for="hideout-uuid" class="form-label">UUID :</label>
+                    <input type="text" class="form-control" id="hideout-uuid" name="hideout-uuid"
+                           value="<?= $hideout->getUUID() ?>" maxlength="36" aria-describedby="hideout-uuid-help"
+                           readonly required>
+                    <div id="hideout-uuid-help" class="form-text text-light">Read only.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="hideout-code-name" class="form-label">Codename :</label>
+                    <input type="text" class="form-control" id="hideout-code-name" name="hideout-code-name"
+                           value="<?= $hideout->getCodeName() ?>" maxlength="30" aria-describedby="code-name-help"
+                           required>
+                    <div id="code-name-help" class="form-text text-light">Required. 30 characters max.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="hideout-address" class="form-label">Address :</label>
+                    <input type="text" class="form-control" id="hideout-address" name="hideout-address"
+                           value="<?= $hideout->getAddress() ?>" maxlength="255"
+                           aria-describedby="address-help">
+                    <div id="address-help" class="form-text text-light">Required. 255 characters max.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="hideout-country" class="form-label">Country :</label>
+                    <input type="text" class="form-control" id="hideout-country" name="hideout-country"
+                           value="<?= $hideout->getCountry() ?>" maxlength="50"
+                           aria-describedby="country-help">
+                    <div id="country-help" class="form-text text-light">Required. 50 characters max.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="hideout-type" class="form-label">Type :</label>
+                    <select class="form-select" id="hideout-type" name="hideout-type"
+                            aria-label="hideout type" aria-describedby="type-help" required>
+                        <?php foreach ($hideoutTypes as $type) : ?>
+                            <option value="<?= $type->getId() ?>" <?= $hideout->getType() == $type->getName() ? 'selected' : '' ?>><?= $type->getName() ?></option>
+                        <?php endforeach ?>
+                    </select>
+                    <div id="type-help" class="form-text text-light">Required.</div>
+                </div>
+                <div class="row justify-content-center my-4">
+                    <div class="col-12">
+                        <button type="submit" id="save-button" class="btn btn-primary me-2">Save</button>
+                        <button type="button" id="delete-button" class="btn btn-danger me-2"
+                                data-bs-toggle="modal" data-bs-target="#delete-modal">Delete
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal text-dark" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete this hideout?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                id="delete-confirm-btn">Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif ?>
+</div>
+<?php $content = ob_get_clean(); ?>
+
+<?php require(__DIR__ . '/../layout-admin.php') ?>

@@ -81,14 +81,14 @@ deleteConfirmButton.addEventListener('click', () => {
         if (checkbox.checked && checkbox !== groupCheckbox) {
             let formData = new FormData();
             formData.append('delete', checkbox.value)
-            fetch(`http://localhost:81/admin/mission-type/list.php`, {
+            fetch(`http://localhost:81/?controller=mission-type&action=delete`, {
                 method: 'POST',
                 mode: 'same-origin',
                 body: formData
             })
             .then((response) => {
                 if (response.ok) {
-                    window.location.reload();
+                    window.location.href = '?controller=mission-type&action=list';
                 }
             })
             .catch((error) => alert("Une erreur s'est produite : " + error)); 
@@ -99,6 +99,6 @@ deleteConfirmButton.addEventListener('click', () => {
 if (resetButton !== null) {
     resetButton.addEventListener('click', () => {
         searchInput.value = '';
-        window.location.href = 'list.php';
+        window.location.href = '?controller=mission-type&action=list';
     });
 }
