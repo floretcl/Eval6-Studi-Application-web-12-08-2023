@@ -33,6 +33,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="login-form-password">Password</label>
                     <input class="form-control" type="password" name="login-form-password" id="login-form-password" required>
+                    <input class="d-none" name="csrf-token" value="<?= $csrfToken ?? '' ?>" hidden>
                 </div>
                 <div class="text-center">
                     <button class="btn btn-light my-4" type="submit" id="login-form-btn">Login</button>
