@@ -68,15 +68,15 @@ class MissionController
                 !empty($_POST['mission-contacts']) &&
                 !empty($_POST['mission-targets']) &&
                 !empty($_POST['mission-agents'])) {
-                $codeName = $_POST['mission-codename'];
-                $title = $_POST['mission-title'];
-                $description = $_POST['mission-description'];
-                $country = $_POST['mission-country'];
-                $type = $_POST['mission-type'];
-                $specialty = $_POST['mission-specialty'];
-                $status = $_POST['mission-status'];
-                $startDate = $_POST['mission-start-date'];
-                $endDate = $_POST['mission-end-date'];
+                $codeName = htmlspecialchars($_POST['mission-codename']);
+                $title = htmlspecialchars($_POST['mission-title']);
+                $description = htmlspecialchars($_POST['mission-description']);
+                $country = htmlspecialchars($_POST['mission-country']);
+                $type = htmlspecialchars($_POST['mission-type']);
+                $specialty = htmlspecialchars($_POST['mission-specialty']);
+                $status = htmlspecialchars($_POST['mission-status']);
+                $startDate = htmlspecialchars($_POST['mission-start-date']);
+                $endDate = htmlspecialchars($_POST['mission-end-date']);
                 $hideouts = $_POST['mission-hideouts'] ?? [];
                 $contacts = $_POST['mission-contacts'];
                 $targets = $_POST['mission-targets'];
@@ -84,6 +84,7 @@ class MissionController
 
                 $success = false;
                 foreach($agents as $agent) {
+                    $agent = htmlspecialchars($agent);
                     $agentSpecialties = $agentSpecialtyRepository->getAgentSpecialties($agent);
                     if ($missionRepository->verifyAgentSpecialties($agentSpecialties, $specialty)) {
                         $success = true;
@@ -92,6 +93,7 @@ class MissionController
 
                 if ($success) {
                     foreach($contacts as $contact) {
+                        $contact = htmlspecialchars($contact);
                         $contactCountry = $contactRepository->getContactNationality($contact);
                         if (!$missionRepository->verifyContactCountry($contactCountry, $country)) {
                             $success = false;
@@ -102,6 +104,7 @@ class MissionController
                 if ($success) {
                     if ($hideouts != []) {
                         foreach($hideouts as $hideout) {
+                            $hideout = htmlspecialchars($hideout);
                             $hideoutCountry = $hideoutRepository->getHideoutCountry($hideout);
                             if (!$missionRepository->verifyHideoutCountry($hideoutCountry, $country)) {
                                 $success = false;
@@ -112,8 +115,10 @@ class MissionController
 
                 if ($success) {
                     foreach($agents as $agent) {
+                        $agent = htmlspecialchars($agent);
                         $agentCountry = $agentRepository->getAgentNationality($agent);
                         foreach ($targets as $target) {
+                            $target = htmlspecialchars($target);
                             $targetCountry = $targetRepository->getTargetNationality($target);
                             if (!$missionRepository->verifyAgentAndTargetCountry($agentCountry, $targetCountry)) {
                                 $success = false;
@@ -157,7 +162,7 @@ class MissionController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $uuid = $_POST['delete'];
+                $uuid = htmlspecialchars($_POST['delete']);
 
                 $success = $missionRepository->deleteMission($uuid);
                 if (!$success) {
@@ -215,16 +220,16 @@ class MissionController
                 !empty($_POST['mission-contacts']) &&
                 !empty($_POST['mission-targets']) &&
                 !empty($_POST['mission-agents'])) {
-                $uuid = $_POST['mission-uuid'];
-                $codename = $_POST['mission-codename'];
-                $title = $_POST['mission-title'];
-                $description = $_POST['mission-description'];
-                $country = $_POST['mission-country'];
-                $type = $_POST['mission-type'];
-                $specialty = $_POST['mission-specialty'];
-                $status = $_POST['mission-status'];
-                $startDate = $_POST['mission-start-date'];
-                $endDate = $_POST['mission-end-date'];
+                $uuid = htmlspecialchars($_POST['mission-uuid']);
+                $codename = htmlspecialchars($_POST['mission-codename']);
+                $title = htmlspecialchars($_POST['mission-title']);
+                $description = htmlspecialchars($_POST['mission-description']);
+                $country = htmlspecialchars($_POST['mission-country']);
+                $type = htmlspecialchars($_POST['mission-type']);
+                $specialty = htmlspecialchars($_POST['mission-specialty']);
+                $status = htmlspecialchars($_POST['mission-status']);
+                $startDate = htmlspecialchars($_POST['mission-start-date']);
+                $endDate = htmlspecialchars($_POST['mission-end-date']);
                 $hideouts = $_POST['mission-hideouts'] ?? [];
                 $contacts = $_POST['mission-contacts'];
                 $targets = $_POST['mission-targets'];
@@ -232,6 +237,7 @@ class MissionController
 
                 $success = false;
                 foreach($agents as $agent) {
+                    $agent = htmlspecialchars($agent);
                     $agentSpecialties = $agentSpecialtyRepository->getAgentSpecialties($agent);
                     if ($missionRepository->verifyAgentSpecialties($agentSpecialties, $specialty)) {
                         $success = true;
@@ -240,6 +246,7 @@ class MissionController
 
                 if ($success) {
                     foreach($contacts as $contact) {
+                        $contact = htmlspecialchars($contact);
                         $contactCountry = $contactRepository->getContactNationality($contact);
                         if (!$missionRepository->verifyContactCountry($contactCountry, $country)) {
                             $success = false;
@@ -250,6 +257,7 @@ class MissionController
                 if ($success) {
                     if ($hideouts != []) {
                         foreach($hideouts as $hideout) {
+                            $hideout = htmlspecialchars($hideout);
                             $hideoutCountry = $hideoutRepository->getHideoutCountry($hideout);
                             if (!$missionRepository->verifyHideoutCountry($hideoutCountry, $country)) {
                                 $success = false;
@@ -260,8 +268,10 @@ class MissionController
 
                 if ($success) {
                     foreach($agents as $agent) {
+                        $agent = htmlspecialchars($agent);
                         $agentCountry = $agentRepository->getAgentNationality($agent);
                         foreach ($targets as $target) {
+                            $target = htmlspecialchars($target);
                             $targetCountry = $targetRepository->getTargetNationality($target);
                             if (!$missionRepository->verifyAgentAndTargetCountry($agentCountry, $targetCountry)) {
                                 $success = false;

@@ -30,7 +30,7 @@ class MissionStatusController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['mission-status-name'])) {
-                $name = $_POST['mission-status-name'];
+                $name = htmlspecialchars($_POST['mission-status-name']);
 
                 $success =$missionStatusRepository->insertMissionStatus($name);
                 if ($success) {
@@ -51,7 +51,7 @@ class MissionStatusController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $id = $_POST['delete'];
+                $id = htmlspecialchars($_POST['delete']);
 
                 $success = $missionStatusRepository->deleteMissionStatus($id);
                 if (!$success) {
@@ -73,8 +73,8 @@ class MissionStatusController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['mission-status-id']) && !empty($_POST['mission-status-name'])) {
-                $id = $_POST['mission-status-id'];
-                $name = $_POST['mission-status-name'];
+                $id = htmlspecialchars($_POST['mission-status-id']);
+                $name = htmlspecialchars($_POST['mission-status-name']);
 
                 $success = $missionStatusRepository->updateMissionStatus($id, $name);
                 if ($success) {

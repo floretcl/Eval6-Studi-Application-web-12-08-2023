@@ -30,11 +30,11 @@ class ContactController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['contact-code-name']) && !empty($_POST['contact-birthday']) && !empty($_POST['contact-nationality'])) {
-                $codeName = $_POST['contact-code-name'];
-                $firstname = $_POST['contact-firstname'] ?? "";;
-                $lastname = $_POST['contact-lastname'] ?? "";;
-                $birthday = $_POST['contact-birthday'];
-                $nationality = $_POST['contact-nationality'];
+                $codeName = htmlspecialchars($_POST['contact-code-name']);
+                $firstname = htmlspecialchars($_POST['contact-firstname'] ?? "");;
+                $lastname = htmlspecialchars($_POST['contact-lastname'] ?? "");;
+                $birthday = htmlspecialchars($_POST['contact-birthday']);
+                $nationality = htmlspecialchars($_POST['contact-nationality']);
 
                 $success = $contactRepository->insertContact($codeName, $firstname, $lastname, $birthday, $nationality);
                 if ($success) {
@@ -55,7 +55,7 @@ class ContactController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $uuid = $_POST['delete'];
+                $uuid = htmlspecialchars($_POST['delete']);
 
                 $success = $contactRepository->deleteContact($uuid);
                 if (!$success) {
@@ -77,12 +77,12 @@ class ContactController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['contact-uuid']) && !empty($_POST['contact-code-name']) && !empty($_POST['contact-birthday']) && !empty($_POST['contact-nationality'])) {
-                $uuid = $_POST['contact-uuid'];
-                $codeName = $_POST['contact-code-name'];
-                $firstname = $_POST['contact-firstname'] ?? "";
-                $lastname = $_POST['contact-lastname'] ?? "";
-                $birthday = $_POST['contact-birthday'];
-                $nationality = $_POST['contact-nationality'];
+                $uuid = htmlspecialchars($_POST['contact-uuid']);
+                $codeName = htmlspecialchars($_POST['contact-code-name']);
+                $firstname = htmlspecialchars($_POST['contact-firstname'] ?? "");
+                $lastname = htmlspecialchars($_POST['contact-lastname'] ?? "");
+                $birthday = htmlspecialchars($_POST['contact-birthday']);
+                $nationality = htmlspecialchars($_POST['contact-nationality']);
 
                 $success = $contactRepository->updateContact($uuid, $codeName, $firstname, $lastname, $birthday, $nationality);
                 if ($success) {

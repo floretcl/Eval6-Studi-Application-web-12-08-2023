@@ -30,7 +30,7 @@ class HideoutTypeController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['hideout-type-name'])) {
-                $name = $_POST['hideout-type-name'];
+                $name = htmlspecialchars($_POST['hideout-type-name']);
 
                 $success = $hideoutTypeRepository->insertHideoutType($name);
                 if ($success) {
@@ -51,7 +51,7 @@ class HideoutTypeController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $id = $_POST['delete'];
+                $id = htmlspecialchars($_POST['delete']);
 
                 $success = $hideoutTypeRepository->deleteHideoutType($id);
                 if (!$success) {
@@ -73,8 +73,8 @@ class HideoutTypeController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['hideout-type-id']) && !empty($_POST['hideout-type-name'])) {
-                $id = $_POST['hideout-type-id'];
-                $name = $_POST['hideout-type-name'];
+                $id = htmlspecialchars($_POST['hideout-type-id']);
+                $name = htmlspecialchars($_POST['hideout-type-name']);
 
                 $success = $hideoutTypeRepository->updateHideoutType($id, $name);
                 if ($success) {

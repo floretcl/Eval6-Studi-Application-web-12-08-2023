@@ -59,7 +59,7 @@ class AgentRepository
             }
             $nbPages = ceil($nbAgents / $perPage);
             if (!empty($_GET['page'])) {
-                $currentPage = (int)strip_tags($_GET['page']);
+                $currentPage = (int)htmlspecialchars($_GET['page']);
             } else {
                 $currentPage = 1;
             }
@@ -142,6 +142,7 @@ class AgentRepository
             $success = true;
             // Add one or more specialty
             foreach ($specialties as $specialty) {
+                $specialty = htmlspecialchars($specialty);
                 $agentSpecialtyRepository = new AgentSpecialtyRepository();
                 $success = $agentSpecialtyRepository->insertAgentSpecialty($code, $specialty);
             }

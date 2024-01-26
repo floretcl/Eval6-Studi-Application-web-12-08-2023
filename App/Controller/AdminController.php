@@ -27,10 +27,10 @@ class AdminController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['admin-email']) && !empty($_POST['admin-password'])) {
-                $firstname = $_POST['admin-firstname'] ?? '';
-                $lastname = $_POST['admin-lastname'] ?? '';
-                $email = $_POST['admin-email'];
-                $password = $_POST['admin-password'];
+                $firstname = htmlspecialchars($_POST['admin-firstname'] ?? '');
+                $lastname = htmlspecialchars($_POST['admin-lastname'] ?? '');
+                $email = htmlspecialchars($_POST['admin-email']);
+                $password = htmlspecialchars($_POST['admin-password']);
                 $hashOptions = ['cost' => 11];
                 $passwordHash = password_hash($password, PASSWORD_BCRYPT, $hashOptions);
 
@@ -55,7 +55,7 @@ class AdminController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $uuid = $_POST['delete'];
+                $uuid = htmlspecialchars($_POST['delete']);
 
                 $currentAdminUuid = $currentAdmin->getUUID();
                 if ($currentAdminUuid != $uuid) {
@@ -81,10 +81,10 @@ class AdminController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['admin-uuid']) && !empty($_POST['admin-email'])) {
-                $uuid = $_POST['admin-uuid'];
-                $firstname = $_POST['admin-firstname'] ?? '';
-                $lastname = $_POST['admin-lastname'] ?? '';
-                $email = $_POST['admin-email'];
+                $uuid = htmlspecialchars($_POST['admin-uuid']);
+                $firstname = htmlspecialchars($_POST['admin-firstname'] ?? '');
+                $lastname = htmlspecialchars($_POST['admin-lastname'] ?? '');
+                $email = htmlspecialchars($_POST['admin-email']);
 
                 $success = $adminRepository->updateAdmin($uuid, $firstname, $lastname, $email);
                 if ($success) {

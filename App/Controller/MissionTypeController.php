@@ -30,7 +30,7 @@ class MissionTypeController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['mission-type-name'])) {
-                $name = $_POST['mission-type-name'];
+                $name = htmlspecialchars($_POST['mission-type-name']);
 
                 $success = $missionTypeRepository->insertMissionType($name);
                 if ($success) {
@@ -51,7 +51,7 @@ class MissionTypeController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $id = $_POST['delete'];
+                $id = htmlspecialchars($_POST['delete']);
 
                 $success = $missionTypeRepository->deleteMissionType($id);
                 if (!$success) {
@@ -73,8 +73,8 @@ class MissionTypeController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['mission-type-id']) && !empty($_POST['mission-type-name'])) {
-                $id = $_POST['mission-type-id'];
-                $name = $_POST['mission-type-name'];
+                $id = htmlspecialchars($_POST['mission-type-id']);
+                $name = htmlspecialchars($_POST['mission-type-name']);
 
                 $success = $missionTypeRepository->updateMissionType($id, $name);
                 if ($success) {

@@ -31,7 +31,7 @@ class SpecialtyController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['specialty-name'])) {
-                $name = $_POST['specialty-name'];
+                $name = htmlspecialchars($_POST['specialty-name']);
 
                 $success = $specialtyRepository->insertSpecialty($name);
                 if ($success) {
@@ -52,7 +52,7 @@ class SpecialtyController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $id = $_POST['delete'];
+                $id = htmlspecialchars($_POST['delete']);
 
                 $success = $specialtyRepository->deleteSpecialty($id);
                 if (!$success) {
@@ -74,8 +74,8 @@ class SpecialtyController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['specialty-id']) && !empty($_POST['specialty-name'])) {
-                $id = $_POST['specialty-id'];
-                $name = $_POST['specialty-name'];
+                $id = htmlspecialchars($_POST['specialty-id']);
+                $name = htmlspecialchars($_POST['specialty-name']);
 
                 $success = $specialtyRepository->updateSpecialty($id, $name);
                 if ($success) {

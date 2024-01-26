@@ -30,11 +30,11 @@ class TargetController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['target-code-name']) && !empty($_POST['target-birthday']) && !empty($_POST['target-nationality'])) {
-                $codeName = $_POST['target-code-name'];
-                $firstname = $_POST['target-firstname'] ?? "";;
-                $lastname = $_POST['target-lastname'] ?? "";;
-                $birthday = $_POST['target-birthday'];
-                $nationality = $_POST['target-nationality'];
+                $codeName = htmlspecialchars($_POST['target-code-name']);
+                $firstname = htmlspecialchars($_POST['target-firstname'] ?? "");;
+                $lastname = htmlspecialchars($_POST['target-lastname'] ?? "");;
+                $birthday = htmlspecialchars($_POST['target-birthday']);
+                $nationality = htmlspecialchars($_POST['target-nationality']);
 
                 $success = $targetRepository->insertTarget($codeName, $firstname, $lastname, $birthday, $nationality);
                 if ($success) {
@@ -55,7 +55,7 @@ class TargetController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $uuid = $_POST['delete'];
+                $uuid = htmlspecialchars($_POST['delete']);
 
                 $success = $targetRepository->deleteTarget($uuid);
                 if (!$success) {
@@ -77,12 +77,12 @@ class TargetController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['target-uuid']) && !empty($_POST['target-code-name']) && !empty($_POST['target-birthday']) && !empty($_POST['target-nationality'])) {
-                $uuid = $_POST['target-uuid'];
-                $codeName = $_POST['target-code-name'];
-                $firstname = $_POST['target-firstname'] ?? "";
-                $lastname = $_POST['target-lastname'] ?? "";
-                $birthday = $_POST['target-birthday'];
-                $nationality = $_POST['target-nationality'];
+                $uuid = htmlspecialchars($_POST['target-uuid']);
+                $codeName = htmlspecialchars($_POST['target-code-name']);
+                $firstname = htmlspecialchars($_POST['target-firstname'] ?? "");
+                $lastname = htmlspecialchars($_POST['target-lastname'] ?? "");
+                $birthday = htmlspecialchars($_POST['target-birthday']);
+                $nationality = htmlspecialchars($_POST['target-nationality']);
 
                 $success = $targetRepository->updateTarget($uuid, $codeName, $firstname, $lastname, $birthday, $nationality);
                 if ($success) {

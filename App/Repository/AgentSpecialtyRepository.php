@@ -68,14 +68,12 @@ class AgentSpecialtyRepository
         $statement = $this->dbConnection->dbConnect()->prepare($sql);
         $success = true;
         foreach ($specialties as $specialty) {
+            $specialty = htmlspecialchars($specialty);
             $statement->bindParam(':agent_uuid', $agentUUID, PDO::PARAM_STR);
             $statement->bindParam(':specialty_id', $specialty, PDO::PARAM_STR);
             $success = false;
             if ($statement->execute()) {
                 $success = true;
-            } else {
-                $errorInfo = $statement->errorInfo();
-                $this->errorLog->writeErrorLog($errorInfo);
             }
         }
         return $success;

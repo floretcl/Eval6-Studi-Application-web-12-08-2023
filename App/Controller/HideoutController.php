@@ -34,10 +34,10 @@ class HideoutController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['hideout-code-name']) && !empty($_POST['hideout-address']) && !empty($_POST['hideout-country']) && !empty($_POST['hideout-type'])) {
-                $codeName = $_POST['hideout-code-name'];
-                $address = $_POST['hideout-address'];
-                $country = $_POST['hideout-country'];
-                $type = $_POST['hideout-type'];
+                $codeName = htmlspecialchars($_POST['hideout-code-name']);
+                $address = htmlspecialchars($_POST['hideout-address']);
+                $country = htmlspecialchars($_POST['hideout-country']);
+                $type = htmlspecialchars($_POST['hideout-type']);
 
                 $success = $hideoutRepository->insertHideout($codeName, $address, $country, $type);
                 if ($success) {
@@ -58,7 +58,7 @@ class HideoutController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $uuid = $_POST['delete'];
+                $uuid = htmlspecialchars($_POST['delete']);
 
                 $success = $hideoutRepository->deleteHideout($uuid);
                 if (!$success) {
@@ -84,11 +84,11 @@ class HideoutController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['hideout-uuid']) && !empty($_POST['hideout-code-name']) && !empty($_POST['hideout-address']) && !empty($_POST['hideout-country']) && !empty($_POST['hideout-type'])) {
-                $uuid = $_POST['hideout-uuid'];
-                $codeName = $_POST['hideout-code-name'];
-                $address = $_POST['hideout-address'];
-                $country = $_POST['hideout-country'];
-                $type = $_POST['hideout-type'];
+                $uuid = htmlspecialchars($_POST['hideout-uuid']);
+                $codeName = htmlspecialchars($_POST['hideout-code-name']);
+                $address = htmlspecialchars($_POST['hideout-address']);
+                $country = htmlspecialchars($_POST['hideout-country']);
+                $type = htmlspecialchars($_POST['hideout-type']);
 
                 $success = $hideoutRepository->updateHideout($uuid, $codeName, $address, $country, $type);
                 if ($success) {

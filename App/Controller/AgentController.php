@@ -37,13 +37,13 @@ class AgentController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['agent-code']) && !empty($_POST['agent-birthday']) && !empty($_POST['agent-nationality']) && !empty($_POST['agent-specialties'])) {
-                $code = $_POST['agent-code'];
-                $firstname = $_POST['agent-firstname'] ?? '';
-                $lastname = $_POST['agent-lastname'] ?? '';
-                $birthday = $_POST['agent-birthday'];
-                $nationality = $_POST['agent-nationality'];
+                $code = htmlspecialchars($_POST['agent-code']);
+                $firstname = htmlspecialchars($_POST['agent-firstname'] ?? '');
+                $lastname = htmlspecialchars($_POST['agent-lastname'] ?? '');
+                $birthday = htmlspecialchars($_POST['agent-birthday']);
+                $nationality = htmlspecialchars($_POST['agent-nationality']);
                 $specialties = $_POST['agent-specialties'];
-                $mission = $_POST['agent-mission'] ?? '';
+                $mission = htmlspecialchars($_POST['agent-mission'] ?? '');
 
                 $success = $agentRepository->insertAgent($code, $firstname, $lastname, $birthday, $nationality, $specialties);
                 if ($success) {
@@ -64,7 +64,7 @@ class AgentController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['delete'])) {
-                $uuid = $_POST['delete'];
+                $uuid = htmlspecialchars($_POST['delete']);
 
                 $success = $agentRepository->deleteAgent($uuid);
                 if (!$success) {
@@ -93,12 +93,12 @@ class AgentController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['agent-uuid']) && !empty($_POST['agent-code']) && !empty($_POST['agent-birthday']) && !empty($_POST['agent-nationality']) && !empty($_POST['agent-specialties'])) {
-                $uuid = $_POST['agent-uuid'];
-                $code = $_POST['agent-code'];
-                $firstname = $_POST['agent-firstname'] ?? '';
-                $lastname = $_POST['agent-lastname'] ?? '';
-                $birthday = $_POST['agent-birthday'];
-                $nationality = $_POST['agent-nationality'];
+                $uuid = htmlspecialchars($_POST['agent-uuid']);
+                $code = htmlspecialchars($_POST['agent-code']);
+                $firstname = htmlspecialchars($_POST['agent-firstname'] ?? '');
+                $lastname = htmlspecialchars($_POST['agent-lastname'] ?? '');
+                $birthday = htmlspecialchars($_POST['agent-birthday']);
+                $nationality = htmlspecialchars($_POST['agent-nationality']);
                 $specialties = $_POST['agent-specialties'];
 
                 $success = $agentRepository->updateAgent($uuid, $code, $firstname, $lastname, $birthday, $nationality, $specialties);

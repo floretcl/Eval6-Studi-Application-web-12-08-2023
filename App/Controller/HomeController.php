@@ -11,7 +11,7 @@ class HomeController
         $missionRepository = new MissionRepository();
 
         $missionsPerPage = 10;
-        $search = $_POST['search'] ?? '';
+        $search = htmlspecialchars($_POST['search'] ?? '');
 
         $pagination = $missionRepository->getPaginationForMissions($missionsPerPage, $search);
         $missions = $missionRepository->getMissionsWithPagination($search, $pagination['start'], $pagination['perPage']);

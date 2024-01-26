@@ -3,16 +3,16 @@
         <?php if (str_contains($_GET['message'], 'Success')): ?>
             <img src="../../assets/bootstrap/icons/check-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
             <div>
-                <?= $_GET['message'] == 'addSuccess' ? 'Successful addition' : '' ?>
-                <?= $_GET['message'] == 'deleteSuccess' ? 'Deletion successful' : '' ?>
-                <?= $_GET['message'] == 'updateSuccess' ? 'Update successful' : '' ?>
+                <?= htmlspecialchars($_GET['message']) === 'addSuccess' ? 'Successful addition' : '' ?>
+                <?= htmlspecialchars($_GET['message']) === 'deleteSuccess' ? 'Deletion successful' : '' ?>
+                <?= htmlspecialchars($_GET['message']) === 'updateSuccess' ? 'Update successful' : '' ?>
             </div>
         <?php else: ?>
             <img src="../../assets/bootstrap/icons/exclamation-circle.svg" alt="Bootstrap" width="32" height="32" class="me-2">
             <div>
-                <?= $_GET['message'] == 'addFail' ? 'Addition failed' : '' ?>
-                <?= $_GET['message'] == 'deleteFail' ? 'Deletion failed' : '' ?>
-                <?= $_GET['message'] == 'updateFail' ? 'Update failed' : '' ?>
+                <?= htmlspecialchars($_GET['message']) === 'addFail' ? 'Addition failed' : '' ?>
+                <?= htmlspecialchars($_GET['message']) === 'deleteFail' ? 'Deletion failed' : '' ?>
+                <?= htmlspecialchars($_GET['message']) === 'updateFail' ? 'Update failed' : '' ?>
             </div>
         <?php endif ?>
     </div>

@@ -55,7 +55,7 @@ class HideoutTypeRepository
             }
             $nbPages = ceil($nbHideoutTypes / $perPage);
             if(!empty($_GET['page'])){
-                $currentPage = (int) strip_tags($_GET['page']);
+                $currentPage = (int) htmlspecialchars($_GET['page']);
             } else {
                 $currentPage = 1;
             }
