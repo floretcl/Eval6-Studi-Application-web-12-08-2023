@@ -7,17 +7,17 @@ INSERT INTO Admin (
     'Lucian',
     'Mclean',
     'lucian-mclean@email.com',
-    '$2y$11$cGGJSgDlOi/t0FtZiDrdv./W9ilKdQ8hHLifUkvnLJYxNpQSmfllK'
+    '$2y$12$tkyS8lFJdo6akI2MRPfAvOPE5ogfnixMGutl4GAFDnQRyG13wIQ9K'
 ), (
     'Shania',
     'Wood',
     'shaniawood@email.com',
-    '$2y$11$j8wEk0IbG/vMfJiKuZBpV.RqaSw7ybGUYsqosyJSFZXc5Mx6796.y'
+    '$2y$12$9sA7zDP/7qcDZY4GuwVTN.X/FRgK6h5rIUQONdM9vwqisn0YmmGEu'
 ), (
     'Tianna',
     'Rangel',
     'tianna.rangel@email.com',
-    '$2y$11$lWoyyAs0e64pQV1rvDQ2U.nv4ZxpGYmsoPBAvuSZrRIZisHmskbsa'
+    '$2y$12$e7AFaY7TAfxy8uKrkei.1OK.QJcVjCTCFVyum4YJ5nQ3i2ZwI3u7C'
 );
 
 INSERT INTO Specialty (
