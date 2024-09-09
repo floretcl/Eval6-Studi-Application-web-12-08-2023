@@ -116,7 +116,6 @@ class AgentRepository
 
     public function insertAgent(string $code, string $firstname, string $lastname, string $birthday, string $nationality, array $specialties): bool
     {
-        // Agent add request
         $sql = 'INSERT INTO Agent (
           agent_code,
           agent_firstname,

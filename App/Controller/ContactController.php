@@ -5,6 +5,7 @@ namespace App\Controller;
 use Exception;
 use App\Repository\AdminRepository;
 use App\Repository\ContactRepository;
+use Random\RandomException;
 
 class ContactController
 {
@@ -21,6 +22,9 @@ class ContactController
         require(__DIR__ . '/../../templates/admin/contact/list.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function addContact(string $SessionUuid): void
     {
         $adminRepository = new AdminRepository();
@@ -28,45 +32,65 @@ class ContactController
 
         $currentAdmin = $adminRepository->getAdmin($SessionUuid);
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['contact-code-name']) && !empty($_POST['contact-birthday']) && !empty($_POST['contact-nationality'])) {
-                $codeName = htmlspecialchars($_POST['contact-code-name']);
-                $firstname = htmlspecialchars($_POST['contact-firstname'] ?? "");;
-                $lastname = htmlspecialchars($_POST['contact-lastname'] ?? "");;
-                $birthday = htmlspecialchars($_POST['contact-birthday']);
-                $nationality = htmlspecialchars($_POST['contact-nationality']);
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['contact-code-name']) && !empty($_POST['contact-birthday']) && !empty($_POST['contact-nationality'])) {
+                    $codeName = htmlspecialchars($_POST['contact-code-name']);
+                    $firstname = htmlspecialchars($_POST['contact-firstname'] ?? "");;
+                    $lastname = htmlspecialchars($_POST['contact-lastname'] ?? "");;
+                    $birthday = htmlspecialchars($_POST['contact-birthday']);
+                    $nationality = htmlspecialchars($_POST['contact-nationality']);
 
-                $success = $contactRepository->insertContact($codeName, $firstname, $lastname, $birthday, $nationality);
-                if ($success) {
-                    header('Location: ?controller=contact&action=list&message=addSuccess');
+                    $success = $contactRepository->insertContact($codeName, $firstname, $lastname, $birthday, $nationality);
+                    if ($success) {
+                        header('Location: ?controller=contact&action=list&message=addSuccess');
+                    } else {
+                        header('Location: ?controller=contact&action=list&message=addFail');
+                    }
                 } else {
-                    header('Location: ?controller=contact&action=list&message=addFail');
+                    throw new Exception("No contact codename, birthday, nationality send");
                 }
             } else {
-                throw new Exception("No contact codename, birthday, nationality send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/contact/add.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function removeContact(string $SessionUuid): void
     {
         $contactRepository = new ContactRepository();
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['delete'])) {
-                $uuid = htmlspecialchars($_POST['delete']);
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
 
-                $success = $contactRepository->deleteContact($uuid);
-                if (!$success) {
-                    throw new Exception("Unable to delete contact");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['delete'])) {
+                    $uuid = htmlspecialchars($_POST['delete']);
+
+                    $success = $contactRepository->deleteContact($uuid);
+                    if (!$success) {
+                        throw new Exception("Unable to delete contact");
+                    }
+                } else {
+                    throw new Exception("No contact id send");
                 }
             } else {
-                throw new Exception("No contact id send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function editContact(string $SessionUuid, string $contactUuid): void
     {
         $adminRepository = new AdminRepository();
@@ -75,23 +99,30 @@ class ContactController
         $currentAdmin = $adminRepository->getAdmin($SessionUuid);
         $contact = $contactRepository->getContact($contactUuid);
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['contact-uuid']) && !empty($_POST['contact-code-name']) && !empty($_POST['contact-birthday']) && !empty($_POST['contact-nationality'])) {
-                $uuid = htmlspecialchars($_POST['contact-uuid']);
-                $codeName = htmlspecialchars($_POST['contact-code-name']);
-                $firstname = htmlspecialchars($_POST['contact-firstname'] ?? "");
-                $lastname = htmlspecialchars($_POST['contact-lastname'] ?? "");
-                $birthday = htmlspecialchars($_POST['contact-birthday']);
-                $nationality = htmlspecialchars($_POST['contact-nationality']);
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['contact-uuid']) && !empty($_POST['contact-code-name']) && !empty($_POST['contact-birthday']) && !empty($_POST['contact-nationality'])) {
+                    $uuid = htmlspecialchars($_POST['contact-uuid']);
+                    $codeName = htmlspecialchars($_POST['contact-code-name']);
+                    $firstname = htmlspecialchars($_POST['contact-firstname'] ?? "");
+                    $lastname = htmlspecialchars($_POST['contact-lastname'] ?? "");
+                    $birthday = htmlspecialchars($_POST['contact-birthday']);
+                    $nationality = htmlspecialchars($_POST['contact-nationality']);
 
-                $success = $contactRepository->updateContact($uuid, $codeName, $firstname, $lastname, $birthday, $nationality);
-                if ($success) {
-                    header('Location: ?controller=contact&action=list&message=updateSuccess');
+                    $success = $contactRepository->updateContact($uuid, $codeName, $firstname, $lastname, $birthday, $nationality);
+                    if ($success) {
+                        header('Location: ?controller=contact&action=list&message=updateSuccess');
+                    } else {
+                        header('Location: ?controller=contact&action=list&message=updateFail');
+                    }
                 } else {
-                    header('Location: ?controller=contact&action=list&message=updateFail');
+                    throw new Exception("No contact uuid and/or email send");
                 }
             } else {
-                throw new Exception("No contact uuid and/or email send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/contact/edit.php');

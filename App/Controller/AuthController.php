@@ -8,8 +8,9 @@ use App\Repository\AdminRepository;
 
 class AuthController
 {
+
     /**
-     * @throws RandomException
+     * @throws Exception
      */
     public function login(): void
     {
@@ -26,13 +27,13 @@ class AuthController
             if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
                 $email = filter_input(INPUT_POST, 'login-form-email', FILTER_SANITIZE_EMAIL);
                 $password = htmlspecialchars($_POST['login-form-password']);
-                $message = $adminRepository->verifyAdmin($email, $password);
-                if ($message == 'Valid identifiers') {
+                $success = $adminRepository->verifyAdmin($email, $password);
+                if ($success === true) {
                     $uuid = $adminRepository->getAdminUuid($email);
 
                     session_start();
-                    $_SESSION['admin'] = true;
                     $_SESSION['uuid'] = $uuid;
+                    $_SESSION['admin'] = true;
                     header('Location: ?controller=administration');
                 } else {
                     require(__DIR__ . '/../../templates/login.php');

@@ -27,7 +27,7 @@ try {
     if (isset($_GET['controller']) && $_GET['controller'] !== '') {
         if ($_GET['controller'] == 'detail' && isset($_GET['id'])) {
             $detailController = new DetailController();
-            $detailController->detail($_GET['id']);
+            $detailController->detail(htmlspecialchars($_GET['id']));
         } elseif ($_GET['controller'] == 'auth') {
             $authController = new AuthController();
             if ($_GET['action'] == 'login') {
@@ -46,13 +46,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $adminController = new AdminController();
                 if ($_GET['action'] == 'list') {
-                    $adminController->listAdmin($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $adminController->listAdmin($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $adminController->removeAdmin($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $adminController->addAdmin($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $adminController->editAdmin($_SESSION['uuid'], $_GET['id']);
+                    $adminController->editAdmin($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }
@@ -64,13 +64,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $missionController = new MissionController();
                 if ($_GET['action'] == 'list') {
-                    $missionController->listMission($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $missionController->listMission($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $missionController->removeMission($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $missionController->addMission($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $missionController->editMission($_SESSION['uuid'], $_GET['id']);
+                    $missionController->editMission($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }
@@ -82,13 +82,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $hideoutController = new HideoutController();
                 if ($_GET['action'] == 'list') {
-                    $hideoutController->listHideout($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $hideoutController->listHideout($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $hideoutController->removeHideout($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $hideoutController->addHideout($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $hideoutController->editHideout($_SESSION['uuid'], $_GET['id']);
+                    $hideoutController->editHideout($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }
@@ -100,13 +100,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $agentController = new AgentController();
                 if ($_GET['action'] == 'list') {
-                    $agentController->listAgent($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $agentController->listAgent($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $agentController->removeAgent($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $agentController->addAgent($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $agentController->editAgent($_SESSION['uuid'], $_GET['id']);
+                    $agentController->editAgent($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }
@@ -118,13 +118,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $contactController = new ContactController();
                 if ($_GET['action'] == 'list') {
-                    $contactController->listContact($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $contactController->listContact($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $contactController->removeContact($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $contactController->addContact($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $contactController->editContact($_SESSION['uuid'], $_GET['id']);
+                    $contactController->editContact($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }
@@ -136,13 +136,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $targetController = new TargetController();
                 if ($_GET['action'] == 'list') {
-                    $targetController->listTarget($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $targetController->listTarget($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $targetController->removeTarget($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $targetController->addTarget($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $targetController->editTarget($_SESSION['uuid'], $_GET['id']);
+                    $targetController->editTarget($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }
@@ -154,13 +154,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $missionTypeController = new MissionTypeController();
                 if ($_GET['action'] == 'list') {
-                    $missionTypeController->listMissionType($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $missionTypeController->listMissionType($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $missionTypeController->removeMissionType($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $missionTypeController->addMissionType($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $missionTypeController->editMissionType($_SESSION['uuid'], $_GET['id']);
+                    $missionTypeController->editMissionType($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }
@@ -172,13 +172,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $missionStatusController = new MissionStatusController();
                 if ($_GET['action'] == 'list') {
-                    $missionStatusController->listMissionStatus($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $missionStatusController->listMissionStatus($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $missionStatusController->removeMissionStatus($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $missionStatusController->addMissionStatus($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $missionStatusController->editMissionStatus($_SESSION['uuid'], $_GET['id']);
+                    $missionStatusController->editMissionStatus($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }
@@ -190,13 +190,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $hideoutTypeController = new HideoutTypeController();
                 if ($_GET['action'] == 'list') {
-                    $hideoutTypeController->listHideoutType($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $hideoutTypeController->listHideoutType($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $hideoutTypeController->removeHideoutType($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $hideoutTypeController->addHideoutType($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $hideoutTypeController->editHideoutType($_SESSION['uuid'], $_GET['id']);
+                    $hideoutTypeController->editHideoutType($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }
@@ -208,13 +208,13 @@ try {
             if (isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_SESSION['uuid'])) {
                 $specialtyController = new SpecialtyController();
                 if ($_GET['action'] == 'list') {
-                    $specialtyController->listSpecialty($_SESSION['uuid'], $_POST['search'] ?? '');
+                    $specialtyController->listSpecialty($_SESSION['uuid'], $_GET['search'] ?? '');
                 } elseif ($_GET['action'] == 'delete') {
                     $specialtyController->removeSpecialty($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'add') {
                     $specialtyController->addSpecialty($_SESSION['uuid']);
                 } elseif ($_GET['action'] == 'edit' && isset($_GET['id'])) {
-                    $specialtyController->editSpecialty($_SESSION['uuid'], $_GET['id']);
+                    $specialtyController->editSpecialty($_SESSION['uuid'], htmlspecialchars($_GET['id']));
                 } else {
                     throw new Exception("404: Resource not found");
                 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use Exception;
 use App\Repository\AdminRepository;
 use App\Repository\SpecialtyRepository;
+use Random\RandomException;
 
 class SpecialtyController
 {
@@ -22,6 +23,9 @@ class SpecialtyController
         require(__DIR__ . '/../../templates/admin/specialty/list.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function addSpecialty(string $SessionUuid): void
     {
         $adminRepository = new AdminRepository();
@@ -29,41 +33,61 @@ class SpecialtyController
 
         $currentAdmin = $adminRepository->getAdmin($SessionUuid);
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['specialty-name'])) {
-                $name = htmlspecialchars($_POST['specialty-name']);
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['specialty-name'])) {
+                    $name = htmlspecialchars($_POST['specialty-name']);
 
-                $success = $specialtyRepository->insertSpecialty($name);
-                if ($success) {
-                    header('Location: ?controller=specialty&action=list&message=addSuccess');
+                    $success = $specialtyRepository->insertSpecialty($name);
+                    if ($success) {
+                        header('Location: ?controller=specialty&action=list&message=addSuccess');
+                    } else {
+                        header('Location: ?controller=specialty&action=list&message=addFail');
+                    }
                 } else {
-                    header('Location: ?controller=specialty&action=list&message=addFail');
+                    throw new Exception("No specialty name send");
                 }
             } else {
-                throw new Exception("No specialty name send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/specialty/add.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function removeSpecialty(string $SessionUuid): void
     {
         $specialtyRepository = new SpecialtyRepository();
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['delete'])) {
-                $id = htmlspecialchars($_POST['delete']);
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['delete'])) {
+                    $id = htmlspecialchars($_POST['delete']);
 
-                $success = $specialtyRepository->deleteSpecialty($id);
-                if (!$success) {
-                    throw new Exception("Unable to delete specialty");
+                    $success = $specialtyRepository->deleteSpecialty($id);
+                    if (!$success) {
+                        throw new Exception("Unable to delete specialty");
+                    }
+                } else {
+                    throw new Exception("No specialty id send");
                 }
             } else {
-                throw new Exception("No specialty id send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function editSpecialty(string $SessionUuid, int $specialtyId): void
     {
         $adminRepository = new AdminRepository();
@@ -72,19 +96,26 @@ class SpecialtyController
         $currentAdmin = $adminRepository->getAdmin($SessionUuid);
         $specialty = $specialtyRepository->getSpecialty($specialtyId);
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['specialty-id']) && !empty($_POST['specialty-name'])) {
-                $id = htmlspecialchars($_POST['specialty-id']);
-                $name = htmlspecialchars($_POST['specialty-name']);
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['specialty-id']) && !empty($_POST['specialty-name'])) {
+                    $id = htmlspecialchars($_POST['specialty-id']);
+                    $name = htmlspecialchars($_POST['specialty-name']);
 
-                $success = $specialtyRepository->updateSpecialty($id, $name);
-                if ($success) {
-                    header('Location: ?controller=specialty&action=list&message=updateSuccess');
+                    $success = $specialtyRepository->updateSpecialty($id, $name);
+                    if ($success) {
+                        header('Location: ?controller=specialty&action=list&message=updateSuccess');
+                    } else {
+                        header('Location: ?controller=specialty&action=list&message=updateFail');
+                    }
                 } else {
-                    header('Location: ?controller=specialty&action=list&message=updateFail');
+                    throw new Exception("No specialty id and/or name send");
                 }
             } else {
-                throw new Exception("No specialty id and/or name send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/specialty/edit.php');

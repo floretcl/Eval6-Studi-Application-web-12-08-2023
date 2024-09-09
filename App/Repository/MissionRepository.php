@@ -341,16 +341,16 @@ class MissionRepository
 
     public function verifyHideoutCountry(string $hideoutCountry, string $missionCountry): bool
     {
-        return $hideoutCountry == $missionCountry;
+        return $hideoutCountry === $missionCountry;
     }
 
     public function verifyContactCountry(string $contactCountry, string $missionCountry): bool
     {
-        return $contactCountry == $missionCountry;
+        return $contactCountry === $missionCountry;
     }
 
     public function verifyAgentAndTargetCountry(string $agentCountry, string $targetCountry): bool
     {
-        return $agentCountry != $targetCountry;
+        return $agentCountry !== $targetCountry;
     }
 }

@@ -171,7 +171,7 @@ class AdminRepository
         return $nbAdmins;
     }
 
-    public function verifyAdmin(string $email, string $password): string
+    public function verifyAdmin(string $email, string $password): bool
     {
         $sql = 'SELECT
         admin_uuid AS uuid,
@@ -184,17 +184,17 @@ class AdminRepository
         $statement = $this->dbConnection->dbConnect()->prepare($sql);
         $statement->bindParam(':email', $email, PDO::PARAM_STR);
 
-        $message = "Error: invalid identifiers";
+        $success = false;
         if ($statement->execute()) {
             while ($admin = $statement->fetchObject('\App\Entity\Admin')) {
                 $hash = $admin->getPasswordHash();
                 // To hash password : $options = array('cost' => 11);
                 if (password_verify($password, $hash)) {
-                    $message = "Valid identifiers";
+                    $success = true;
                 }
             }
         }
-        return $message;
+        return $success;
     }
 
     public function getAdminUuid(string $email): string

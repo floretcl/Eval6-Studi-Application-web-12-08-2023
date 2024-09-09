@@ -5,6 +5,7 @@ namespace App\Controller;
 use Exception;
 use App\Repository\MissionTypeRepository;
 use App\Repository\AdminRepository;
+use Random\RandomException;
 
 class MissionTypeController
 {
@@ -21,6 +22,9 @@ class MissionTypeController
         require(__DIR__ . '/../../templates/admin/mission-type/list.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function addMissionType(string $SessionUuid): void
     {
         $adminRepository = new AdminRepository();
@@ -28,41 +32,61 @@ class MissionTypeController
 
         $currentAdmin = $adminRepository->getAdmin($SessionUuid);
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['mission-type-name'])) {
-                $name = htmlspecialchars($_POST['mission-type-name']);
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['mission-type-name'])) {
+                    $name = htmlspecialchars($_POST['mission-type-name']);
 
-                $success = $missionTypeRepository->insertMissionType($name);
-                if ($success) {
-                    header('Location: ?controller=mission-type&action=list&message=addSuccess');
+                    $success = $missionTypeRepository->insertMissionType($name);
+                    if ($success) {
+                        header('Location: ?controller=mission-type&action=list&message=addSuccess');
+                    } else {
+                        header('Location: ?controller=mission-type&action=list&message=addFail');
+                    }
                 } else {
-                    header('Location: ?controller=mission-type&action=list&message=addFail');
+                    throw new Exception("No mission type name send");
                 }
             } else {
-                throw new Exception("No mission type name send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/mission-type/add.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function removeMissionType(string $SessionUuid): void
     {
         $missionTypeRepository = new MissionTypeRepository();
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['delete'])) {
-                $id = htmlspecialchars($_POST['delete']);
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['delete'])) {
+                    $id = htmlspecialchars($_POST['delete']);
 
-                $success = $missionTypeRepository->deleteMissionType($id);
-                if (!$success) {
-                    throw new Exception("Unable to delete mission type");
+                    $success = $missionTypeRepository->deleteMissionType($id);
+                    if (!$success) {
+                        throw new Exception("Unable to delete mission type");
+                    }
+                } else {
+                    throw new Exception("No mission type id send");
                 }
             } else {
-                throw new Exception("No mission type id send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function editMissionType(string $SessionUuid, int $missionTypeId): void
     {
         $adminRepository = new AdminRepository();
@@ -71,19 +95,26 @@ class MissionTypeController
         $currentAdmin = $adminRepository->getAdmin($SessionUuid);
         $missionType = $missionTypeRepository->getMissionType($missionTypeId);
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['mission-type-id']) && !empty($_POST['mission-type-name'])) {
-                $id = htmlspecialchars($_POST['mission-type-id']);
-                $name = htmlspecialchars($_POST['mission-type-name']);
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['mission-type-id']) && !empty($_POST['mission-type-name'])) {
+                    $id = htmlspecialchars($_POST['mission-type-id']);
+                    $name = htmlspecialchars($_POST['mission-type-name']);
 
-                $success = $missionTypeRepository->updateMissionType($id, $name);
-                if ($success) {
-                    header('Location: ?controller=mission-type&action=list&message=updateSuccess');
+                    $success = $missionTypeRepository->updateMissionType($id, $name);
+                    if ($success) {
+                        header('Location: ?controller=mission-type&action=list&message=updateSuccess');
+                    } else {
+                        header('Location: ?controller=mission-type&action=list&message=updateFail');
+                    }
                 } else {
-                    header('Location: ?controller=mission-type&action=list&message=updateFail');
+                    throw new Exception("No mission type id and/or name send");
                 }
             } else {
-                throw new Exception("No mission type id and/or name send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/mission-type/edit.php');

@@ -68,7 +68,7 @@ class MissionTargetRepository
         $statement = $this->dbConnection->dbConnect()->prepare($sql);
         $success = true;
         foreach ($missions as $mission) {
-            if ($mission != '') {
+            if ($mission !== '') {
                 $statement->bindParam(':target_uuid', $targetUUID, PDO::PARAM_STR);
                 $statement->bindParam(':mission_uuid', $mission, PDO::PARAM_STR);
                 $success = false;

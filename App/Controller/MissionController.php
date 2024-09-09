@@ -33,6 +33,9 @@ class MissionController
         require(__DIR__ . '/../../templates/admin/mission/list.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function addMission(string $SessionUuid): void
     {
         $adminRepository = new AdminRepository();
@@ -55,125 +58,145 @@ class MissionController
         $missionsStatus = $missionStatusRepository->getMissionsStatus();
         $specialties = $specialtyRepository->getSpecialties();
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (
-                !empty($_POST['mission-codename']) &&
-                !empty($_POST['mission-title']) &&
-                !empty($_POST['mission-description']) &&
-                !empty($_POST['mission-country']) &&
-                !empty($_POST['mission-type']) &&
-                !empty($_POST['mission-specialty']) &&
-                !empty($_POST['mission-status']) &&
-                !empty($_POST['mission-start-date']) &&
-                !empty($_POST['mission-contacts']) &&
-                !empty($_POST['mission-targets']) &&
-                !empty($_POST['mission-agents'])) {
-                $codeName = htmlspecialchars($_POST['mission-codename']);
-                $title = htmlspecialchars($_POST['mission-title']);
-                $description = htmlspecialchars($_POST['mission-description']);
-                $country = htmlspecialchars($_POST['mission-country']);
-                $type = htmlspecialchars($_POST['mission-type']);
-                $specialty = htmlspecialchars($_POST['mission-specialty']);
-                $status = htmlspecialchars($_POST['mission-status']);
-                $startDate = htmlspecialchars($_POST['mission-start-date']);
-                $endDate = htmlspecialchars($_POST['mission-end-date']);
-                $hideouts = $_POST['mission-hideouts'] ?? [];
-                $contacts = $_POST['mission-contacts'];
-                $targets = $_POST['mission-targets'];
-                $agents = $_POST['mission-agents'];
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (
+                    !empty($_POST['mission-codename']) &&
+                    !empty($_POST['mission-title']) &&
+                    !empty($_POST['mission-description']) &&
+                    !empty($_POST['mission-country']) &&
+                    !empty($_POST['mission-type']) &&
+                    !empty($_POST['mission-specialty']) &&
+                    !empty($_POST['mission-status']) &&
+                    !empty($_POST['mission-start-date']) &&
+                    !empty($_POST['mission-contacts']) &&
+                    !empty($_POST['mission-targets']) &&
+                    !empty($_POST['mission-agents'])) {
+                    $codeName = htmlspecialchars($_POST['mission-codename']);
+                    $title = htmlspecialchars($_POST['mission-title']);
+                    $description = htmlspecialchars($_POST['mission-description']);
+                    $country = htmlspecialchars($_POST['mission-country']);
+                    $type = htmlspecialchars($_POST['mission-type']);
+                    $specialty = htmlspecialchars($_POST['mission-specialty']);
+                    $status = htmlspecialchars($_POST['mission-status']);
+                    $startDate = htmlspecialchars($_POST['mission-start-date']);
+                    $endDate = htmlspecialchars($_POST['mission-end-date']);
+                    $hideouts = $_POST['mission-hideouts'] ?? [];
+                    $contacts = $_POST['mission-contacts'];
+                    $targets = $_POST['mission-targets'];
+                    $agents = $_POST['mission-agents'];
 
-                $success = false;
-                foreach($agents as $agent) {
-                    $agent = htmlspecialchars($agent);
-                    $agentSpecialties = $agentSpecialtyRepository->getAgentSpecialties($agent);
-                    if ($missionRepository->verifyAgentSpecialties($agentSpecialties, $specialty)) {
-                        $success = true;
-                    }
-                }
-
-                if ($success) {
-                    foreach($contacts as $contact) {
-                        $contact = htmlspecialchars($contact);
-                        $contactCountry = $contactRepository->getContactNationality($contact);
-                        if (!$missionRepository->verifyContactCountry($contactCountry, $country)) {
-                            $success = false;
-                        }
-                    }
-                }
-
-                if ($success) {
-                    if ($hideouts != []) {
-                        foreach($hideouts as $hideout) {
-                            $hideout = htmlspecialchars($hideout);
-                            $hideoutCountry = $hideoutRepository->getHideoutCountry($hideout);
-                            if (!$missionRepository->verifyHideoutCountry($hideoutCountry, $country)) {
-                                $success = false;
-                            }
-                        }
-                    }
-                }
-
-                if ($success) {
+                    $success = false;
                     foreach($agents as $agent) {
                         $agent = htmlspecialchars($agent);
-                        $agentCountry = $agentRepository->getAgentNationality($agent);
-                        foreach ($targets as $target) {
-                            $target = htmlspecialchars($target);
-                            $targetCountry = $targetRepository->getTargetNationality($target);
-                            if (!$missionRepository->verifyAgentAndTargetCountry($agentCountry, $targetCountry)) {
+                        $agentSpecialties = $agentSpecialtyRepository->getAgentSpecialties($agent);
+                        if ($missionRepository->verifyAgentSpecialties($agentSpecialties, $specialty)) {
+                            $success = true;
+                        }
+                    }
+
+                    if ($success) {
+                        foreach($contacts as $contact) {
+                            $contact = htmlspecialchars($contact);
+                            $contactCountry = $contactRepository->getContactNationality($contact);
+                            if (!$missionRepository->verifyContactCountry($contactCountry, $country)) {
                                 $success = false;
                             }
                         }
                     }
-                }
 
-                if ($success) {
-                    $success = $missionRepository->insertMission(
-                        $codeName,
-                        $title,
-                        $description,
-                        $country,
-                        $type,
-                        $specialty,
-                        $status,
-                        $startDate,
-                        $endDate,
-                        $hideouts,
-                        $contacts,
-                        $targets,
-                        $agents);
-                }
+                    if ($success) {
+                        if ($hideouts !== []) {
+                            foreach($hideouts as $hideout) {
+                                $hideout = htmlspecialchars($hideout);
+                                $hideoutCountry = $hideoutRepository->getHideoutCountry($hideout);
+                                if (!$missionRepository->verifyHideoutCountry($hideoutCountry, $country)) {
+                                    $success = false;
+                                }
+                            }
+                        }
+                    }
 
-                if ($success) {
-                    header('Location: ?controller=mission&action=list&message=addSuccess');
+                    if ($success) {
+                        foreach($agents as $agent) {
+                            $agent = htmlspecialchars($agent);
+                            $agentCountry = $agentRepository->getAgentNationality($agent);
+                            foreach ($targets as $target) {
+                                $target = htmlspecialchars($target);
+                                $targetCountry = $targetRepository->getTargetNationality($target);
+                                if (!$missionRepository->verifyAgentAndTargetCountry($agentCountry, $targetCountry)) {
+                                    $success = false;
+                                }
+                            }
+                        }
+                    }
+
+                    if ($success) {
+                        $success = $missionRepository->insertMission(
+                            $codeName,
+                            $title,
+                            $description,
+                            $country,
+                            $type,
+                            $specialty,
+                            $status,
+                            $startDate,
+                            $endDate,
+                            $hideouts,
+                            $contacts,
+                            $targets,
+                            $agents);
+                    }
+
+                    if ($success) {
+                        header('Location: ?controller=mission&action=list&message=addSuccess');
+                    } else {
+                        header('Location: ?controller=mission&action=list&message=addFail');
+                    }
                 } else {
-                    header('Location: ?controller=mission&action=list&message=addFail');
+                    throw new Exception("No correct mission data send");
                 }
             } else {
-                throw new Exception("No correct mission data send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/mission/add.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function removeMission(string $SessionUuid): void
     {
         $missionRepository = new MissionRepository();
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['delete'])) {
-                $uuid = htmlspecialchars($_POST['delete']);
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
 
-                $success = $missionRepository->deleteMission($uuid);
-                if (!$success) {
-                    throw new Exception("Unable to delete mission");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['delete'])) {
+                    $uuid = htmlspecialchars($_POST['delete']);
+
+                    $success = $missionRepository->deleteMission($uuid);
+                    if (!$success) {
+                        throw new Exception("Unable to delete mission");
+                    }
+                } else {
+                    throw new Exception("No mission id send");
                 }
             } else {
-                throw new Exception("No mission id send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function editMission(string $SessionUuid, string $missionUuid): void
     {
         $adminRepository = new AdminRepository();
@@ -205,107 +228,114 @@ class MissionController
         $missionAgents = $agentRepository->getAgentsUUIDFromMission($missionUuid);
         $missionTargets = $targetRepository->getTargetsUUIDFromMission($missionUuid);
 
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (
-                !empty($_POST['mission-uuid']) &&
-                !empty($_POST['mission-codename']) &&
-                !empty($_POST['mission-title']) &&
-                !empty($_POST['mission-description']) &&
-                !empty($_POST['mission-country']) &&
-                !empty($_POST['mission-type']) &&
-                !empty($_POST['mission-specialty']) &&
-                !empty($_POST['mission-status']) &&
-                !empty($_POST['mission-start-date']) &&
-                !empty($_POST['mission-end-date']) &&
-                !empty($_POST['mission-contacts']) &&
-                !empty($_POST['mission-targets']) &&
-                !empty($_POST['mission-agents'])) {
-                $uuid = htmlspecialchars($_POST['mission-uuid']);
-                $codename = htmlspecialchars($_POST['mission-codename']);
-                $title = htmlspecialchars($_POST['mission-title']);
-                $description = htmlspecialchars($_POST['mission-description']);
-                $country = htmlspecialchars($_POST['mission-country']);
-                $type = htmlspecialchars($_POST['mission-type']);
-                $specialty = htmlspecialchars($_POST['mission-specialty']);
-                $status = htmlspecialchars($_POST['mission-status']);
-                $startDate = htmlspecialchars($_POST['mission-start-date']);
-                $endDate = htmlspecialchars($_POST['mission-end-date']);
-                $hideouts = $_POST['mission-hideouts'] ?? [];
-                $contacts = $_POST['mission-contacts'];
-                $targets = $_POST['mission-targets'];
-                $agents = $_POST['mission-agents'];
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (
+                    !empty($_POST['mission-uuid']) &&
+                    !empty($_POST['mission-codename']) &&
+                    !empty($_POST['mission-title']) &&
+                    !empty($_POST['mission-description']) &&
+                    !empty($_POST['mission-country']) &&
+                    !empty($_POST['mission-type']) &&
+                    !empty($_POST['mission-specialty']) &&
+                    !empty($_POST['mission-status']) &&
+                    !empty($_POST['mission-start-date']) &&
+                    !empty($_POST['mission-end-date']) &&
+                    !empty($_POST['mission-contacts']) &&
+                    !empty($_POST['mission-targets']) &&
+                    !empty($_POST['mission-agents'])) {
+                    $uuid = htmlspecialchars($_POST['mission-uuid']);
+                    $codename = htmlspecialchars($_POST['mission-codename']);
+                    $title = htmlspecialchars($_POST['mission-title']);
+                    $description = htmlspecialchars($_POST['mission-description']);
+                    $country = htmlspecialchars($_POST['mission-country']);
+                    $type = htmlspecialchars($_POST['mission-type']);
+                    $specialty = htmlspecialchars($_POST['mission-specialty']);
+                    $status = htmlspecialchars($_POST['mission-status']);
+                    $startDate = htmlspecialchars($_POST['mission-start-date']);
+                    $endDate = htmlspecialchars($_POST['mission-end-date']);
+                    $hideouts = $_POST['mission-hideouts'] ?? [];
+                    $contacts = $_POST['mission-contacts'];
+                    $targets = $_POST['mission-targets'];
+                    $agents = $_POST['mission-agents'];
 
-                $success = false;
-                foreach($agents as $agent) {
-                    $agent = htmlspecialchars($agent);
-                    $agentSpecialties = $agentSpecialtyRepository->getAgentSpecialties($agent);
-                    if ($missionRepository->verifyAgentSpecialties($agentSpecialties, $specialty)) {
-                        $success = true;
-                    }
-                }
-
-                if ($success) {
-                    foreach($contacts as $contact) {
-                        $contact = htmlspecialchars($contact);
-                        $contactCountry = $contactRepository->getContactNationality($contact);
-                        if (!$missionRepository->verifyContactCountry($contactCountry, $country)) {
-                            $success = false;
-                        }
-                    }
-                }
-
-                if ($success) {
-                    if ($hideouts != []) {
-                        foreach($hideouts as $hideout) {
-                            $hideout = htmlspecialchars($hideout);
-                            $hideoutCountry = $hideoutRepository->getHideoutCountry($hideout);
-                            if (!$missionRepository->verifyHideoutCountry($hideoutCountry, $country)) {
-                                $success = false;
-                            }
-                        }
-                    }
-                }
-
-                if ($success) {
+                    $success = false;
                     foreach($agents as $agent) {
                         $agent = htmlspecialchars($agent);
-                        $agentCountry = $agentRepository->getAgentNationality($agent);
-                        foreach ($targets as $target) {
-                            $target = htmlspecialchars($target);
-                            $targetCountry = $targetRepository->getTargetNationality($target);
-                            if (!$missionRepository->verifyAgentAndTargetCountry($agentCountry, $targetCountry)) {
+                        $agentSpecialties = $agentSpecialtyRepository->getAgentSpecialties($agent);
+                        if ($missionRepository->verifyAgentSpecialties($agentSpecialties, $specialty)) {
+                            $success = true;
+                        }
+                    }
+
+                    if ($success) {
+                        foreach($contacts as $contact) {
+                            $contact = htmlspecialchars($contact);
+                            $contactCountry = $contactRepository->getContactNationality($contact);
+                            if (!$missionRepository->verifyContactCountry($contactCountry, $country)) {
                                 $success = false;
                             }
                         }
                     }
-                }
+
+                    if ($success) {
+                        if ($hideouts !== []) {
+                            foreach($hideouts as $hideout) {
+                                $hideout = htmlspecialchars($hideout);
+                                $hideoutCountry = $hideoutRepository->getHideoutCountry($hideout);
+                                if (!$missionRepository->verifyHideoutCountry($hideoutCountry, $country)) {
+                                    $success = false;
+                                }
+                            }
+                        }
+                    }
+
+                    if ($success) {
+                        foreach($agents as $agent) {
+                            $agent = htmlspecialchars($agent);
+                            $agentCountry = $agentRepository->getAgentNationality($agent);
+                            foreach ($targets as $target) {
+                                $target = htmlspecialchars($target);
+                                $targetCountry = $targetRepository->getTargetNationality($target);
+                                if (!$missionRepository->verifyAgentAndTargetCountry($agentCountry, $targetCountry)) {
+                                    $success = false;
+                                }
+                            }
+                        }
+                    }
 
 
 
-                if ($success) {
-                    $success = $missionRepository->updateMission(
-                        $uuid,
-                        $codename,
-                        $title,
-                        $description,
-                        $country,
-                        $type,
-                        $specialty,
-                        $status,
-                        $startDate,
-                        $endDate,
-                        $hideouts,
-                        $contacts,
-                        $targets,
-                        $agents);
-                }
-                if ($success) {
-                    header('Location: ?controller=mission&action=list&message=updateSuccess');
+                    if ($success) {
+                        $success = $missionRepository->updateMission(
+                            $uuid,
+                            $codename,
+                            $title,
+                            $description,
+                            $country,
+                            $type,
+                            $specialty,
+                            $status,
+                            $startDate,
+                            $endDate,
+                            $hideouts,
+                            $contacts,
+                            $targets,
+                            $agents);
+                    }
+                    if ($success) {
+                        header('Location: ?controller=mission&action=list&message=updateSuccess');
+                    } else {
+                        header('Location: ?controller=mission&action=list&message=updateFail');
+                    }
                 } else {
-                    header('Location: ?controller=mission&action=list&message=updateFail');
+                    throw new Exception("No correct mission data send");
                 }
             } else {
-                throw new Exception("No correct mission data send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/mission/edit.php');

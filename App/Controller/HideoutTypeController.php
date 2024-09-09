@@ -21,6 +21,9 @@ class HideoutTypeController
         require(__DIR__ . '/../../templates/admin/hideout-type/list.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function addHideoutType(string $SessionUuid): void
     {
         $adminRepository = new AdminRepository();
@@ -28,41 +31,61 @@ class HideoutTypeController
 
         $currentAdmin = $adminRepository->getAdmin($SessionUuid);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['hideout-type-name'])) {
-                $name = htmlspecialchars($_POST['hideout-type-name']);
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
 
-                $success = $hideoutTypeRepository->insertHideoutType($name);
-                if ($success) {
-                    header('Location: ?controller=hideout-type&action=list&message=addSuccess');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['hideout-type-name'])) {
+                    $name = htmlspecialchars($_POST['hideout-type-name']);
+
+                    $success = $hideoutTypeRepository->insertHideoutType($name);
+                    if ($success) {
+                        header('Location: ?controller=hideout-type&action=list&message=addSuccess');
+                    } else {
+                        header('Location: ?controller=hideout-type&action=list&message=addFail');
+                    }
                 } else {
-                    header('Location: ?controller=hideout-type&action=list&message=addFail');
+                    throw new Exception("No hideout type name send");
                 }
             } else {
-                throw new Exception("No hideout type name send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/hideout-type/add.php');
     }
 
+    /**
+     * @throws Exception
+     */
     public function removeHideoutType(string $SessionUuid): void
     {
         $hideoutTypeRepository = new hideoutTypeRepository();
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['delete'])) {
-                $id = htmlspecialchars($_POST['delete']);
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
 
-                $success = $hideoutTypeRepository->deleteHideoutType($id);
-                if (!$success) {
-                    throw new Exception("Unable to delete hideout type");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['delete'])) {
+                    $id = htmlspecialchars($_POST['delete']);
+
+                    $success = $hideoutTypeRepository->deleteHideoutType($id);
+                    if (!$success) {
+                        throw new Exception("Unable to delete hideout type");
+                    }
+                } else {
+                    throw new Exception("No hideout type id send");
                 }
             } else {
-                throw new Exception("No hideout type id send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function editHideoutType(string $SessionUuid, int $hideoutTypeId): void
     {
         $adminRepository = new AdminRepository();
@@ -71,19 +94,26 @@ class HideoutTypeController
         $currentAdmin = $adminRepository->getAdmin($SessionUuid);
         $hideoutType = $hideoutTypeRepository->getHideoutType($hideoutTypeId);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['hideout-type-id']) && !empty($_POST['hideout-type-name'])) {
-                $id = htmlspecialchars($_POST['hideout-type-id']);
-                $name = htmlspecialchars($_POST['hideout-type-name']);
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        $csrfToken = $_SESSION['csrf-token'];
 
-                $success = $hideoutTypeRepository->updateHideoutType($id, $name);
-                if ($success) {
-                    header('Location: ?controller=hideout-type&action=list&message=updateSuccess');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf-token']) && $_POST['csrf-token'] !== $_SESSION['csrf-token']) {
+                if (!empty($_POST['hideout-type-id']) && !empty($_POST['hideout-type-name'])) {
+                    $id = htmlspecialchars($_POST['hideout-type-id']);
+                    $name = htmlspecialchars($_POST['hideout-type-name']);
+
+                    $success = $hideoutTypeRepository->updateHideoutType($id, $name);
+                    if ($success) {
+                        header('Location: ?controller=hideout-type&action=list&message=updateSuccess');
+                    } else {
+                        header('Location: ?controller=hideout-type&action=list&message=updateFail');
+                    }
                 } else {
-                    header('Location: ?controller=hideout-type&action=list&message=updateFail');
+                    throw new Exception("No hideout type id and/or name send");
                 }
             } else {
-                throw new Exception("No hideout type id and/or name send");
+                throw new Exception("405: Method Not Allowed");
             }
         }
         require(__DIR__ . '/../../templates/admin/hideout-type/edit.php');

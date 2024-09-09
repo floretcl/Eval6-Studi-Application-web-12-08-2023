@@ -9,7 +9,7 @@ class DatabaseConnection
 
     public function dbConnect(): PDO
     {
-        if ($this->pdo == null) {
+        if ($this->pdo === null) {
             // Database variables
             $dsn = 'mysql:dbname=' . $_ENV['database_name'] . ';host=' . $_ENV['database_host'] . ';port=3306';
             $username = $_ENV['database_user'];

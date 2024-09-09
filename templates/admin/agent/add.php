@@ -25,6 +25,7 @@
     <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) : ?>
         <div class="row mt-2 pb-2 mb-4 overflow-x-scroll">
             <form action="" method="post">
+                <input class="d-none" name="csrf-token" value="<?= $csrfToken ?? '' ?>" hidden>
                 <?php require(__DIR__ . '/../admin-message.php') ?>
                 <div class="mb-3">
                     <label for="agent-code" class="form-label">Code :</label>

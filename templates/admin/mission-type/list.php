@@ -24,12 +24,15 @@
     <?php if (isset($_SESSION['admin']) && $_SESSION['admin']) : ?>
         <div class="row justify-content-center gx-5 gy-3 mb-4">
             <div class="col-10 col-sm-7 col-md-6 col-lg-5">
-                <form class="d-flex" action="" method="POST" role="search">
+                <form class="d-flex" action="" method="GET" role="search">
+                    <input type="hidden" name="controller" value="mission-type" />
+                    <input type="hidden" name="action" value="list" />
                     <input class="form-control me-2" id="search-input" name="search" type="search"
                            placeholder="<?= $search == '' ? 'Search by name' : '' ?>"
-                           value="<?= $search == '' ? '' : $search ?>" aria-label="Search mission type by name">
+                           value="<?= $search == '' ? '' : htmlspecialchars($search) ?>" aria-label="Search mission type by name">
+                    <input type="hidden" name="page" value="<?= htmlspecialchars($pagination['currentPage']) ?>">
                     <button class="btn btn-outline-success me-2" type="submit">Search</button>
-                    <?php if (isset($_POST['search'])) : ?>
+                    <?php if (isset($_GET['search'])) : ?>
                         <button class="btn btn-outline-danger" id="reset-search-btn" type="button">Reset
                         </button>
                     <?php endif ?>

@@ -14,6 +14,7 @@
     <div class="row justify-content-center">
         <div class="col-10 col-sm-9 col-md-7 col-lg-5">
             <form class="form" action="" method="post">
+                <input class="d-none" name="csrf-token" value="<?= $csrfToken ?? '' ?>" hidden>
                 <?php if (isset($message)) : ?>
                     <div class="alert <?= $message == 'Valid identifiers' ? 'alert-success' : 'alert-danger' ?> d-flex align-items-center" role="alert">
                         <?php if ($message == 'Valid identifiers') : ?>
@@ -33,7 +34,6 @@
                 <div class="mb-3">
                     <label class="form-label" for="login-form-password">Password</label>
                     <input class="form-control" type="password" name="login-form-password" id="login-form-password" required>
-                    <input class="d-none" name="csrf-token" value="<?= $csrfToken ?? '' ?>" hidden>
                 </div>
                 <div class="text-center">
                     <button class="btn btn-light my-4" type="submit" id="login-form-btn">Login</button>
